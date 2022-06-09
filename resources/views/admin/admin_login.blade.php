@@ -33,10 +33,20 @@
       </div>
       @endif
 
+       @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
       <form action="{{ url('/admin') }}" method="post">
         @csrf
         <div class="input-group mb-3">
-          <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+          <input type="text" name="email" id="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
