@@ -24,5 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('admin')->group(function () {
     // Admin all route here
+    Route::any('/', [AdminController::class, 'login']);
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
 });
