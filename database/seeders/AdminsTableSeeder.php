@@ -31,7 +31,6 @@ class AdminsTableSeeder extends Seeder
         ];
 
         Admin::create($adminRecord);
-        // foreach ($adminRecord as $key => $record) {
-        // }
+        
     }
 }
