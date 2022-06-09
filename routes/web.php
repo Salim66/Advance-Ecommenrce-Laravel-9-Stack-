@@ -25,5 +25,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('admin')->group(function () {
     // Admin all route here
     Route::any('/', [AdminController::class, 'login']);
-    Route::get('/dashboard', [AdminController::class, 'dashboard']);
+
+    // Admin all routes protecetd form admin guard
+    Route::group(['middleware' => ['admin']], function(){
+        Route::get('/dashboard', [AdminController::class, 'dashboard']);
+    });
 });
