@@ -17,6 +17,13 @@ class AdminController extends Controller
     }
 
     /**
+     * Admin Settings
+     */
+    public function settings(){
+        return view('admin.admin_settings');
+    }
+
+    /**
      * Admin loging page
      */
     public function login(Request $request){

@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function () {
     // Admin all routes protecetd form admin guard
     Route::group(['middleware' => ['admin']], function(){
         Route::get('/dashboard', [AdminController::class, 'dashboard']);
+        Route::get('/settings', [AdminController::class, 'settings']);
         Route::get('/logout', [AdminController::class, 'logout']);
     });
 });
