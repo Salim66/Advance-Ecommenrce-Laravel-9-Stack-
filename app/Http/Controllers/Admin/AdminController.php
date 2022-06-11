@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use Laravel\Ui\Presets\React;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -73,6 +75,29 @@ class AdminController extends Controller
             echo 'true';
         }else {
             echo 'false';
+        }
+    }
+
+    /**
+     * Update Admin Current Password
+     */
+    public function updateCurrentPassword(Request $request){
+        // Check Requrest Method is POST or not
+        if($request->isMethod('POST')){
+            $data = $request->all();
+            if(Hash::check($data['current_pwd'], Auth::guard('admin')->user()->password)){
+                // Check new password and confirm password is match
+                if($data['new_pwd'] == $data['confirm_pwd']){
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['password' => bcrypt($data['new_pwd'])]);
+                    Session::flash('success_message', 'Your Current password is updated successfully :)');
+                }else {
+                    Session::flash('error_message', 'New password and Confirm password is not match!');
+                }
+            }else {
+                Session::flash('error_message', 'Current password is not match!');
+            }
+
+            return redirect()->back();
         }
     }
 }
