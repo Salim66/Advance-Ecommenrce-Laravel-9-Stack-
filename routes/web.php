@@ -31,5 +31,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard']);
         Route::get('/settings', [AdminController::class, 'settings']);
         Route::get('/logout', [AdminController::class, 'logout']);
+        Route::post('/check-current-pwd', [AdminController::class, 'chkCurrentPassword']);
     });
 });

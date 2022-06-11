@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -61,5 +62,17 @@ class AdminController extends Controller
     public function logout(){
         Auth::guard('admin')->logout();
         return redirect('/admin');
+    }
+
+    /**
+     * Check Admin Current Pssword
+     */
+    public function chkCurrentPassword(Request $request){
+        $data = $request->all();
+        if(Hash::check($data['current_pwd'], Auth::guard('admin')->user()->password)){
+            echo 'true';
+        }else {
+            echo 'false';
+        }
     }
 }
