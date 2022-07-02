@@ -15,4 +15,23 @@ class SectionController extends Controller
         $all_data = Section::get();
         return view('admin.sections.sections', compact('all_data'));
     }
+
+    /**
+     * Update Section Status
+     */
+    public function updateSectionStatus(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            if($data['status'] == 'Active'){
+                $status = 0;
+            }else {
+                $status = 1;
+            }
+            $data_a = Section::where('id', $data['section_id'])->update(['status' => $status]);
+            return response()->json([
+                'status' => $status,
+                'section_id' => $data['section_id']
+            ]);
+        }
+    }
 }

@@ -38,6 +38,7 @@ Route::prefix('admin')->group(function () {
 
         // Section Route
         Route::get('/sections', [SectionController::class, 'sections'])->name('sections');
+        Route::post('/update-section-status', [SectionController::class, 'updateSectionStatus']);
 
     });
 });

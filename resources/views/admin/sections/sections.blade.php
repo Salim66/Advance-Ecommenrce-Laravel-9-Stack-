@@ -47,9 +47,9 @@
                         <td>{{ $data->name }}</td>
                         <td>
                             @if($data->status == 1)
-                                Active
+                                <a class="updateSectionStatus" id="section-{{ $data->id }}" section_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
                             @else
-                                Inactive
+                            <a class="updateSectionStatus" id="section-{{ $data->id }}" section_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
                             @endif
                         </td>
                         <td>4</td>
