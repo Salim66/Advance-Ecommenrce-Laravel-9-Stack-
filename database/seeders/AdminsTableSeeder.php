@@ -31,6 +31,6 @@ class AdminsTableSeeder extends Seeder
         ];
 
         Admin::create($adminRecord);
-        
+
     }
 }

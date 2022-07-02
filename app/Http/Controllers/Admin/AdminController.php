@@ -17,6 +17,7 @@ class AdminController extends Controller
      * Dashboard load
      */
     public function dashboard(){
+        Session::put('page', 'dashboard');
         return view('admin.admin_dashboard');
     }
 
@@ -24,6 +25,7 @@ class AdminController extends Controller
      * Admin Settings
      */
     public function settings(){
+        Session::put('page', 'settings');
         return view('admin.admin_settings');
     }
 
@@ -31,7 +33,7 @@ class AdminController extends Controller
      * Admin loging page
      */
     public function login(Request $request){
-        
+
         if($request->isMethod('post')){
 
             $rules = [
@@ -106,6 +108,7 @@ class AdminController extends Controller
      * Update Admin Details
      */
     public function updateAdminDetails(Request $request){
+        Session::put('page', 'update-admin-details');
         if($request->isMethod('POST')){
             $data = $request->all();
 
