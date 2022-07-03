@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SectionController extends Controller
 {
@@ -12,6 +13,7 @@ class SectionController extends Controller
      * All Section List
      */
     public function sections(){
+        Session::put('page', 'sections');
         $all_data = Section::get();
         return view('admin.sections.sections', compact('all_data'));
     }

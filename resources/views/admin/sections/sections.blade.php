@@ -37,7 +37,6 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Status</th>
-                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -52,7 +51,6 @@
                             <a class="updateSectionStatus" id="section-{{ $data->id }}" section_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
                             @endif
                         </td>
-                        <td>4</td>
                     </tr>
                     @endforeach
                   </tbody>
