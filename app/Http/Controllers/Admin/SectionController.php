@@ -29,7 +29,7 @@ class SectionController extends Controller
             }else {
                 $status = 1;
             }
-            $data_a = Section::where('id', $data['section_id'])->update(['status' => $status]);
+            Section::where('id', $data['section_id'])->update(['status' => $status]);
             return response()->json([
                 'status' => $status,
                 'section_id' => $data['section_id']

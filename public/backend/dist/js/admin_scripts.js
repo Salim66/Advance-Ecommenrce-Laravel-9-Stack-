@@ -43,5 +43,28 @@
             });
         });
 
+        //Admin Category Status Update Script
+        $('.updateCategoryStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).text();
+            let category_id = $(this).attr('category_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-categories-status',
+                data: {status:status, category_id:category_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#category-'+category_id).html('<a class="updateCategoryStatus" href="javascript:void(0)">Active</a>');
+                    }else if(resp['status'] == 0){
+                        $('#category-'+category_id).html('<a class="updateCategoryStatus" href="javascript:void(0)">Inactive</a>');
+                    }
+
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
     });
 })(jQuery);
