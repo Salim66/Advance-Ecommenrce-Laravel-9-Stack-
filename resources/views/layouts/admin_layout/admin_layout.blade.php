@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{ asset('backend/') }}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('backend/') }}/plugins/select2/css/select2.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('backend/') }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
@@ -65,6 +67,11 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('backend/') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="{{ asset('backend/') }}/plugins/select2/js/select2.full.min.js"></script>
+<script>
+    $('.select2').select2();
+</script>
 <!-- ChartJS -->
 <script src="{{ asset('backend/') }}/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->

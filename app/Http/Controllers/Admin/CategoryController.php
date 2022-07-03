@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Section;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
@@ -35,5 +36,22 @@ class CategoryController extends Controller
                 'category_id' => $data['category_id']
             ]);
         }
+    }
+
+    /**
+     * Category Add Edit Method
+     */
+    public function addEditCategory(Request $request, $id=null){
+        if($id == ""){
+            $title = 'Add Category';
+            //Add Category Functionality
+        }else {
+            $title = 'Edit Category';
+            //Edit Category Functionality
+        }
+
+        $all_section = Section::all();
+
+        return view('admin.categories.add_edit_category', compact('title', 'all_section'));
     }
 }

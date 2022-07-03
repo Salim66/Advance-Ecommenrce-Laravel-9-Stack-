@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Categories</h1>
+            <h1>Catalogues</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -28,6 +28,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">All Categories</h3>
+                <a href="{{ url('/admin/add-edit-category') }}" class="btn btn-primary float-right">Add Category</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
