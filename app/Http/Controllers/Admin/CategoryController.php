@@ -148,4 +148,19 @@ class CategoryController extends Controller
         Session::put('success_message', 'Category Image Deleted');
         return redirect()->back();
     }
+
+    /**
+     * Delete Category With Image
+     */
+    public function deleteCategory($id){
+        $category_data = Category::findOrFail($id);
+        if(file_exists('images/category_images/'.$category_data->category_image) && !empty($category_data->category_image)){
+            unlink('images/category_images/'.$category_data->category_image);
+        }
+
+        $category_data->delete();
+
+        Session::put('success_message', 'Category Deleted Successfully ):');
+        return redirect()->back();
+    }
 }

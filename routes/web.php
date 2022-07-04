@@ -48,6 +48,7 @@ Route::prefix('admin')->group(function () {
         Route::any('/add-edit-category/{id?}', [CategoryController::class, 'addEditCategory']);
         Route::post('/append-category-level', [CategoryController::class, 'appendCategoryLevel']);
         Route::get('/delete-category-image/{id}', [CategoryController::class, 'deleteCategoryImage']);
+        Route::get('/delete-category/{id}', [CategoryController::class, 'deleteCategory']);
 
     });
 });
