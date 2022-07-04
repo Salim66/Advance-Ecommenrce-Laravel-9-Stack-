@@ -92,13 +92,13 @@
                     </div>
                   </div>
                   <!-- /.card-body -->
-  
+
                   <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
               </div>
-              <!-- /.card -->    
+              <!-- /.card -->
             </div>
             <!--/.col (left) -->
           </div>
@@ -106,7 +106,7 @@
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
-  
+
   </div>
   <!-- /.content-wrapper -->
 @endsection

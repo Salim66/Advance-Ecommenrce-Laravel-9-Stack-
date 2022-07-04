@@ -132,7 +132,7 @@ class AdminController extends Controller
                     //Generate new image name
                     $extension = $image_tmp->getClientOriginalExtension();
                     //Image Name
-                    $imageName = rand(111,99999).$extension;
+                    $imageName = rand(111,99999).'.'.$extension;
                     $imagePath = 'images/admin_images/admin_photos/'.$imageName;
                     // Upload the image
                     Image::make($image_tmp)->save($imagePath);

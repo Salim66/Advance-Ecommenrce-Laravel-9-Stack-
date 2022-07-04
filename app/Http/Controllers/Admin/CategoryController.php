@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Image;
 
 class CategoryController extends Controller
 {
@@ -48,6 +49,56 @@ class CategoryController extends Controller
         }else {
             $title = 'Edit Category';
             //Edit Category Functionality
+        }
+
+        // Add Category
+        if($request->isMethod('post')){
+
+            $rules = [
+                'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'section_id' => 'required',
+                'url' => 'required',
+                'category_image' => 'image',
+            ];
+            $customMessage = [
+                'category_name.required' => 'Name is required',
+                'category_name.alpha'  => 'Valid name is required',
+                'section_id.required' => 'Section is required',
+                'url.required' => 'URL is required',
+                'category_image.image'  => 'Valid image is required'
+            ];
+            $this->validate($request, $rules, $customMessage);
+
+            if($request->hasFile('category_image')){
+                $image_tmp = $request->file('category_image');
+                if($image_tmp->isValid()){
+                    //Generate new image name
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    //Image Name
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'images/category_images/'.$imageName;
+                    // Upload the image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            }
+
+            Category::create([
+                'parent_id' => $request->parent_id,
+                'section_id' => $request->section_id,
+                'category_name' => $request->category_name,
+                'category_image' => $imageName,
+                'category_discount' => $request->category_discount,
+                'description' => $request->description,
+                'url' => $request->url,
+                'meta_title' => $request->meta_title,
+                'meta_description' => $request->meta_description,
+                'meta_keyword' => $request->meta_keyword,
+                'status' => 1,
+            ]);
+
+            Session::put('success_message', 'Category Added Successfully');
+            return redirect('admin/categories');
+
         }
 
         $all_section = Section::all();
