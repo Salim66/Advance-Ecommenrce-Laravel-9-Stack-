@@ -43,16 +43,25 @@
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Category Name</th>
+                    <th>Parent Category</th>
+                    <th>Section</th>
                     <th>URL</th>
                     <th>Status</th>
                   </tr>
                   </thead>
                   <tbody>
                     @foreach ($all_data as $data)
+                    @if(!isset($data->parentCategory->category_name))
+                        @php $parent_category = 'Root'; @endphp
+                    @else
+                        @php $parent_category = $data->parentCategory->category_name; @endphp
+                    @endif
                     <tr>
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ $data->category_name }}</td>
+                        <td>{{ $parent_category }}</td>
+                        <td>{{ $data->section->name }}</td>
                         <td>{{ $data->url }}</td>
                         <td>
                             @if($data->status == 1)
