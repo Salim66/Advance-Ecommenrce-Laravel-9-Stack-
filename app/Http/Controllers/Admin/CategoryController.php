@@ -46,14 +46,18 @@ class CategoryController extends Controller
         if($id == ""){
             $title = 'Add Category';
             //Add Category Functionality
-            $category = [];
+            $category = new Category;
+            $category_data = [];
+            $categories = [];
+            $message = 'Category Added Successfully';
         }else {
             $title = 'Edit Category';
             //Edit Category Functionality
-            $category = Category::findOrFail($id);
-            $getCategories = Category::with('subCategories')->where(['parent_id'=>0, 'section_id'=>$category->section_id])->get();
-            // return $getCategories;
-
+            $category_data = Category::findOrFail($id);
+            $categories = Category::with('subCategories')->where(['parent_id'=>0, 'section_id'=>$category_data->section_id])->get();
+            // return $categories;
+            $category = Category::find($id);
+            $message = 'Category Updated Successfully';
         }
 
         // Add Category
@@ -74,6 +78,7 @@ class CategoryController extends Controller
             ];
             $this->validate($request, $rules, $customMessage);
 
+
             if($request->hasFile('category_image')){
                 $image_tmp = $request->file('category_image');
                 if($image_tmp->isValid()){
@@ -84,31 +89,33 @@ class CategoryController extends Controller
                     $imagePath = 'images/category_images/'.$imageName;
                     // Upload the image
                     Image::make($image_tmp)->save($imagePath);
+
+                    $category->category_image = $imageName;
                 }
             }
 
-            Category::create([
-                'parent_id' => $request->parent_id,
-                'section_id' => $request->section_id,
-                'category_name' => $request->category_name,
-                'category_image' => $imageName,
-                'category_discount' => $request->category_discount,
-                'description' => $request->description,
-                'url' => $request->url,
-                'meta_title' => $request->meta_title,
-                'meta_description' => $request->meta_description,
-                'meta_keyword' => $request->meta_keyword,
-                'status' => 1,
-            ]);
 
-            Session::put('success_message', 'Category Added Successfully');
+            $category->parent_id = $request->parent_id;
+            $category->section_id = $request->section_id;
+            $category->category_name = $request->category_name;
+            $category->category_discount = $request->category_discount;
+            $category->description = $request->description;
+            $category->url = $request->url;
+            $category->meta_title = $request->meta_title;
+            $category->meta_description = $request->meta_description;
+            $category->meta_keyword = $request->meta_keyword;
+            $category->status = 1;
+            $category->save();
+
+
+            Session::put('success_message', $message);
             return redirect('admin/categories');
 
         }
 
         $all_section = Section::all();
 
-        return view('admin.categories.add_edit_category', compact('title', 'all_section', 'category', 'getCategories'));
+        return view('admin.categories.add_edit_category', compact('title', 'all_section', 'category_data', 'categories'));
     }
 
     /**
@@ -127,5 +134,18 @@ class CategoryController extends Controller
             return view('admin.categories.append_category_level', compact('categories'));
 
         }
+    }
+
+    /**
+     * Delete Category Image
+     */
+    public function deleteCategoryImage($id){
+        $category_data = Category::findOrFail($id);
+        if(file_exists('images/category_images/'.$category_data->category_image) && !empty($category_data->category_image)){
+            unlink('images/category_images/'.$category_data->category_image);
+        }
+
+        Session::put('success_message', 'Category Image Deleted');
+        return redirect()->back();
     }
 }
