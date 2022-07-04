@@ -48,6 +48,7 @@
                     <th>Section</th>
                     <th>URL</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -69,6 +70,9 @@
                             @else
                             <a class="updateCategoryStatus" id="category-{{ $data->id }}" category_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
                             @endif
+                        </td>
+                        <td>
+                            <a href="{{ url('admin/add-edit-category/'. $data->id) }}" class="btn btn-info">Edit</a>
                         </td>
                     </tr>
                     @endforeach

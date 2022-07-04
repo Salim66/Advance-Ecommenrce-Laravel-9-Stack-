@@ -46,9 +46,14 @@ class CategoryController extends Controller
         if($id == ""){
             $title = 'Add Category';
             //Add Category Functionality
+            $category = [];
         }else {
             $title = 'Edit Category';
             //Edit Category Functionality
+            $category = Category::findOrFail($id);
+            $getCategories = Category::with('subCategories')->where(['parent_id'=>0, 'section_id'=>$category->section_id])->get();
+            // return $getCategories;
+
         }
 
         // Add Category
@@ -103,7 +108,7 @@ class CategoryController extends Controller
 
         $all_section = Section::all();
 
-        return view('admin.categories.add_edit_category', compact('title', 'all_section'));
+        return view('admin.categories.add_edit_category', compact('title', 'all_section', 'category', 'getCategories'));
     }
 
     /**
