@@ -56,11 +56,8 @@
                         <label for="category_name">Category Name</label>
                         <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter Category Name">
                     </div>
-                    <div class="form-group">
-                        <label>Select Category Level</label>
-                        <select class="form-control select2" name="parent_id" id="parent_id" style="width: 100%;">
-                            <option value="0">Main Category</option>
-                        </select>
+                    <div id="appendCategoryLevel">
+                        @include('admin.categories.append_category_level')
                     </div>
                     <div class="form-group">
                         <label for="category_discount">Category Discount</label>
