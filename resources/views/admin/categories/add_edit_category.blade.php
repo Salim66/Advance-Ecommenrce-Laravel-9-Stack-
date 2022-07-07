@@ -101,9 +101,11 @@
                             <span class="input-group-text">Upload</span>
                         </div>
                         </div>
+                        @if(!empty($category_data->category_image))
                         @if(file_exists('images/category_images/'.$category_data->category_image) && !empty($category_data->category_image))
                             <img style="width: 50px;" src="{{ URL::to('images/category_images/'.$category_data->category_image) }}" alt="">
-                            <a href="{{ url('admin/delete-category-image/'.$category_data->id) }}">Delete Image</a>
+                            <a class="confirmDelete" href="javascript:void(0)" <?php /* href="{{ url('admin/delete-category-image/'.$category_data->id) }}" */ ?> record="category-image" recordId="{{ $category_data->id }}">Delete Image</a>
+                        @endif
                         @endif
                     </div>
                     <div class="form-group">

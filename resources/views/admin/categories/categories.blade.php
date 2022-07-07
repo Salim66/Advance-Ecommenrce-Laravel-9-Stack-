@@ -73,7 +73,7 @@
                         </td>
                         <td>
                             <a href="{{ url('admin/add-edit-category/'. $data->id) }}" class="btn btn-info">Edit</a>
-                            <a href="{{ url('admin/delete-category/'. $data->id) }}" class="btn btn-danger">Delete</a>
+                            <a href="javascript:void(0)" <?php /* href="{{ url('admin/delete-category/'. $data->id) }}" */ ?> class="btn btn-danger confirmDelete" record="category" recordId="{{ $data->id }}">Delete</a>
                         </td>
                     </tr>
                     @endforeach
