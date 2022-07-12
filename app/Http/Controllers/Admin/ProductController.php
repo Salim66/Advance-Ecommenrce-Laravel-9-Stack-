@@ -14,7 +14,11 @@ class ProductController extends Controller
      */
     public function products(){
         Session::put('page', 'products');
-        $all_data = Product::get();
+        $all_data = Product::with(['category' => function($queey){
+            $queey->select('id', 'category_name');
+        }, 'section' => function($query){
+            $query->select('id', 'name');
+        }])->get();
         return view('admin.products.products', compact('all_data'));
     }
 

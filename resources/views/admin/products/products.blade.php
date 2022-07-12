@@ -62,6 +62,8 @@
                         <td>{{ $data->product_name }}</td>
                         <td>{{ $data->product_code }}</td>
                         <td>{{ $data->product_color }}</td>
+                        <td>{{ $data->category->category_name }}</td>
+                        <td>{{ $data->section->name }}</td>
                         <td>
                             @if($data->status == 1)
                                 <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Active</a>

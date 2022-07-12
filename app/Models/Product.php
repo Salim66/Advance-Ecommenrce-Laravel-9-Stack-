@@ -11,4 +11,12 @@ class Product extends Model
 
     protected $guarded = [];
 
+    public function category(){
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function section(){
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+
 }
