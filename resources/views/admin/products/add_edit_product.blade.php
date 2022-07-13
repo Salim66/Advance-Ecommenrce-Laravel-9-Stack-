@@ -64,6 +64,15 @@
                         <label>Select Category</label>
                         <select class="form-control select2" name="category_id" id="category_id" style="width: 100%;">
                             <option selected disabled>Select</option>
+                            @foreach($categories as $section) 
+                                <optgroup label="{{ $section->name }}"></optgroup>
+                                @foreach ($section->categories as $category)
+                                    <option value="{{ $category->id }}">&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category->category_name }}</option>
+                                    @foreach ($category->sub_categories as $sub)
+                                        <option value="{{ $sub->id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $sub->category_name }}</option>
+                                    @endforeach
+                                @endforeach
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -91,12 +100,34 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label>Select Fabric</label>
+                        <select class="form-control select2" name="fabric" id="fabric" style="width: 100%;">
+                            <option selected disabled>Select</option>
+                            @foreach($filterArray as $fabric)
+                            <option value="{{ $fabric }}">{{ $fabric }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Pattern</label>
+                        <select class="form-control select2" name="pattern" id="pattern" style="width: 100%;">
+                            <option selected disabled>Select</option>
+                            @foreach($patternArray as $pattern)
+                            <option value="{{ $pattern }}">{{ $pattern }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>product Description</label>
                         <textarea class="form-control" name="description" rows="3" placeholder="Enter product Description">@if(!empty($product_data->description)) {{ $product_data->description }} @else {{ old('description') }} @endif</textarea>
                     </div>
                     <div class="form-group">
                         <label>Meta Description</label>
                         <textarea class="form-control" name="meta_description" rows="3" placeholder="Enter Meta Description">@if(!empty($product_data->meta_description)) {{ $product_data->meta_description }} @else {{ old('meta_description') }} @endif</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="is_featured">Is Featured</label>
+                        <input type="checkbox" name="is_featured" id="is_featured" value="1">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -123,6 +154,33 @@
                             <span class="input-group-text">Upload</span>
                         </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Sleeve</label>
+                        <select class="form-control select2" name="sleeve" id="sleeve" style="width: 100%;">
+                            <option selected disabled>Select</option>
+                            @foreach($sleeveArray as $sleeve)
+                            <option value="{{ $sleeve }}">{{ $sleeve }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Fit</label>
+                        <select class="form-control select2" name="fit" id="fit" style="width: 100%;">
+                            <option selected disabled>Select</option>
+                            @foreach($fitArray as $fit)
+                            <option value="{{ $fit }}">{{ $fit }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Occasion</label>
+                        <select class="form-control select2" name="occasion" id="occasion" style="width: 100%;">
+                            <option selected disabled>Select</option>
+                            @foreach($occasionArray as $occasion)
+                            <option value="{{ $occasion }}">{{ $occasion }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Wash Care</label>
