@@ -55,4 +55,25 @@ class ProductController extends Controller
         Session::put('success_message', 'Product Deleted Successfully ):');
         return redirect()->back();
     }
+
+    /**
+     * Add Edit Product
+     */
+    public function addEditCategory(Request $request, $id=null){
+        // Check id has or not
+        if($id==""){
+            $title = "Add Product";
+        }else {
+            $title = "Edit Product";
+        }
+
+        // Filter Array
+        $filterArray = ["Cotton", "Polyester", "Wool"];
+        $sleeveArray = ["Full Sleeve", "Half Sleeve", "Short Sleeve", "Sleeveless"];
+        $patternArray = ["Checked", "Plain", "Printed", "Self", "Solid"];
+        $fitArray = ["Regular", "Slim"];
+        $occasionArray = ["Casual", "Formal"];
+
+        return view('admin.products.add_edit_product', compact('title', 'filterArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray'));
+    }
 }

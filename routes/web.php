@@ -55,6 +55,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/products', [ProductController::class, 'products']);
         Route::post('/update-products-status', [ProductController::class, 'updateProductStatus']);
         Route::get('/delete-product/{id}', [ProductController::class, 'deleteProduct']);
+        Route::any('/add-edit-product/{id?}', [ProductController::class, 'addEditCategory']);
 
     });
 });
