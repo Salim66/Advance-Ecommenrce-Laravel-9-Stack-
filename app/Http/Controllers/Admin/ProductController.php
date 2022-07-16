@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Section;
 use Illuminate\Support\Facades\Session;
+use Image;
 
 class ProductController extends Controller
 {
@@ -159,6 +160,49 @@ class ProductController extends Controller
 
             if(empty($data['main_image'])){
                 $data['main_image'] = "";
+            }
+
+            // Upload Product Main Image
+            if($request->hasFile('main_image')){
+                $image_tmp = $request->file('main_image');
+                if($image_tmp->isValid()){
+                    // Get orginal image name
+                    $image_name = $image_tmp->getClientOriginalName();
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate new image name
+                    $imageName = $image_name . '-'. rand(111,9999) . '.' . $extension;
+                    // Set paths for small, medium and large images
+                    $large_image_path = 'images/product_images/large/' . $imageName; // W:1040, H:1200
+                    $medium_image_path = 'images/product_images/medium/' . $imageName;
+                    $small_image_path = 'images/product_images/small/' . $imageName;
+                    // Upload large image
+                    Image::make($image_tmp)->save($large_image_path);
+                    // Upload medium and small image after resize
+                    Image::make($image_tmp)->resize(520,600)->save($medium_image_path);
+                    Image::make($image_tmp)->resize(260,300)->save($small_image_path);
+                    // Save product main image in product table
+                    $product->main_image = $imageName;
+                }
+            }
+
+            // Upload Product Video
+            if($request->hasFile('product_video')){
+                $video_tmp = $request->file('product_video');
+                if($video_tmp->isValid()){
+                    // Ger orginal video name
+                    $video_name = $video_tmp->getClientOriginalName();
+                    // Get video extension
+                    $extension = $video_tmp->getClientOriginalExtension();
+                    // Generate new video name
+                    $videoName = $video_name. '-' . rand() . '.' . $extension;
+                    // set path for video 
+                    $video_path = 'videos/product_videos/';
+                    // upload video
+                    $video_tmp->move($video_path, $videoName);
+                    // Save video in product table
+                    $product->product_video = $videoName;
+                }
             }
 
             // Save product details in product table

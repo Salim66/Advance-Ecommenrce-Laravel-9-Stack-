@@ -91,7 +91,7 @@
                         <label for="product_video">product Video</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" name="product_image" class="custom-file-input" id="product_video">
+                                <input type="file" name="product_video" class="custom-file-input" id="product_video">
                                 <label class="custom-file-label" for="product_video">Choose file</label>
                             </div>
                             <div class="input-group-append">
@@ -147,13 +147,13 @@
                         <label for="product_main_image">product Main Image</label>
                         <div class="input-group">
                         <div class="custom-file">
-                            <input type="file" name="product_image" class="custom-file-input" id="product_main_image">
+                            <input type="file" name="main_image" class="custom-file-input" id="product_main_image">
                             <label class="custom-file-label" for="product_main_image">Choose file</label>
                         </div>
                         <div class="input-group-append">
                             <span class="input-group-text">Upload</span>
                         </div>
-                        </div>
+                        </div> Recommended Image Size( Width:1040px, Height:1200px )
                     </div>
                     <div class="form-group">
                         <label>Select Sleeve</label>
