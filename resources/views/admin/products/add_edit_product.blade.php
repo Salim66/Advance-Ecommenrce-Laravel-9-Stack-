@@ -67,9 +67,9 @@
                             @foreach($categories as $section) 
                                 <optgroup label="{{ $section->name }}"></optgroup>
                                 @foreach ($section->categories as $category)
-                                    <option value="{{ $category->id }}">&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category->category_name }}</option>
+                                    <option value="{{ $category->id }}" @if(!empty(@old('category_id')) && $category->id==@old('category_id')) selected @elseif(!empty($product_data->category_id) && $product_data->category_id==$category->id) selected @endif>&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category->category_name }}</option>
                                     @foreach ($category->sub_categories as $sub)
-                                        <option value="{{ $sub->id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $sub->category_name }}</option>
+                                        <option value="{{ $sub->id }}" @if(!empty(@old('category_id')) && $sub->id==@old('category_id')) selected @elseif(!empty($product_data->category_id) && $product_data->category_id==$sub->id) selected @endif>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $sub->category_name }}</option>
                                     @endforeach
                                 @endforeach
                             @endforeach
@@ -104,7 +104,7 @@
                         <select class="form-control select2" name="fabric" id="fabric" style="width: 100%;">
                             <option selected disabled>Select</option>
                             @foreach($filterArray as $fabric)
-                            <option value="{{ $fabric }}">{{ $fabric }}</option>
+                            <option value="{{ $fabric }}" @if(!empty($product_data->fabric) && $product_data->fabric==$fabric) selected @endif>{{ $fabric }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -113,7 +113,7 @@
                         <select class="form-control select2" name="pattern" id="pattern" style="width: 100%;">
                             <option selected disabled>Select</option>
                             @foreach($patternArray as $pattern)
-                            <option value="{{ $pattern }}">{{ $pattern }}</option>
+                            <option value="{{ $pattern }}"  @if(!empty($product_data->pattern) && $product_data->pattern==$pattern) selected @endif>{{ $pattern }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -127,7 +127,7 @@
                     </div>
                     <div class="form-group">
                         <label for="is_featured">Is Featured</label>
-                        <input type="checkbox" name="is_featured" id="is_featured" value="1">
+                        <input type="checkbox" name="is_featured" id="is_featured" value="1" @if(!empty($product_data->is_featured) && $product_data->is_featured=="Yes") selected @endif>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -160,7 +160,7 @@
                         <select class="form-control select2" name="sleeve" id="sleeve" style="width: 100%;">
                             <option selected disabled>Select</option>
                             @foreach($sleeveArray as $sleeve)
-                            <option value="{{ $sleeve }}">{{ $sleeve }}</option>
+                            <option value="{{ $sleeve }}"  @if(!empty($product_data->sleeve) && $product_data->sleeve==$sleeve) selected @endif>{{ $sleeve }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -169,7 +169,7 @@
                         <select class="form-control select2" name="fit" id="fit" style="width: 100%;">
                             <option selected disabled>Select</option>
                             @foreach($fitArray as $fit)
-                            <option value="{{ $fit }}">{{ $fit }}</option>
+                            <option value="{{ $fit }}"  @if(!empty($product_data->fit) && $product_data->fit==$fit) selected @endif>{{ $fit }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -178,7 +178,7 @@
                         <select class="form-control select2" name="occasion" id="occasion" style="width: 100%;">
                             <option selected disabled>Select</option>
                             @foreach($occasionArray as $occasion)
-                            <option value="{{ $occasion }}">{{ $occasion }}</option>
+                            <option value="{{ $occasion }}"  @if(!empty($product_data->occasion) && $product_data->occasion==$occasion) selected @endif>{{ $occasion }}</option>
                             @endforeach
                         </select>
                     </div>
