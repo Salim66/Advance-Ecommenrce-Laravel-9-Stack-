@@ -98,6 +98,10 @@
                                 <span class="input-group-text">Upload</span>
                             </div>
                         </div>
+                        @if(!empty($product_data->product_video))
+                            <a href="{{ asset('videos/product_videos/'.$product_data->product_video) }}" download>Download</a> |
+                            <a class="confirmDelete" href="javascript:void(0)" record="product-video" recordId="{{ $product_data->id }}">Delete Video</a>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Select Fabric</label>
@@ -153,7 +157,12 @@
                         <div class="input-group-append">
                             <span class="input-group-text">Upload</span>
                         </div>
-                        </div> Recommended Image Size( Width:1040px, Height:1200px )
+                       </div> 
+                      <div>Recommended Image Size( Width:1040px, Height:1200px )</div>
+                        @if(!empty($product_data->main_image))
+                            <img style="width: 50px;" src="{{ URL::to('images/product_images/small/'.$product_data->main_image) }}" alt="">
+                            <a class="confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $product_data->id }}">Delete Image</a>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Select Sleeve</label>

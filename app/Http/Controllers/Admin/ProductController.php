@@ -62,7 +62,7 @@ class ProductController extends Controller
     /**
      * Add Edit Product
      */
-    public function addEditCategory(Request $request, $id=null){
+    public function addEditProduct(Request $request, $id=null){
         // Check id has or not
         if($id==""){
             $title = "Add Product";
@@ -186,6 +186,8 @@ class ProductController extends Controller
                     // echo $imageName; die;
                     $product_main_image = $imageName;
                 }
+            }else {
+                $product_main_image = $product->main_image;
             }
 
             // Upload Product Video
@@ -205,6 +207,8 @@ class ProductController extends Controller
                     // Save video in product table
                     $product_roduct_video = $videoName;
                 }
+            }else {
+                $product_roduct_video = $product->product_video;
             }
 
             // Save product details in product table
@@ -251,5 +255,45 @@ class ProductController extends Controller
         // echo "<pre>"; print_r($categories); die;
 
         return view('admin.products.add_edit_product', compact('title', 'filterArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'product_data'));
+    }
+
+    
+    /**
+     * Delete Product Image
+     */
+    public function deleteProductImage($id){
+        $product_data = Product::findOrFail($id);
+
+        // small image deleted
+        if(file_exists('images/product_images/small/'.$product_data->main_image) && !empty($product_data->main_image)){
+            unlink('images/product_images/small/'.$product_data->main_image);
+        }
+        // medium image deleted
+        if(file_exists('images/product_images/medium/'.$product_data->main_image) && !empty($product_data->main_image)){
+            unlink('images/product_images/medium/'.$product_data->main_image);
+        }
+        // large image deleted
+        if(file_exists('images/product_images/large/'.$product_data->main_image) && !empty($product_data->main_image)){
+            unlink('images/product_images/large/'.$product_data->main_image);
+        }
+
+        Session::put('success_message', 'Product Image has been Deleted successfully');
+        return redirect()->back();
+    }
+
+    
+    /**
+     * Delete Product Video
+     */
+    public function deleteProductVideo($id){
+        $product_data = Product::findOrFail($id);
+
+        // product video deleted
+        if(file_exists('videos/product_videos/'.$product_data->product_video) && !empty($product_data->product_video)){
+            unlink('videos/product_videos/'.$product_data->product_video);
+        }
+
+        Session::put('success_message', 'Product Video has been Deleted successfully');
+        return redirect()->back();
     }
 }
