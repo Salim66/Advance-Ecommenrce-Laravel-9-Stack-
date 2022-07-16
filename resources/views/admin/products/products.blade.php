@@ -80,8 +80,9 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ url('admin/add-edit-product/'. $data->id) }}" class="btn btn-info">Edit</a>
-                            <a href="javascript:void(0)" <?php /* href="{{ url('admin/delete-product/'. $data->id) }}" */ ?> class="btn btn-danger confirmDelete" record="product" recordId="{{ $data->id }}">Delete</a>
+                            <a title="Add Attribute" href="{{ url('admin/add-attribute/'. $data->id) }}"><i class="fas fa-plus"></i></a>
+                            <a title="Edit Product" href="{{ url('admin/add-edit-product/'. $data->id) }}"><i class="fas fa-edit"></i></a>
+                            <a title="Delete Product" href="javascript:void(0)" <?php /* href="{{ url('admin/delete-product/'. $data->id) }}" */ ?> class="confirmDelete" record="product" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     @endforeach

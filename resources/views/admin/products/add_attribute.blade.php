@@ -1,0 +1,108 @@
+@extends('layouts.admin_layout.admin_layout')
+
+@section('content')
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Catalogues</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Product Attribute</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title">Add Attribute</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+            {{-- @if(session()->has('success_message'))
+                <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                    {{ session()->get('success_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger mt-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif --}}
+          <form id="productForm" @if(empty($product_data)) action="{{ url('admin/add-attribute') }}" @endif method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="product_name">Product Name: </label>
+                            {{ $product_data->product_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="product_code">Product Code: </label>
+                            {{ $product_data->product_code }}
+                        </div>
+                        <div class="form-group">
+                            <label for="product_color">Product Color: </label>
+                            {{ $product_data->product_color }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @if(!empty($product_data->main_image))
+                                <img style="width: 120px;" src="{{ URL::to('images/product_images/small/'.$product_data->main_image) }}" alt="">
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <div class="field_wrapper">
+                                <div>
+                                    <input type="text" name="size[]" value="" placeholder="Size" style="width: 120px" />
+                                    <input type="text" name="price[]" value="" placeholder="Price" style="width: 120px" />
+                                    <input type="text" name="stock[]" value="" placeholder="Stock" style="width: 120px" />
+                                    <input type="text" name="sku[]" value="" placeholder="SKU" style="width: 120px" />
+                                    <a href="javascript:void(0);" class="add_button" title="Add field">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@endsection

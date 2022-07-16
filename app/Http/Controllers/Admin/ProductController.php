@@ -162,7 +162,7 @@ class ProductController extends Controller
             $product_roduct_video = "";
 
             $product_main_image = "";
-            
+
             // Upload Product Main Image
             if($request->hasFile('main_image')){
                 $image_tmp = $request->file('main_image');
@@ -200,7 +200,7 @@ class ProductController extends Controller
                     $extension = $video_tmp->getClientOriginalExtension();
                     // Generate new video name
                     $videoName = $video_name. '-' . rand() . '.' . $extension;
-                    // set path for video 
+                    // set path for video
                     $video_path = 'videos/product_videos/';
                     // upload video
                     $video_tmp->move($video_path, $videoName);
@@ -257,7 +257,7 @@ class ProductController extends Controller
         return view('admin.products.add_edit_product', compact('title', 'filterArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'product_data'));
     }
 
-    
+
     /**
      * Delete Product Image
      */
@@ -281,7 +281,7 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    
+
     /**
      * Delete Product Video
      */
@@ -295,5 +295,21 @@ class ProductController extends Controller
 
         Session::put('success_message', 'Product Video has been Deleted successfully');
         return redirect()->back();
+    }
+
+    /**
+     * Add Attribute
+     */
+    public function addAttribute(Request $request, $id){
+
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+
+        $product_data = Product::find($id);
+
+        return view('admin.products.add_attribute', compact('product_data'));
     }
 }

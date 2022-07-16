@@ -59,5 +59,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete-product-image/{id}', [ProductController::class, 'deleteProductImage']);
         Route::get('/delete-product-video/{id}', [ProductController::class, 'deleteProductVideo']);
 
+        // Attributes
+        Route::any('/add-attribute/{id?}', [ProductController::class, 'addAttribute']);
+
     });
 });
