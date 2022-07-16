@@ -46,6 +46,7 @@
                     <th>Product Name</th>
                     <th>Product Code</th>
                     <th>Product Color</th>
+                    <th>Product Image</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -62,6 +63,13 @@
                         <td>{{ $data->product_name }}</td>
                         <td>{{ $data->product_code }}</td>
                         <td>{{ $data->product_color }}</td>
+                        <td>
+                            @if (file_exists('images/product_images/small/'.$data->main_image) && !empty($data->main_image))
+                                <img width="100px" src="{{ URL::to('images/product_images/small/'. $data->main_image) }}" alt="">
+                            @else
+                                <img width="100px" src="{{ URL::to('/images/product_images/small/no_image.jpg') }}" alt="">
+                            @endif
+                        </td>
                         <td>{{ $data->category->category_name }}</td>
                         <td>{{ $data->section->name }}</td>
                         <td>

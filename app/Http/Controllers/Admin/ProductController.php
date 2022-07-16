@@ -154,14 +154,10 @@ class ProductController extends Controller
                 $data['occasion'] = "";
             }
 
-            if(empty($data['product_video'])){
-                $data['product_video'] = "";
-            }
+            $product_roduct_video = "";
 
-            if(empty($data['main_image'])){
-                $data['main_image'] = "";
-            }
-
+            $product_main_image = "";
+            
             // Upload Product Main Image
             if($request->hasFile('main_image')){
                 $image_tmp = $request->file('main_image');
@@ -182,7 +178,8 @@ class ProductController extends Controller
                     Image::make($image_tmp)->resize(520,600)->save($medium_image_path);
                     Image::make($image_tmp)->resize(260,300)->save($small_image_path);
                     // Save product main image in product table
-                    $product->main_image = $imageName;
+                    // echo $imageName; die;
+                    $product_main_image = $imageName;
                 }
             }
 
@@ -201,7 +198,7 @@ class ProductController extends Controller
                     // upload video
                     $video_tmp->move($video_path, $videoName);
                     // Save video in product table
-                    $product->product_video = $videoName;
+                    $product_roduct_video = $videoName;
                 }
             }
 
@@ -226,8 +223,8 @@ class ProductController extends Controller
             $product->meta_title = $data['meta_title'];
             $product->meta_description = $data['meta_description'];
             $product->meta_keyword = $data['meta_keyword'];
-            $product->product_video = $data['product_video'];
-            $product->main_image = $data['main_image'];
+            $product->product_video = $product_roduct_video;
+            $product->main_image = $product_main_image;
             $product->status = 1;
             $product->save();
 
