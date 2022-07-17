@@ -349,4 +349,29 @@ class ProductController extends Controller
 
         return view('admin.products.add_attribute', compact('product_data'));
     }
+
+    /**
+     * Edit Attribute
+     */
+    public function editAttribute(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            if(!empty($data)){
+
+                foreach($data['attrId'] as $key => $value){
+
+                    ProductAttribute::where('id',$value)->update([
+                        'price' => $data['price'][$key],
+                        'stock' => $data['stock'][$key],
+                    ]);
+
+                }
+
+                $message = 'Product attribute has been updated successfully';
+                Session::flash('success_message', $message);
+                return redirect()->back();
+
+            }
+        }
+    }
 }

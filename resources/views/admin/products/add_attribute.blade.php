@@ -104,55 +104,66 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Add Attribute</button>
             </div>
           </form>
 
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Added Product Attributes</h3>
+          <form action="{{ url('admin/edit-attribute') }}" method="POST">
+            @csrf
+            <div class="card">
+                <div class="card-header">
+                <h3 class="card-title">Added Product Attributes</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                <table id="sections" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>Size</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    {{-- <th>Status</th> --}}
+                    <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($product_data->attributes as $data)
+                    <input type="text" style="display: none;" name="attrId[]" value="{{ $data->id }}">
+                    <tr>
+                        <td>{{ $loop->index+1 }}</td>
+                        <td>{{ $data->size }}</td>
+                        <td>{{ $data->sku }}</td>
+                        <td>
+                            <input type="number" name="price[]" value="{{ $data->price }}">
+                        </td>
+                        <td>
+                            <input type="number" name="stock[]" value="{{ $data->stock }}">
+                        </td>
+                        {{-- <td>
+                            @if($data->status == 1)
+                                <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
+                            @else
+                            <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
+                            @endif
+                        </td> --}}
+                        <td>
+                            <a title="Add Attribute" href="{{ url('admin/add-attribute/'. $data->id) }}"><i class="fas fa-plus"></i></a>
+                            <a title="Edit Product" href="{{ url('admin/add-edit-product/'. $data->id) }}"><i class="fas fa-edit"></i></a>
+                            <a title="Delete Product" href="javascript:void(0)" <?php /* href="{{ url('admin/delete-product/'. $data->id) }}" */ ?> class="confirmDelete" record="product" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success">Update Attribute</button>
+                </div>
+                </div>
+                <!-- /.card-body -->
             </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="sections" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Size</th>
-                  <th>SKU</th>
-                  <th>Price</th>
-                  <th>Stock</th>
-                  {{-- <th>Status</th> --}}
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                  @foreach ($product_data->attributes as $data)
-                  <tr>
-                      <td>{{ $loop->index+1 }}</td>
-                      <td>{{ $data->size }}</td>
-                      <td>{{ $data->sku }}</td>
-                      <td>{{ $data->price }}</td>
-                      <td>{{ $data->stock }}</td>
-                      {{-- <td>
-                          @if($data->status == 1)
-                              <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
-                          @else
-                          <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
-                          @endif
-                      </td> --}}
-                      <td>
-                          <a title="Add Attribute" href="{{ url('admin/add-attribute/'. $data->id) }}"><i class="fas fa-plus"></i></a>
-                          <a title="Edit Product" href="{{ url('admin/add-edit-product/'. $data->id) }}"><i class="fas fa-edit"></i></a>
-                          <a title="Delete Product" href="javascript:void(0)" <?php /* href="{{ url('admin/delete-product/'. $data->id) }}" */ ?> class="confirmDelete" record="product" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
-                      </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
+          </form>
 
         </div>
       </div>

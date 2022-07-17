@@ -61,6 +61,7 @@ Route::prefix('admin')->group(function () {
 
         // Attributes
         Route::any('/add-attribute/{id?}', [ProductController::class, 'addAttribute']);
+        Route::post('/edit-attribute', [ProductController::class, 'editAttribute']);
 
     });
 });
