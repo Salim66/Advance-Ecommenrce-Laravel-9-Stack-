@@ -124,7 +124,7 @@
                     <th>SKU</th>
                     <th>Price</th>
                     <th>Stock</th>
-                    {{-- <th>Status</th> --}}
+                    <th>Status</th>
                     <th>Action</th>
                     </tr>
                     </thead>
@@ -141,17 +141,15 @@
                         <td>
                             <input type="number" name="stock[]" value="{{ $data->stock }}">
                         </td>
-                        {{-- <td>
-                            @if($data->status == 1)
-                                <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
-                            @else
-                            <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
-                            @endif
-                        </td> --}}
                         <td>
-                            <a title="Add Attribute" href="{{ url('admin/add-attribute/'. $data->id) }}"><i class="fas fa-plus"></i></a>
-                            <a title="Edit Product" href="{{ url('admin/add-edit-product/'. $data->id) }}"><i class="fas fa-edit"></i></a>
-                            <a title="Delete Product" href="javascript:void(0)" <?php /* href="{{ url('admin/delete-product/'. $data->id) }}" */ ?> class="confirmDelete" record="product" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
+                            @if($data->status == 1)
+                                <a class="updateAttributeStatus" id="attribute-{{ $data->id }}" attribute_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
+                            @else
+                            <a class="updateAttributeStatus" id="attribute-{{ $data->id }}" attribute_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
+                            @endif
+                        </td>
+                        <td>
+                            <a title="Delete Attribute" href="javascript:void(0)" class="confirmDelete" record="attribute" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     @endforeach

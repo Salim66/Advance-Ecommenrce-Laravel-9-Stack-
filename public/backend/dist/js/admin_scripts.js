@@ -89,6 +89,29 @@
             });
         });
 
+        //Admin Product Attribute Status Update Script
+        $('.updateAttributeStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).text();
+            let attribute_id = $(this).attr('attribute_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-attributes-status',
+                data: {status:status, attribute_id:attribute_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#attribute-'+attribute_id).html('<a class="updateAttributeStatus" href="javascript:void(0)">Active</a>');
+                    }else if(resp['status'] == 0){
+                        $('#attribute-'+attribute_id).html('<a class="updateAttributeStatus" href="javascript:void(0)">Inactive</a>');
+                    }
+
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
         // Append Category Level
         $('#section_id').change(function(){
             let section_id = $(this).val();
@@ -126,6 +149,7 @@
             })
         });
 
+        //<!-- Start -->
         // Product Attributes Add/Remove script
         var maxField = 10; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
@@ -148,6 +172,7 @@
             $(this).parent('div').remove(); //Remove field html
             x--; //Decrement field counter
         });
+        //<!-- End -->
 
     });
 })(jQuery);

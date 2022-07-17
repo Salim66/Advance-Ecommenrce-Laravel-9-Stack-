@@ -298,6 +298,9 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+
+    ///////////////////// Product Attributes ////////////////////////
+
     /**
      * Add Attribute
      */
@@ -373,5 +376,38 @@ class ProductController extends Controller
 
             }
         }
+    }
+
+
+    /**
+     * Update Attribute Status
+     */
+    public function updateAttributeStatus(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            if($data['status'] == 'Active'){
+                $status = 0;
+            }else {
+                $status = 1;
+            }
+            ProductAttribute::where('id', $data['attribute_id'])->update(['status' => $status]);
+            return response()->json([
+                'status' => $status,
+                'attribute_id' => $data['attribute_id']
+            ]);
+        }
+    }
+
+
+    /**
+     * Delete Attribute
+     */
+    public function deleteAttribute($id){
+        $attribute_data = ProductAttribute::findOrFail($id);
+
+        $attribute_data->delete();
+
+        Session::put('success_message', 'Product Attribute Deleted Successfully ):');
+        return redirect()->back();
     }
 }
