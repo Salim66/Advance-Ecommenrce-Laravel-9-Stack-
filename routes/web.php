@@ -65,5 +65,8 @@ Route::prefix('admin')->group(function () {
         Route::post('/update-attributes-status', [ProductController::class, 'updateAttributeStatus']);
         Route::get('/delete-attribute/{id}', [ProductController::class, 'deleteAttribute']);
 
+        // Add Images
+        Route::any('/add-images/{id?}', [ProductController::class, 'addImages']);
+
     });
 });

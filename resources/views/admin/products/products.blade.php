@@ -81,8 +81,9 @@
                             <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
                             @endif
                         </td>
-                        <td>
+                        <td style="width: 120px;">
                             <a title="Add Attribute" href="{{ url('admin/add-attribute/'. $data->id) }}"><i class="fas fa-plus"></i></a>
+                            <a title="Add Images" href="{{ url('admin/add-images/'. $data->id) }}"><i class="fas fa-plus-circle"></i></a>
                             <a title="Edit Product" href="{{ url('admin/add-edit-product/'. $data->id) }}"><i class="fas fa-edit"></i></a>
                             <a title="Delete Product" href="javascript:void(0)" <?php /* href="{{ url('admin/delete-product/'. $data->id) }}" */ ?> class="confirmDelete" record="product" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
                         </td>

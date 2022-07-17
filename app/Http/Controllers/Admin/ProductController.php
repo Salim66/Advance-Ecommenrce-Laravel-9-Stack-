@@ -410,4 +410,20 @@ class ProductController extends Controller
         Session::put('success_message', 'Product Attribute Deleted Successfully ):');
         return redirect()->back();
     }
+
+
+    //////////////// Add Images ////////////////
+
+    /**
+     * Add product images
+     */
+    public function addImages(Request $request, $id){
+
+
+        $product_data = Product::select(['id', 'product_name', 'product_code', 'product_color', 'main_image'])->with('images')->find($id);
+        // return $product_data;
+        $title = 'Add Images';
+        return view('admin.products.add_images', compact('product_data', 'title'));
+
+    }
 }
