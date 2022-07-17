@@ -47,6 +47,8 @@
                     <th>Product Code</th>
                     <th>Product Color</th>
                     <th>Product Image</th>
+                    <th>Category</th>
+                    <th>Section</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
