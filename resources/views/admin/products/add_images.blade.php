@@ -131,21 +131,18 @@
                         </td>
                         <td>
                             @if($data->status == 1)
-                                <a class="updateAttributeStatus" id="attribute-{{ $data->id }}" attribute_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
+                                <a class="updateImagesStatus" id="image-{{ $data->id }}" image_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
                             @else
-                            <a class="updateAttributeStatus" id="attribute-{{ $data->id }}" attribute_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
+                            <a class="updateImagesStatus" id="image-{{ $data->id }}" image_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
                             @endif
                         </td>
                         <td>
-                            <a title="Delete Attribute" href="javascript:void(0)" class="confirmDelete" record="attribute" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
+                            <a title="Delete Product Image" href="javascript:void(0)" class="confirmDelete" record="image" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     @endforeach
                     </tbody>
                 </table>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-success">Update Image</button>
-                </div>
                 </div>
                 <!-- /.card-body -->
             </div>

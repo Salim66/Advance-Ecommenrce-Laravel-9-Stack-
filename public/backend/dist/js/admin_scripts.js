@@ -112,6 +112,29 @@
             });
         });
 
+        //Admin Product Images Status Update Script
+        $('.updateImagesStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).text();
+            let image_id = $(this).attr('image_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-images-status',
+                data: {status:status, image_id:image_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#image-'+image_id).html('<a class="updateImagesStatus" href="javascript:void(0)">Active</a>');
+                    }else if(resp['status'] == 0){
+                        $('#image-'+image_id).html('<a class="updateImagesStatus" href="javascript:void(0)">Inactive</a>');
+                    }
+
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
         // Append Category Level
         $('#section_id').change(function(){
             let section_id = $(this).val();
