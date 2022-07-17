@@ -38,9 +38,17 @@
             </div>
           </div>
           <!-- /.card-header -->
-            {{-- @if(session()->has('success_message'))
+            @if(session()->has('success_message'))
                 <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
                     {{ session()->get('success_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if(session()->has('error_message'))
+                <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                    {{ session()->get('error_message') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -54,7 +62,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif --}}
+            @endif
           <form id="productForm" @if(empty($product_data)) action="{{ url('admin/add-attribute') }}" @endif method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
@@ -84,11 +92,11 @@
                         <div class="form-group">
                             <div class="field_wrapper">
                                 <div>
-                                    <input type="text" name="size[]" value="" placeholder="Size" style="width: 120px" />
-                                    <input type="text" name="price[]" value="" placeholder="Price" style="width: 120px" />
-                                    <input type="text" name="stock[]" value="" placeholder="Stock" style="width: 120px" />
-                                    <input type="text" name="sku[]" value="" placeholder="SKU" style="width: 120px" />
-                                    <a href="javascript:void(0);" class="add_button" title="Add field">Add</a>
+                                    <input type="text" name="size[]" value="" placeholder="Size" style="width: 120px" required />
+                                    <input type="text" name="sku[]" value="" placeholder="SKU" style="width: 120px" required />
+                                    <input type="number" name="price[]" value="" placeholder="Price" style="width: 120px" required />
+                                    <input type="number" name="stock[]" value="" placeholder="Stock" style="width: 120px" required />
+                                    <a href="javascript:void(0);" title="Add" class="add_button btn btn-rounded btn-success btn-sm" title="Add field"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>

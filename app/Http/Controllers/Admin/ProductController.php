@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\Section;
 use Illuminate\Support\Facades\Session;
 use Image;
@@ -305,7 +306,43 @@ class ProductController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+            foreach($data['sku'] as $key => $value){
+                if(!empty($value)){
+
+
+                    // Check whethe the SKU already has or not
+                    $attCountSku = ProductAttribute::where('sku', $value)->count();
+                    if($attCountSku>0){
+                        $message = "SkU already exists, Please add another SKU";
+                        Session::flash('error_message', $message);
+                        return redirect()->back();
+                    }
+
+                    // Check whethe the Size already has or not
+                    $attCountSize = ProductAttribute::where(['product_id'=>$id, 'size'=>$data['size'][$key]])->count();
+                    if($attCountSize>0){
+                        $message = "Size already exists, Please add another size";
+                        Session::flash('error_message', $message);
+                        return redirect()->back();
+                    }
+
+                    $attribute = new ProductAttribute;
+                    $attribute->product_id = $id;
+                    $attribute->sku = $value;
+                    $attribute->size = $data['size'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key];
+                    $attribute->status = 1;
+                    $attribute->save();
+
+                }
+            }
+
+            $message = "Product attribute has been added successfully";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+
         }
 
         $product_data = Product::find($id);
