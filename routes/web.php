@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
@@ -41,6 +42,13 @@ Route::prefix('admin')->group(function () {
         // Section Route
         Route::get('/sections', [SectionController::class, 'sections'])->name('sections');
         Route::post('/update-section-status', [SectionController::class, 'updateSectionStatus']);
+
+
+        // Brand Route
+        Route::get('/brands', [BrandController::class, 'brands'])->name('brands');
+        Route::post('/update-brand-status', [BrandController::class, 'updateBrandstatus']);
+        Route::any('/add-edit-brand/{id?}', [BrandController::class, 'addEditBrand']);
+        Route::get('/delete-brand/{id}', [BrandController::class, 'deleteBrand']);
 
 
         // Category Route
