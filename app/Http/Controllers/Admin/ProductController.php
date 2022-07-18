@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttribute;
@@ -69,6 +70,7 @@ class ProductController extends Controller
         if($id==""){
             $title = "Add Product";
             $product = new Product;
+            $product_data = '';
             $message = "Product added successfully";
         }else {
             $title = "Edit Product";
@@ -89,6 +91,7 @@ class ProductController extends Controller
                 'product_code' => 'required|regex:/^[\w-]*$/',
                 'product_price' => 'required|numeric',
                 'category_id' => 'required',
+                'brand_id' => 'required',
             ];
             $customMessage = [
                 'product_name.required' => 'Name is required',
@@ -98,6 +101,7 @@ class ProductController extends Controller
                 'product_price.required'  => 'Product price is required',
                 'product_price.alpha'  => 'Valid product price is required',
                 'category_id.required' => 'Category id is required',
+                'barnd_id.required' => 'Brand id is required',
             ];
             $this->validate($request, $rules, $customMessage);
 
@@ -216,6 +220,7 @@ class ProductController extends Controller
             // Save product details in product table
             $categoryDetails = Category::find($data['category_id']);
             $product->section_id = $categoryDetails['section_id'];
+            $product->brand_id = $data['brand_id'];
             $product->category_id = $data['category_id'];
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code'];
@@ -256,7 +261,10 @@ class ProductController extends Controller
         $categories = json_decode(json_encode($categories));
         // echo "<pre>"; print_r($categories); die;
 
-        return view('admin.products.add_edit_product', compact('title', 'filterArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'product_data'));
+        // // brand
+        $brands = Brand::where('status', 1)->get();
+
+        return view('admin.products.add_edit_product', compact('title', 'filterArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'product_data', 'brands'));
     }
 
 

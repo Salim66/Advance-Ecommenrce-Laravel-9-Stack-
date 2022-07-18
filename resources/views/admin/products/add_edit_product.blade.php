@@ -64,7 +64,7 @@
                         <label>Select Category</label>
                         <select class="form-control select2" name="category_id" id="category_id" style="width: 100%;">
                             <option selected disabled>Select</option>
-                            @foreach($categories as $section) 
+                            @foreach($categories as $section)
                                 <optgroup label="{{ $section->name }}"></optgroup>
                                 @foreach ($section->categories as $category)
                                     <option value="{{ $category->id }}" @if(!empty(@old('category_id')) && $category->id==@old('category_id')) selected @elseif(!empty($product_data->category_id) && $product_data->category_id==$category->id) selected @endif>&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category->category_name }}</option>
@@ -72,6 +72,15 @@
                                         <option value="{{ $sub->id }}" @if(!empty(@old('category_id')) && $sub->id==@old('category_id')) selected @elseif(!empty($product_data->category_id) && $product_data->category_id==$sub->id) selected @endif>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $sub->category_name }}</option>
                                     @endforeach
                                 @endforeach
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Brand</label>
+                        <select class="form-control select2" name="brand_id" id="brand_id" style="width: 100%;">
+                            <option selected disabled>Select</option>
+                            @foreach($brands as $brand)
+                            <option value="{{ $brand->id }}" @if(!empty(@old('brand_id')) && $brand->id==@old('brand_id')) selected @elseif(!empty($product_data->brand_id) && $product_data->brand_id==$brand->id) selected @endif>{{ $brand->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -131,7 +140,7 @@
                     </div>
                     <div class="form-group">
                         <label for="is_featured">Is Featured</label>
-                        <input type="checkbox" name="is_featured" id="is_featured" value="1" @if(!empty($product_data->is_featured) && $product_data->is_featured=="Yes") selected @endif>
+                        <input type="checkbox" name="is_featured" id="is_featured" value="1" @if(!empty($product_data->is_featured) && $product_data->is_featured=="Yes") checked @endif>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -157,7 +166,7 @@
                         <div class="input-group-append">
                             <span class="input-group-text">Upload</span>
                         </div>
-                       </div> 
+                       </div>
                       <div>Recommended Image Size( Width:1040px, Height:1200px )</div>
                         @if(!empty($product_data->main_image))
                             <img style="width: 50px;" src="{{ URL::to('images/product_images/small/'.$product_data->main_image) }}" alt="">
