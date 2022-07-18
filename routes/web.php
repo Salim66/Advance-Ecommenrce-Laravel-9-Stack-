@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Front\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,12 @@ use App\Http\Controllers\Admin\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::namespace('Front')->group(function(){
+    Route::get('/', [IndexController::class, 'index']);
 });
 
 Auth::routes();
