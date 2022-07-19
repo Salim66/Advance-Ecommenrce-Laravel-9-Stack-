@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -11,6 +12,11 @@ class IndexController extends Controller
      * Home page
      */
     public function index() {
-        return view('front.index');
+        $featuredItemsCount = Product::where('is_featured', 'Yes')->count();
+        $featuredItems = Product::where('is_featured', 'Yes')->get()->toArray();
+        $featuredItemsChunk = array_chunk($featuredItems, 4);
+        // return $featuredItemsChunk;
+        $page_name = 'index';
+        return view('front.index', compact('page_name', 'featuredItemsChunk'));
     }
 }
