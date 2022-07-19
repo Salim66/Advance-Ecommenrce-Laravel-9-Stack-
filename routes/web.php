@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -82,6 +83,13 @@ Route::prefix('admin')->group(function () {
         Route::any('/add-images/{id?}', [ProductController::class, 'addImages']);
         Route::post('/update-images-status', [ProductController::class, 'updateImageStatus']);
         Route::get('/delete-image/{id}', [ProductController::class, 'deleteImage']);
+
+
+        // Banner Route
+        Route::get('/banners', [BannerController::class, 'banners'])->name('banners');
+        Route::post('/update-banner-status', [BannerController::class, 'updateBannerstatus']);
+        Route::any('/add-edit-banner/{id?}', [BannerController::class, 'addEditBanner']);
+        Route::get('/delete-banner/{id}', [BannerController::class, 'deleteBanner']);
 
     });
 });
