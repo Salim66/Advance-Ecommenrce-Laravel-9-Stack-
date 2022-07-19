@@ -12,11 +12,15 @@ class IndexController extends Controller
      * Home page
      */
     public function index() {
-        $featuredItemsCount = Product::where('is_featured', 'Yes')->count();
-        $featuredItems = Product::where('is_featured', 'Yes')->get()->toArray();
+        // Featured Products
+        $featuredItemsCount = Product::where('is_featured', 'Yes')->where('status', 1)->count();
+        $featuredItems = Product::where('is_featured', 'Yes')->where('status', 1)->get()->toArray();
         $featuredItemsChunk = array_chunk($featuredItems, 4);
-        // return $featuredItemsChunk;
+
+        // Latest products
+        $newProducts = Product::where('status', 1)->orderBy('id','DESC')->limit(6)->get();
+        // return $newProducts;
         $page_name = 'index';
-        return view('front.index', compact('page_name', 'featuredItemsChunk', 'featuredItemsCount'));
+        return view('front.index', compact('page_name', 'featuredItemsChunk', 'featuredItemsCount', 'newProducts'));
     }
 }
