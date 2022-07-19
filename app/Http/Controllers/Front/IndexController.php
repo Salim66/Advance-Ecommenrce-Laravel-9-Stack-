@@ -17,6 +17,6 @@ class IndexController extends Controller
         $featuredItemsChunk = array_chunk($featuredItems, 4);
         // return $featuredItemsChunk;
         $page_name = 'index';
-        return view('front.index', compact('page_name', 'featuredItemsChunk'));
+        return view('front.index', compact('page_name', 'featuredItemsChunk', 'featuredItemsCount'));
     }
 }
