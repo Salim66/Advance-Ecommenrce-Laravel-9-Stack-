@@ -90,6 +90,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/update-banner-status', [BannerController::class, 'updateBannerstatus']);
         Route::any('/add-edit-banner/{id?}', [BannerController::class, 'addEditBanner']);
         Route::get('/delete-banner/{id}', [BannerController::class, 'deleteBanner']);
+        Route::get('/delete-banner-image/{id}', [BannerController::class, 'deleteBannerImage']);
 
     });
 });
