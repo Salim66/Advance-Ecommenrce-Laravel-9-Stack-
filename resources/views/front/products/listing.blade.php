@@ -12,14 +12,16 @@
         {{ $catDetails['categoryDetails']['description'] }}
     </p>
     <hr class="soft"/>
-    <form class="form-horizontal span6">
+    <form class="form-horizontal span6" id="sortProrduct">
         <div class="control-group">
             <label class="control-label alignL">Sort By </label>
-            <select>
-                <option>Product name A - Z</option>
-                <option>Product name Z - A</option>
-                <option>Product Stoke</option>
-                <option>Price Lowest first</option>
+            <select name="sort" id="sort">
+                <option value="">Select</option>
+                <option value="product_latest" @if(isset($_GET['sort']) && $_GET['sort'] == 'product_latest') selected @endif>Latest Product</option>
+                <option value="product_name_a_z" @if(isset($_GET['sort']) && $_GET['sort'] == 'product_name_a_z') selected @endif>Product name A - Z</option>
+                <option value="product_name_z_a" @if(isset($_GET['sort']) && $_GET['sort'] == 'product_name_z_a') selected @endif>Product name Z - A</option>
+                <option value="price_lowest" @if(isset($_GET['sort']) && $_GET['sort'] == 'price_lowest') selected @endif>Lowest Price Fist</option>
+                <option value="price_highest" @if(isset($_GET['sort']) && $_GET['sort'] == 'price_highest') selected @endif>Highest Price First</option>
             </select>
         </div>
     </form>
@@ -83,7 +85,7 @@
                             <p>
                                 {{ $product['brand']['name'] }}
                             </p>
-                            <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.1000</a></h4>
+                            <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{ $product['product_price'] }}</a></h4>
                         </div>
                     </div>
                 </li>
@@ -94,8 +96,11 @@
     </div>
     <a href="compare.html" class="btn btn-large pull-right">Compare Product</a>
     <div class="pagination">
-        {{ $catProducts->links() }}
-        {{-- {{ $catProducts->appends(['sort' => 'price_products'])->links() }} --}}
+        @if(isset($_GET['sort']) && !empty($_GET['sort']))
+            {{ $catProducts->appends(['sort' => $_GET['sort']])->links() }}
+        @else
+            {{ $catProducts->links() }}
+        @endif
     </div>
     <br class="clr"/>
 </div>
