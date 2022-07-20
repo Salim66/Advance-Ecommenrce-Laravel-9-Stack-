@@ -11,4 +11,9 @@ class Banner extends Model
 
     protected $guarded = [];
 
+    public static function getBanners() {
+        $getBanners = Banner::where('status', 1)->get();
+        return $getBanners;
+    }
+
 }
