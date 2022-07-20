@@ -21,10 +21,10 @@
 		          <span class="icon-bar"></span>
 		          <span class="icon-bar"></span>
 		        </a>
-		        <a class="brand" href="#">Stack Developers</a>
+		        <a class="brand" href="{{ url('/') }}">Stack Developers</a>
 		        <div class="nav-collapse">
 		          <ul class="nav">
-		            <li class="active"><a href="#">Home</a></li>
+		            <li class="active"><a href="{{ url('/') }}">Home</a></li>
 		            @foreach($sections as $section)
                         @if(count($section->categories) > 0)
                         <li class="dropdown">
@@ -32,9 +32,9 @@
                             <ul class="dropdown-menu">
                                 <li class="divider"></li>
                                 @foreach($section->categories as $category)
-                                <li class="nav-header"><a href="#">{{ $category->category_name }}</a></li>
+                                <li class="nav-header"><a href="{{ url($category->url) }}">{{ $category->category_name }}</a></li>
                                     @foreach($category->subCategories as $subcat)
-                                    <li><a href="#">{{ $subcat->category_name }}</a></li>
+                                    <li><a href="{{ url($subcat->url) }}">{{ $subcat->category_name }}</a></li>
                                     @endforeach
                                 @endforeach
                             </ul>
