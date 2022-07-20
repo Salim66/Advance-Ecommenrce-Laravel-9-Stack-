@@ -23,4 +23,21 @@ class Category extends Model
         return $this->belongsTo(Section::class, 'section_id')->select('id','name');
     }
 
+    /**
+     * Category Detalis find
+     */
+    public static function categoryDetails($url){
+        $categoryDetails = Category::select('id','category_name', 'url')->with(['subCategories' => function($query){
+            $query->select('id','parent_id')->where('status', 1);
+        }])->where('url', $url)->first()->toArray();
+        $categories = Category::with('subCategories')->where('url', $url)->first();
+        // return $categories;
+        $catIds = [];
+        $catIds[] = $categoryDetails['id'];
+        foreach ($categories->subCategories as $key => $subcat) {
+            $catIds[] = $subcat->id;
+        }
+        return ['catIds'=>$catIds, 'categoryDetails'=>$categoryDetails];
+    }
+
 }

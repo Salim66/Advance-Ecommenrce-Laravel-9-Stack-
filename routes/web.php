@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Front\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ use App\Http\Controllers\Front\IndexController;
 
 Route::namespace('Front')->group(function(){
     Route::get('/', [IndexController::class, 'index']);
+    //Listing/Cotegories Route
+    Route::get('/{url}', [ProductsController::class, 'listing']);
 });
 
 Auth::routes();
