@@ -250,11 +250,12 @@ class ProductController extends Controller
         }
 
         // Filter Array
-        $filterArray = ["Cotton", "Polyester", "Wool"];
-        $sleeveArray = ["Full Sleeve", "Half Sleeve", "Short Sleeve", "Sleeveless"];
-        $patternArray = ["Checked", "Plain", "Printed", "Self", "Solid"];
-        $fitArray = ["Regular", "Slim"];
-        $occasionArray = ["Casual", "Formal"];
+        $productFilters = Product::productFilters();
+        $fabricArray = $productFilters['fabricArray'];
+        $sleeveArray = $productFilters['sleeveArray'];
+        $patternArray = $productFilters['patternArray'];
+        $fitArray = $productFilters['fitArray'];
+        $occasionArray = $productFilters['occasionArray'];
 
         // Sections with category and subcategory
         $categories = Section::with('categories')->get();
@@ -264,7 +265,7 @@ class ProductController extends Controller
         // // brand
         $brands = Brand::where('status', 1)->get();
 
-        return view('admin.products.add_edit_product', compact('title', 'filterArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'product_data', 'brands'));
+        return view('admin.products.add_edit_product', compact('title', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'product_data', 'brands'));
     }
 
 

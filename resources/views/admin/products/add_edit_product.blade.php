@@ -116,7 +116,7 @@
                         <label>Select Fabric</label>
                         <select class="form-control select2" name="fabric" id="fabric" style="width: 100%;">
                             <option selected disabled>Select</option>
-                            @foreach($filterArray as $fabric)
+                            @foreach($fabricArray as $fabric)
                             <option value="{{ $fabric }}" @if(!empty($product_data->fabric) && $product_data->fabric==$fabric) selected @endif>{{ $fabric }}</option>
                             @endforeach
                         </select>

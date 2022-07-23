@@ -73,8 +73,17 @@ class ProductsController extends Controller
 
                 $catProducts = $catProducts->paginate(30);
 
+                // Filter Array
+                $productFilters = Product::productFilters();
+                $fabricArray = $productFilters['fabricArray'];
+                $sleeveArray = $productFilters['sleeveArray'];
+                $patternArray = $productFilters['patternArray'];
+                $fitArray = $productFilters['fitArray'];
+                $occasionArray = $productFilters['occasionArray'];
+
+                $page_name = 'listing';
                 // return $catDetails; die;
-                return view('front.products.listing', compact('catDetails', 'catProducts', 'url'));
+                return view('front.products.listing', compact('catDetails', 'catProducts', 'url', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'page_name'));
             }else {
                 abort(404);
             }
