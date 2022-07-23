@@ -16,13 +16,18 @@ class ProductsController extends Controller
 
         if($request->ajax()){
             $data = $request->all();
-
+            // echo "<pre>"; print_r($data); die;
             $url = $data['url'];
 
             $categoryCount = Category::where(['url'=>$url, 'status'=>1])->count();
             if($categoryCount > 0){
                 $catDetails = Category::categoryDetails($url);
                 $catProducts = Product::with('brand')->where('category_id', $catDetails['catIds'])->where('status', 1);
+
+                // If fabric filter is selected
+                if(isset($data['fabric']) && !empty($data['fabric']) == 'fabric'){
+                    $catProducts->whereIn('products.fabric', $data['fabric']);
+                }
 
                 if(isset($data['sort']) && !empty($data['sort'])){
                     if($data['sort'] == 'product_latest'){
