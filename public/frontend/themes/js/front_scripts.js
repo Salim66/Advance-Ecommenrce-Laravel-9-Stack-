@@ -13,7 +13,10 @@
                 method:'post',
                 data: {sort:sort,url:url},
                 success: function(data){
-                    $('#filter_products').html(data);
+                    $('.filter_products').html(data);
+                },
+                error: function(){
+                    alert('Error');
                 }
             });
         });

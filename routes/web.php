@@ -25,15 +25,11 @@ use App\Http\Controllers\Front\ProductsController;
 //     return view('welcome');
 // });
 
-Route::namespace('Front')->group(function(){
-    Route::get('/', [IndexController::class, 'index']);
-    //Listing/Cotegories Route
-    Route::get('/{url}', [ProductsController::class, 'listing']);
-});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Route::prefix('admin')->group(function () {
     // Admin all route here
@@ -96,4 +92,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete-banner-image/{id}', [BannerController::class, 'deleteBannerImage']);
 
     });
+});
+
+
+Route::namespace('Front')->group(function(){
+    Route::get('/', [IndexController::class, 'index']);
+    //Listing/Cotegories Route
+    Route::get('/{url}', [ProductsController::class, 'listing']);
 });
