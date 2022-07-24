@@ -39,7 +39,7 @@
         @foreach($catProducts as $product)
         <li class="span3">
             <div class="thumbnail">
-                <a href="product_details.html">
+                <a href="{{ url('product/'.$product->id) }}">
                     @if(!empty($product['main_image']))
                     <img src="{{ URL::to('images/product_images/small/'.$product['main_image']) }}" alt=""/>
                     @else
@@ -51,22 +51,7 @@
                     <p>
                         {{ $product['brand']['name'] }}
                     </p>
-                    <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{ $product['product_price'] }}</a></h4>
-                    <p>
-                        {{ $product['fabric'] }}
-                    </p>
-                    <p>
-                        {{ $product['sleeve'] }}
-                    </p>
-                    <p>
-                        {{ $product['pattern'] }}
-                    </p>
-                    <p>
-                        {{ $product['fit'] }}
-                    </p>
-                    <p>
-                        {{ $product['occasion'] }}
-                    </p>
+                    <h4 style="text-align:center"><a class="btn" href="{{ url('product/'.$product->id) }}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{ $product['product_price'] }}</a></h4>
                 </div>
             </div>
         </li>

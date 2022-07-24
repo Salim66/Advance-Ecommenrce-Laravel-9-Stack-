@@ -70,7 +70,7 @@ class ProductsController extends Controller
                     $catProducts->orderBy('id', 'DESC');
                 }
 
-                $catProducts = $catProducts->paginate(2);
+                $catProducts = $catProducts->paginate(30);
 
                 // return $catDetails; die;
                 return view('front.products.ajax_products_listing', compact('catDetails', 'catProducts', 'url'));
@@ -103,7 +103,7 @@ class ProductsController extends Controller
                 //     $catProducts->orderBy('id', 'DESC');
                 // }
 
-                $catProducts = $catProducts->paginate(2);
+                $catProducts = $catProducts->paginate(30);
 
                 // Filter Array
                 $productFilters = Product::productFilters();
@@ -134,7 +134,10 @@ class ProductsController extends Controller
 
         $product_detail = Product::with('category', 'section', 'brand', 'attributes', 'images')->find($id);
         $total_stock = ProductAttribute::where('product_id', $id)->sum('stock');
-        return view('front.products.detial', compact('product_detail', 'total_stock'));
+        //get related product
+        $related_product = Product::where('category_id', $product_detail->category_id)->where('id', '!=', $id)->inRandomOrder()->get();
+        // dd($related_product);
+        return view('front.products.detial', compact('product_detail', 'total_stock', 'related_product'));
 
     }
 
