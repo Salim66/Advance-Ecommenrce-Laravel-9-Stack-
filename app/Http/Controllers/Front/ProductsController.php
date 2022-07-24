@@ -29,6 +29,28 @@ class ProductsController extends Controller
                     $catProducts->whereIn('products.fabric', $data['fabric']);
                 }
 
+                // If fabric sleeve is selected
+                if(isset($data['sleeve']) && !empty($data['sleeve']) == 'sleeve'){
+                    $catProducts->whereIn('products.sleeve', $data['sleeve']);
+                }
+
+                // If pattern is selected
+                if(isset($data['pattern']) && !empty($data['pattern']) == 'pattern'){
+                    $catProducts->whereIn('products.pattern', $data['pattern']);
+                }
+
+                // If fit filter is selected
+                if(isset($data['fit']) && !empty($data['fit']) == 'fit'){
+                    $catProducts->whereIn('products.fit', $data['fit']);
+                }
+
+                // If occasion filter is selected
+                if(isset($data['occasion']) && !empty($data['occasion']) == 'occasion'){
+                    $catProducts->whereIn('products.occasion', $data['occasion']);
+                }
+
+
+                // If sort option is selected
                 if(isset($data['sort']) && !empty($data['sort'])){
                     if($data['sort'] == 'product_latest'){
                         $catProducts->orderBy('id', 'DESC');
