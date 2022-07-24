@@ -9,20 +9,15 @@
     </ul>
     <div class="row">
         <div id="gallery" class="span3">
-            <a href="themes/images/products/large/f1.jpg" title="Blue Casual T-Shirt">
-                <img src="{{ URL::to('frontend/') }}/themes/images/products/large/3.jpg" style="width:100%" alt="Blue Casual T-Shirt"/>
+            <a href="{{ URL::to('images/product_images/large/'.$product_detail->main_image) }}" title="Blue Casual T-Shirt">
+                <img src="{{ URL::to('images/product_images/medium/'.$product_detail->main_image) }}" style="width:100%" alt="Blue Casual T-Shirt"/>
             </a>
             <div id="differentview" class="moreOptopm carousel slide">
                 <div class="carousel-inner">
                     <div class="item active">
-                        <a href="themes/images/products/large/f1.jpg"> <img style="width:29%" src="{{ URL::to('frontend/') }}/themes/images/products/large/f1.jpg" alt=""/></a>
-                        <a href="themes/images/products/large/f2.jpg"> <img style="width:29%" src="{{ URL::to('frontend/') }}/themes/images/products/large/f2.jpg" alt=""/></a>
-                        <a href="themes/images/products/large/f3.jpg" > <img style="width:29%" src="{{ URL::to('frontend/') }}/themes/images/products/large/f3.jpg" alt=""/></a>
-                    </div>
-                    <div class="item">
-                        <a href="themes/images/products/large/f3.jpg" > <img style="width:29%" src="{{ URL::to('frontend/') }}/themes/images/products/large/f3.jpg" alt=""/></a>
-                        <a href="themes/images/products/large/f1.jpg"> <img style="width:29%" src="{{ URL::to('frontend/') }}/themes/images/products/large/f1.jpg" alt=""/></a>
-                        <a href="themes/images/products/large/f2.jpg"> <img style="width:29%" src="{{ URL::to('frontend/') }}/themes/images/products/large/f2.jpg" alt=""/></a>
+                        @foreach($product_detail->images as $image)
+                        <a href="{{ URL::to('images/product_images/large/'.$image->image) }}"> <img style="width:29%" src="{{ URL::to('images/product_images/small/'.$image->image) }}" alt=""/></a>
+                        @endforeach
                     </div>
                 </div>
                 <!--
@@ -46,12 +41,12 @@
             <h3>{{ $product_detail->product_name }}  </h3>
             <small>- {{ $product_detail->brand->name }}</small>
             <hr class="soft"/>
-            <small>100 items in stock</small>
+            <small>{{ $total_stock }} items in stock</small>
             <form class="form-horizontal qtyFrm">
                 <div class="control-group">
                     <h4>Rs.{{ $product_detail->product_price }}</h4>
                         <select class="span2 pull-left">
-                            <option value="">Select</option>
+                            <option value="">Select Size</option>
                             @foreach($product_detail->attributes as $att)
                             <option value="{{ $att->id }}">{{ $att->size }}</option>
                             @endforeach
@@ -65,7 +60,6 @@
             <hr class="soft clr"/>
             <p class="span6">
                 {{ $product_detail->description }}
-
             </p>
             <a class="btn btn-small pull-right" href="#detail">More Details</a>
             <br class="clr"/>
