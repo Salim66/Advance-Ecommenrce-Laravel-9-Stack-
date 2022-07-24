@@ -98,17 +98,14 @@ Route::prefix('admin')->group(function () {
 
 Route::namespace('Front')->group(function(){
     Route::get('/', [IndexController::class, 'index']);
+
     //Listing/Cotegories Route
     // Route::get('/{url}', [ProductsController::class, 'listing']);
-
-    // Get Category URL's
     $catURL = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
-    // echo "<pre>"; print_r($catURL); die;
     foreach($catURL as $url){
         Route::get('/'.$url, [ProductsController::class, 'listing']);
     }
 
-    Route::get('/contact-us', function(){
-        return 'test';
-    });
+    Route::get('/product/{code}/{id}', [ProductsController::class, 'detail']);
+
 });

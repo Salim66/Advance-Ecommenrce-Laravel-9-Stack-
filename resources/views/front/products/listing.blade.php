@@ -38,7 +38,7 @@
     <a href="compare.html" class="btn btn-large pull-right">Compare Product</a>
     <div class="pagination">
         @if(isset($_GET['sort']) && !empty($_GET['sort']))
-            {{ $catProducts->appends(['sort' => $_GET['sort']])->links('pagination::bootstrap-4') }}
+            {{ $catProducts->appends(['sort' => $_GET['sort']])->links() }}
         @else
             {{ $catProducts->links() }}
         @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,7 @@ class ProductsController extends Controller
      * Listing/ Categories
      */
     public function listing(Request $request){
-
+        Paginator::useBootstrap();
         if($request->ajax()){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
@@ -68,7 +69,7 @@ class ProductsController extends Controller
                     $catProducts->orderBy('id', 'DESC');
                 }
 
-                $catProducts = $catProducts->paginate(30);
+                $catProducts = $catProducts->paginate(2);
 
                 // return $catDetails; die;
                 return view('front.products.ajax_products_listing', compact('catDetails', 'catProducts', 'url'));
@@ -101,7 +102,7 @@ class ProductsController extends Controller
                 //     $catProducts->orderBy('id', 'DESC');
                 // }
 
-                $catProducts = $catProducts->paginate(30);
+                $catProducts = $catProducts->paginate(2);
 
                 // Filter Array
                 $productFilters = Product::productFilters();
@@ -119,6 +120,19 @@ class ProductsController extends Controller
             }
         }
 
+
+    }
+
+    /**
+     * @access public
+     * @route /product/{code}/{id}
+     * @method GET
+     * Product Detials page
+     */
+    public function detail($code, $id){
+
+
+        return view('front.products.detial');
 
     }
 }
