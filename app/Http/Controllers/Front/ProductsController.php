@@ -129,10 +129,10 @@ class ProductsController extends Controller
      * @method GET
      * Product Detials page
      */
-    public function detail($code, $id){
+    public function detail($id){
 
-
-        return view('front.products.detial');
+        $product_detail = Product::with('category', 'section', 'brand', 'attributes', 'images')->find($id);
+        return view('front.products.detial', compact('product_detail'));
 
     }
 }
