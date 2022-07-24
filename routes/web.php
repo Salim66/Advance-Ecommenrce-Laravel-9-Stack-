@@ -106,6 +106,10 @@ Route::namespace('Front')->group(function(){
         Route::get('/'.$url, [ProductsController::class, 'listing']);
     }
 
+    // product detail page
     Route::get('/product/{id}', [ProductsController::class, 'detail']);
+
+    // get product attribute price
+    Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);
 
 });

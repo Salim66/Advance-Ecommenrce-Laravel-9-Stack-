@@ -137,4 +137,17 @@ class ProductsController extends Controller
         return view('front.products.detial', compact('product_detail', 'total_stock'));
 
     }
+
+    /**
+     * @access public
+     * @route /get-product-price
+     * @method POST
+     */
+    public function getProductPrice(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            $get_product_price = ProductAttribute::where(['product_id'=>$data['product_id'], 'size'=>$data['size']])->first();
+            echo $get_product_price->price;
+        }
+    }
 }

@@ -1,10 +1,18 @@
 (function($){
     $(document).ready(function(){
-        //sorting products
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        //sorting/filtering products by php form submit
         // $('#sort').change(function(){
         //     this.form.submit();
         // });
 
+        // sorting / filtering products by ajax request
         $('#sort').change(function(){
             const sort = $(this).val();
             const url = $('#url').val();
@@ -136,5 +144,25 @@
             // console.log(filter);
             return filter;
         }
+
+
+        // price change by size
+        $('.getProductPrice').change(function(){
+            let size = $(this).val();
+            let product_id = $(this).attr('product_id');
+            $.ajax({
+                url: '/get-product-price',
+                type: 'post',
+                data: {size:size,product_id:product_id},
+                success: function(data){
+                    $('.setProductPrice').html('Rs. ' + data);
+                },
+                error: function(){
+                    alert('Error');
+                }
+            });
+        });
+
+
     });
 })(jQuery);

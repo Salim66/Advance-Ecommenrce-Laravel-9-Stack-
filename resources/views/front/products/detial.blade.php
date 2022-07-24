@@ -44,11 +44,11 @@
             <small>{{ $total_stock }} items in stock</small>
             <form class="form-horizontal qtyFrm">
                 <div class="control-group">
-                    <h4>Rs.{{ $product_detail->product_price }}</h4>
-                        <select class="span2 pull-left">
-                            <option value="">Select Size</option>
+                    <h4 class="setProductPrice">Rs. {{ $product_detail->product_price }}</h4>
+                        <select name="size" class="getProductPrice" product_id="{{ $product_detail->id }}" class="span2 pull-left">
+                            <option value="" disabled selected>Select Size</option>
                             @foreach($product_detail->attributes as $att)
-                            <option value="{{ $att->id }}">{{ $att->size }}</option>
+                            <option value="{{ $att->size }}">{{ $att->size }}</option>
                             @endforeach
                         </select>
                         <input type="number" class="span1" placeholder="Qty."/>
