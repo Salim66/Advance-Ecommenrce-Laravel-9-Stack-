@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\ProductsController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,5 +99,16 @@ Route::prefix('admin')->group(function () {
 Route::namespace('Front')->group(function(){
     Route::get('/', [IndexController::class, 'index']);
     //Listing/Cotegories Route
-    Route::get('/{url}', [ProductsController::class, 'listing']);
+    // Route::get('/{url}', [ProductsController::class, 'listing']);
+
+    // Get Category URL's
+    $catURL = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
+    // echo "<pre>"; print_r($catURL); die;
+    foreach($catURL as $url){
+        Route::get('/'.$url, [ProductsController::class, 'listing']);
+    }
+
+    Route::get('/contact-us', function(){
+        return 'test';
+    });
 });
