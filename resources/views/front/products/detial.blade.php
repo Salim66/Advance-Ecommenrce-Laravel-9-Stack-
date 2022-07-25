@@ -62,9 +62,18 @@
                 @csrf
 
                 <input type="hidden" name="product_id" value="{{ $product_detail->id }}">
-
+                @php
+                    $discount_price = \App\Models\Product::getDiscountPrice($product_detail->id);
+                @endphp
                 <div class="control-group">
-                    <h4 class="setProductPrice">Rs. {{ $product_detail->product_price }}</h4>
+                    <h4 class="setProductPrice">
+                        @if($discount_price>0)
+                            <del>Rs. {{ $product_detail->product_price }}</del> Rs. {{ $discount_price }}
+                        @else
+                            Rs. {{ $product_detail->product_price }}
+                        @endif
+
+                    </h4>
                         <select name="size" class="getProductPrice" product_id="{{ $product_detail->id }}" class="span2 pull-left" required>
                             <option value="" disabled selected>Select Size</option>
                             @foreach($product_detail->attributes as $att)

@@ -37,6 +37,9 @@
 <div class="tab-pane  active" id="blockView">
     <ul class="thumbnails">
         @foreach($catProducts as $product)
+        @php
+            $discount_price = \App\Models\Product::getDiscountPrice($product->id);
+        @endphp
         <li class="span3">
             <div class="thumbnail">
                 <a href="{{ url('product/'.$product->id) }}">
@@ -51,7 +54,16 @@
                     <p>
                         {{ $product['brand']['name'] }}
                     </p>
-                    <h4 style="text-align:center"><a class="btn" href="{{ url('product/'.$product->id) }}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{ $product['product_price'] }}</a></h4>
+                    <h4 style="text-align:center"><a class="btn" href="{{ url('product/'.$product->id) }}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
+                       @if($discount_price>0)
+                        <del>Rs.{{ $product['product_price'] }}</del>
+                       @else
+                        Rs.{{ $product['product_price'] }}
+                       @endif
+                    </a></h4>
+                    @if($discount_price>0)
+                    <h4 style="text-align: center;"><font style="color: red;">Discount Price: {{ $discount_price }}</font></h4>
+                    @endif
                 </div>
             </div>
         </li>
