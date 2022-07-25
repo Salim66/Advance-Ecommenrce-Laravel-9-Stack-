@@ -153,4 +153,16 @@ class ProductsController extends Controller
             echo $get_product_price->price;
         }
     }
+
+    /**
+     * @access public
+     * @route /add-to-cart
+     * @method POST
+     */
+    public function addToCart(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            return $data;
+        }
+    }
 }

@@ -112,4 +112,7 @@ Route::namespace('Front')->group(function(){
     // get product attribute price
     Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);
 
+    // Add To Cart
+    Route::post('/add-to-cart', [ProductsController::class, 'addToCart']);
+
 });
