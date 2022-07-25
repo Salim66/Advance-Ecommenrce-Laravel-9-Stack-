@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 class ProductsController extends Controller
 {
@@ -162,7 +164,44 @@ class ProductsController extends Controller
     public function addToCart(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
+
+            // Check product stock is available or not
+            $getProductStock = ProductAttribute::where(['product_id' => $data['product_id'], 'size' => $data['size']])->first();
+            if($getProductStock->stock < $data['quantity']){
+                $message = "Product quantity is not available!";
+                Session::flash('error_message', $message);
+                return redirect()->back();
+            }
+
+            // Generate session ID if not exists
+            $session_id = Session::get('session_id');
+            if(empty($session_id)){
+                $session_id = Session::getId();
+                Session::put('session_id', $session_id);
+            }
+
+            // Check product if already exists in Cart
+            $countProduct = Cart::where(['product_id'=>$data['product_id'], 'size'=>$data['size']])->count();
+            if($countProduct > 0){
+                $message = "Product already exists in Cart!";
+                Session::flash('error_message', $message);
+                return redirect()->back();
+            }
+
+            // Save product in cart
+            $cart = new Cart;
+            $cart->session_id = $session_id;
+            $cart->product_id = $data['product_id'];
+            $cart->size = $data['size'];
+            $cart->quantity = $data['quantity'];
+            $cart->save();
+
+            $message = "Product has been added into the cart!";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+
             return $data;
+
         }
     }
 }
