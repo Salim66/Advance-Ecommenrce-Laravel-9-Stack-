@@ -221,7 +221,7 @@ class ProductsController extends Controller
      * @method GET
      */
     public function cart(){
-
-        return view('front.products.cart');
+        $user_cart_items = Cart::userCartItem();
+        return view('front.products.cart', compact('user_cart_items'));
     }
 }
