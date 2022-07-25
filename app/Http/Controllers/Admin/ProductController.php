@@ -358,7 +358,7 @@ class ProductController extends Controller
 
         }
 
-        $product_data = Product::select(['id', 'product_name', 'product_code', 'product_color', 'main_image'])->with('attributes')->find($id);
+        $product_data = Product::select(['id', 'product_name', 'product_code', 'product_color', 'main_image', 'product_price'])->with('attributes')->find($id);
 
         return view('admin.products.add_attribute', compact('product_data'));
     }

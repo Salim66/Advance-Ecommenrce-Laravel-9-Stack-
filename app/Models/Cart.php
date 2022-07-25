@@ -33,4 +33,12 @@ class Cart extends Model
         return $user_cart_item;
     }
 
+    /**
+     * Get Product Attribute Price
+     */
+    public static function getProductAttrPrice($product_id, $size){
+        $attrPrice = ProductAttribute::select('price')->where(['product_id'=>$product_id, 'size'=>$size])->first();
+        return $attrPrice->price;
+    }
+
 }

@@ -45,44 +45,52 @@
             <thead>
                 <tr>
                 <th>Product</th>
-                <th>Description</th>
+                <th colspan="2">Description</th>
                 <th>Quantity/Update</th>
                 <th>Price</th>
                 <th>Discount</th>
-                <th>Tax</th>
                 <th>Total</th>
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $total_price = 0;
+                @endphp
                 @foreach($user_cart_items as $item)
+                    @php
+                        $get_attr_price = \App\Models\Cart::getProductAttrPrice($item->product->id, $item->size);
+                    @endphp
                 <tr>
                     <td> <img width="60" src="{{ URL::to('images/product_images/small/'.$item->product->main_image) }}" alt=""/></td>
                     <td>{{ $item->product->product_name }}<br/>Color : {{ $item->product->product_color }}</td>
-                    <td>
-                        <div class="input-append"><input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				</div>
+                    <td colspan="2">
+                        <div class="input-append">
+                            <input class="span1" style="max-width:34px" value="{{ $item->quantity }}" id="appendedInputButtons" size="16" type="text">
+                            <button class="btn" type="button"><i class="icon-minus"></i></button>
+                            <button class="btn" type="button"><i class="icon-plus"></i></button>
+                            <button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>
+                        </div>
                     </td>
-                    <td>Rs.1000.00</td>
+                    <td>Rs.{{ $get_attr_price }}</td>
                     <td>Rs.0.00</td>
-                    <td>Rs.0.00</td>
-                    <td>Rs.1000.00</td>
+                    <td>Rs.{{ $item->quantity * $get_attr_price }}</td>
                 </tr>
+                @php
+                    $total_price = $total_price + ( $item->quantity * $get_attr_price );
+                @endphp
                 @endforeach
 
                 <tr>
                 <td colspan="6" style="text-align:right">Total Price:	</td>
-                <td> Rs.3000.00</td>
+                <td> Rs.{{ $total_price }}</td>
                 </tr>
                 <tr>
                 <td colspan="6" style="text-align:right">Total Discount:	</td>
                 <td> Rs.0.00</td>
                 </tr>
                 <tr>
-                <td colspan="6" style="text-align:right">Total Tax:	</td>
-                <td> Rs.0.00</td>
-                </tr>
-                <tr>
-                <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.3000 - Rs.0 + Rs.0) =</strong></td>
-                <td class="label label-important" style="display:block"> <strong> Rs.3000.00 </strong></td>
+                <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.3000 - Rs.0) =</strong></td>
+                <td class="label label-important" style="display:block"> <strong> Rs.{{ $total_price }} </strong></td>
                 </tr>
                 </tbody>
             </table>
