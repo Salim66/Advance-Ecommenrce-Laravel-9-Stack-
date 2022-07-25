@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductAttribute;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -134,7 +135,9 @@ class ProductsController extends Controller
      */
     public function detail($id){
 
-        $product_detail = Product::with('category', 'section', 'brand', 'attributes', 'images')->find($id);
+        $product_detail = Product::with(['category', 'section', 'brand', 'attributes' => function($query){
+            $query->where('status', 1);
+        }, 'images'])->find($id);
         $total_stock = ProductAttribute::where('product_id', $id)->sum('stock');
         //get related product
         $related_product = Product::where('category_id', $product_detail->category_id)->where('id', '!=', $id)->inRandomOrder()->get();
@@ -180,8 +183,15 @@ class ProductsController extends Controller
                 Session::put('session_id', $session_id);
             }
 
-            // Check product if already exists in Cart
-            $countProduct = Cart::where(['product_id'=>$data['product_id'], 'size'=>$data['size']])->count();
+            // Check product if already exists in User Cart
+            if(Auth::check()){
+                // User is logged in
+                $countProduct = Cart::where(['product_id'=>$data['product_id'], 'size'=>$data['size'], 'user_id'=>Auth::user()->id])->count();
+            }else {
+                // User is not logged in
+                $countProduct = Cart::where(['product_id'=>$data['product_id'], 'size'=>$data['size'], 'session_id'=>Session::get('session_id')])->count();
+            }
+
             if($countProduct > 0){
                 $message = "Product already exists in Cart!";
                 Session::flash('error_message', $message);
@@ -203,5 +213,15 @@ class ProductsController extends Controller
             return $data;
 
         }
+    }
+
+    /**
+     * @access public
+     * @route /cart
+     * @method GET
+     */
+    public function cart(){
+
+        return view('front.products.cart');
     }
 }

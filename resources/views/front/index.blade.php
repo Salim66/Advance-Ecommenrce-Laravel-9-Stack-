@@ -14,7 +14,7 @@
                             <li class="span3">
                                 <div class="thumbnail">
                                     <i class="tag"></i>
-                                    <a href="product_details.html">
+                                    <a href="{{ url('product/'.$item['id']) }}">
                                         @if(!empty($item['main_image']) && file_exists('images/product_images/small/'.$item['main_image']))
                                         <img src="{{ URL::to('images/product_images/small/'.$item['main_image']) }}" alt="">
                                         @else
@@ -23,7 +23,7 @@
                                     </a>
                                     <div class="caption">
                                         <h5>{{ $item['product_name'] }}</h5>
-                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">Rs.{{ $item['product_price'] }}</span></h4>
+                                        <h4><a class="btn" href="{{ url('product/'.$item['id']) }}">VIEW</a> <span class="pull-right">Rs.{{ $item['product_price'] }}</span></h4>
                                     </div>
                                 </div>
                             </li>
@@ -42,7 +42,7 @@
         @foreach($newProducts as $new)
         <li class="span3">
             <div class="thumbnail">
-                <a  href="product_details.html">
+                <a  href="{{ url('product/'.$new->id) }}">
                     @if(!empty($new->main_image) && file_exists('images/product_images/small/'.$new->main_image))
                     <img style="width: 100%" src="{{ URL::to('images/product_images/small/'.$new->main_image) }}" alt=""/>
                     @else
@@ -55,7 +55,7 @@
                         {{ $new->product_code }} ({{ $new->product_color }})
                     </p>
 
-                    <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{ $new->product_price }}</a></h4>
+                    <h4 style="text-align:center"><a class="btn" href="{{ url('product/'.$new->id) }}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{ $new->product_price }}</a></h4>
                 </div>
             </div>
         </li>
