@@ -54,16 +54,14 @@
                     <p>
                         {{ $product['brand']['name'] }}
                     </p>
-                    <h4 style="text-align:center"><a class="btn" href="{{ url('product/'.$product->id) }}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
+                    <h4 style="text-align:center"> <a class="btn" href="{{ url('product/'.$product->id) }}">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
                        @if($discount_price>0)
                         <del>Rs.{{ $product['product_price'] }}</del>
+                        <font color="yellow">Rs.{{ $discount_price }}</font>
                        @else
                         Rs.{{ $product['product_price'] }}
                        @endif
                     </a></h4>
-                    @if($discount_price>0)
-                    <h4 style="text-align: center;"><font style="color: red;">Discount Price: {{ $discount_price }}</font></h4>
-                    @endif
                 </div>
             </div>
         </li>
