@@ -155,7 +155,12 @@
                 type: 'post',
                 data: {size:size,product_id:product_id},
                 success: function(data){
-                    $('.setProductPrice').html('Rs. ' + data);
+                    if(data['discount_price']>0){
+                        $('.setProductPrice').html('<del>Rs. ' + data['product_price']+"</del> Rs. "+data['discount_price']);
+                    }else {
+                        $('.setProductPrice').html('Rs. ' + data['product_price']);
+                    }
+
                 },
                 error: function(){
                     alert('Error');

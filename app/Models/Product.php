@@ -55,4 +55,22 @@ class Product extends Model
         return $discounted_price;
     }
 
+    public static function getDiscountedAttrPrice($product_id, $size){
+        $proAttrPrice = ProductAttribute::where(['product_id'=>$product_id, 'size'=>$size])->first();
+        $proDetails = Product::select('product_discount', 'category_id')->where('id', $product_id)->first();
+        $catDetails = Category::select('category_discount')->where('id', $proDetails->category_id)->first();
+
+        if($proDetails->product_discount > 0){
+            // If product discount is added from admin panel
+            $discounted_price = $proAttrPrice->price - ($proAttrPrice->price * $proDetails->product_discount/100);
+        }else if($catDetails->category_discount > 0){
+            // If product discount is not added from admin panel and category discount is added admin panel
+            $discounted_price = $proAttrPrice->price - ($proAttrPrice->price * $catDetails->category_discount/100);
+        }else {
+            $discounted_price = 0;
+        }
+        return ['product_price'=>$proAttrPrice->price, 'discount_price'=>$discounted_price];
+
+    }
+
 }

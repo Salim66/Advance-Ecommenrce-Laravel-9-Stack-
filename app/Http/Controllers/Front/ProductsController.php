@@ -154,8 +154,8 @@ class ProductsController extends Controller
     public function getProductPrice(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            $get_product_price = ProductAttribute::where(['product_id'=>$data['product_id'], 'size'=>$data['size']])->first();
-            echo $get_product_price->price;
+            $getDiscountedAttrPrice = Product::getDiscountedAttrPrice($data['product_id'], $data['size']);
+            return $getDiscountedAttrPrice;
         }
     }
 
