@@ -155,8 +155,8 @@
                 type: 'post',
                 data: {size:size,product_id:product_id},
                 success: function(data){
-                    if(data['discount_price']>0){
-                        $('.setProductPrice').html('<del>Rs. ' + data['product_price']+"</del> Rs. "+data['discount_price']);
+                    if(data['discount']>0){
+                        $('.setProductPrice').html('<del>Rs. ' + data['product_price']+"</del> Rs. "+data['discount']);
                     }else {
                         $('.setProductPrice').html('Rs. ' + data['product_price']);
                     }

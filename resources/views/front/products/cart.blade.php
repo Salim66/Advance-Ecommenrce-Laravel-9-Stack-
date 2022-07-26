@@ -40,7 +40,22 @@
         </td>
         </tr>
     </table>
-
+    @if(session()->has('success_message'))
+    <div class="alert alert-success" role="alert">
+        {{ session()->get('success_message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(session()->has('error_message'))
+    <div class="alert alert-danger" role="alert">
+        {{ session()->get('error_message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
     <table class="table table-bordered">
             <thead>
                 <tr>
@@ -48,8 +63,8 @@
                 <th colspan="2">Description</th>
                 <th>Quantity/Update</th>
                 <th>Price</th>
-                <th>Discount</th>
-                <th>Total</th>
+                <th>Product/Categrey <br>Discount</th>
+                <th>Sub Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,7 +73,7 @@
                 @endphp
                 @foreach($user_cart_items as $item)
                     @php
-                        $get_attr_price = \App\Models\Cart::getProductAttrPrice($item->product->id, $item->size);
+                        $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
                     @endphp
                 <tr>
                     <td> <img width="60" src="{{ URL::to('images/product_images/small/'.$item->product->main_image) }}" alt=""/></td>
@@ -71,12 +86,12 @@
                             <button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>
                         </div>
                     </td>
-                    <td>Rs.{{ $get_attr_price }}</td>
-                    <td>Rs.0.00</td>
-                    <td>Rs.{{ $item->quantity * $get_attr_price }}</td>
+                    <td>Rs.{{ $get_attr_price['product_price'] }}</td>
+                    <td>Rs.{{ $get_attr_price['discount'] }}</td>
+                    <td>Rs.{{ $item->quantity * $get_attr_price['final_price'] }}</td>
                 </tr>
                 @php
-                    $total_price = $total_price + ( $item->quantity * $get_attr_price );
+                    $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
                 @endphp
                 @endforeach
 
@@ -85,7 +100,7 @@
                 <td> Rs.{{ $total_price }}</td>
                 </tr>
                 <tr>
-                <td colspan="6" style="text-align:right">Total Discount:	</td>
+                <td colspan="6" style="text-align:right">Voucher Discount:	</td>
                 <td> Rs.0.00</td>
                 </tr>
                 <tr>
