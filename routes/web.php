@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\ProductsController;
+use App\Http\Controllers\Front\UserController;
 use App\Models\Category;
 
 /*
@@ -123,5 +124,14 @@ Route::namespace('Front')->group(function(){
 
     // Delete cart item qty
     Route::post('/delete-cart-item-qty', [ProductsController::class, 'deleteCartItem']);
+
+    // Login / Register Page
+    Route::get('/login-register', [UserController::class, 'loginRegister']);
+
+    // Login User
+    Route::post('/login', [UserController::class, 'loginUser']);
+
+    // Register User
+    Route::post('/register', [UserController::class, 'registerUser']);
 
 });

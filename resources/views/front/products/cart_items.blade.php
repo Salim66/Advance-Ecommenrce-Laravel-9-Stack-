@@ -19,7 +19,7 @@
             @endphp
         <tr>
             <td> <img width="60" src="{{ URL::to('images/product_images/small/'.$item->product->main_image) }}" alt=""/></td>
-            <td>{{ $item->product->product_name }}<br/>Color : {{ $item->product->product_color }}</td>
+            <td>{{ $item->product->product_name }} ({{ $item->product->product_code }})<br/>Color : {{ $item->product->product_color }}</td>
             <td colspan="2">
                 <div class="input-append">
                     <input class="span1" style="max-width:34px" value="{{ $item->quantity }}" id="appendedInputButtons" size="16" type="text">
