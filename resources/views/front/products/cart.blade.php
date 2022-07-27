@@ -56,79 +56,29 @@
         </button>
     </div>
     @endif
+    <div id="appendCartItems">
+        @include('front.products.cart_items')
+    </div>
+
+
     <table class="table table-bordered">
-            <thead>
-                <tr>
-                <th>Product</th>
-                <th colspan="2">Description</th>
-                <th>Quantity/Update</th>
-                <th>Price</th>
-                <th>Product/Categrey <br>Discount</th>
-                <th>Sub Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $total_price = 0;
-                @endphp
-                @foreach($user_cart_items as $item)
-                    @php
-                        $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
-                    @endphp
-                <tr>
-                    <td> <img width="60" src="{{ URL::to('images/product_images/small/'.$item->product->main_image) }}" alt=""/></td>
-                    <td>{{ $item->product->product_name }}<br/>Color : {{ $item->product->product_color }}</td>
-                    <td colspan="2">
-                        <div class="input-append">
-                            <input class="span1" style="max-width:34px" value="{{ $item->quantity }}" id="appendedInputButtons" size="16" type="text">
-                            <button class="btn" type="button"><i class="icon-minus"></i></button>
-                            <button class="btn" type="button"><i class="icon-plus"></i></button>
-                            <button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>
-                        </div>
-                    </td>
-                    <td>Rs.{{ $get_attr_price['product_price'] }}</td>
-                    <td>Rs.{{ $get_attr_price['discount'] }}</td>
-                    <td>Rs.{{ $item->quantity * $get_attr_price['final_price'] }}</td>
-                </tr>
-                @php
-                    $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
-                @endphp
-                @endforeach
+        <tbody>
+            <tr>
+            <td>
+            <form class="form-horizontal">
+            <div class="control-group">
+            <label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
+            <div class="controls">
+            <input type="text" class="input-medium" placeholder="CODE">
+            <button type="submit" class="btn"> ADD </button>
+            </div>
+            </div>
+            </form>
+            </td>
+            </tr>
 
-                <tr>
-                <td colspan="6" style="text-align:right">Total Price:	</td>
-                <td> Rs.{{ $total_price }}</td>
-                </tr>
-                <tr>
-                <td colspan="6" style="text-align:right">Voucher Discount:	</td>
-                <td> Rs.0.00</td>
-                </tr>
-                <tr>
-                <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.3000 - Rs.0) =</strong></td>
-                <td class="label label-important" style="display:block"> <strong> Rs.{{ $total_price }} </strong></td>
-                </tr>
-                </tbody>
-            </table>
-
-
-            <table class="table table-bordered">
-            <tbody>
-                <tr>
-                <td>
-                <form class="form-horizontal">
-                <div class="control-group">
-                <label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
-                <div class="controls">
-                <input type="text" class="input-medium" placeholder="CODE">
-                <button type="submit" class="btn"> ADD </button>
-                </div>
-                </div>
-                </form>
-                </td>
-                </tr>
-
-            </tbody>
-            </table>
+        </tbody>
+    </table>
 
             <!-- <table class="table table-bordered">
             <tr><th>ESTIMATE YOUR SHIPPING </th></tr>
