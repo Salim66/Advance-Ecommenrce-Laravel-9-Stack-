@@ -201,6 +201,26 @@
             });
         });
 
+        // Delete Cart Items
+        $(document).on('click', '.btnItemDelete', function(){
+            let cartid = $(this).data('cartid');
+            let result = confirm('Want to delete this cart item')
+
+            if(result){
+                $.ajax({
+                    data: { "cartid":cartid },
+                    url: '/delete-cart-item-qty',
+                    type: 'post',
+                    success:function(data){
+                        $('#appendCartItems').html(data.view);
+                    },error:function(){
+                        alert('Error');
+                    }
+                });
+            }
+
+        });
+
 
     });
 })(jQuery);

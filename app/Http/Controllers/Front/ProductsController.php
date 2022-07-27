@@ -268,4 +268,19 @@ class ProductsController extends Controller
             return response()->json(['view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))]);
         }
     }
+
+    /**
+     * @access public
+     * @route /delete-cart-item-qty
+     * @method POST
+     */
+    public function deleteCartItem(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+
+            Cart::where('id', $data['cartid'])->delete();
+            $user_cart_items = Cart::userCartItem();
+            return response()->json(['view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))]);
+        }
+    }
 }

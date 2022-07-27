@@ -25,7 +25,7 @@
                     <input class="span1" style="max-width:34px" value="{{ $item->quantity }}" id="appendedInputButtons" size="16" type="text">
                     <button class="btn btnItemUpdate qtyMinus" type="button" data-cartid="{{ $item->id }}"><i class="icon-minus"></i></button>
                     <button class="btn btnItemUpdate qtyPlus" type="button" data-cartid="{{ $item->id }}"><i class="icon-plus"></i></button>
-                    <button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>
+                    <button class="btn btn-danger btnItemDelete" type="button" data-cartid="{{ $item->id }}"><i class="icon-remove icon-white"></i></button>
                 </div>
             </td>
             <td>Rs.{{ $get_attr_price['product_price'] }}</td>
@@ -46,7 +46,7 @@
         <td> Rs.0.00</td>
         </tr>
         <tr>
-        <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.3000 - Rs.0) =</strong></td>
+        <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.{{ $total_price }} - Rs.0) =</strong></td>
         <td class="label label-important" style="display:block"> <strong> Rs.{{ $total_price }} </strong></td>
         </tr>
     </tbody>
