@@ -52,6 +52,23 @@ class UserController extends Controller
     }
 
     /**
+     * @access public
+     * @route /check-email
+     * @method POST
+     */
+    public function checkEmail(Request $request){
+        $data = $request->all();
+
+        // Check the user email already exists or not
+        $user_email_count = User::where('email', $data['email'])->count();
+        if($user_email_count > 0){
+            return "false";
+        }else {
+            return "true";
+        }
+    }
+
+    /**
      * @access private
      * @route /logout
      * @method GET

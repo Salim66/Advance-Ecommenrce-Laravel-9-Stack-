@@ -14,7 +14,7 @@
             <div class="well">
             <h5>CREATE YOUR ACCOUNT</h5><br/>
             Enter your name and e-mail to create an account.<br/><br/>
-            <form action="{{ url('register') }}" method="POST">
+            <form id="registerForm" action="{{ url('register') }}" method="POST">
                 @csrf
                 <div class="control-group">
                     <label class="control-label" for="name">Name</label>
