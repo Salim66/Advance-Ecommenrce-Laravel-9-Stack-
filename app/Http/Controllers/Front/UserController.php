@@ -15,4 +15,16 @@ class UserController extends Controller
     public function loginRegister(){
         return view('front.users.login_register');
     }
+
+    /**
+     * @access public
+     * @route /register
+     * @method POST
+     */
+    public function registerUser(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+    }
 }

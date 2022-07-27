@@ -13,30 +13,31 @@
         <div class="span4">
             <div class="well">
             <h5>CREATE YOUR ACCOUNT</h5><br/>
-            Enter your name and e-mail address to create an account.<br/><br/>
-            <form action="register.html">
+            Enter your name and e-mail to create an account.<br/><br/>
+            <form action="{{ url('register') }}" method="POST">
+                @csrf
                 <div class="control-group">
-                    <label class="control-label" for="inputName">Name</label>
+                    <label class="control-label" for="name">Name</label>
                     <div class="controls">
-                        <input class="span3"  type="text" id="inputName" placeholder="Name">
+                        <input class="span3"  type="text" id="name" name="name" placeholder="Name">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputMobile">Mobile</label>
+                    <label class="control-label" for="mobile">Mobile</label>
                     <div class="controls">
-                        <input class="span3"  type="text" id="inputMobile" placeholder="Mobile">
+                        <input class="span3"  type="text" id="mobile" name="mobile" placeholder="Mobile">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputEmail0">E-mail address</label>
+                    <label class="control-label" for="email">E-mail address</label>
                     <div class="controls">
-                        <input class="span3"  type="email" id="inputEmail0" placeholder="Email">
+                        <input class="span3"  type="email" id="email" name="email" placeholder="Email">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPassword">Password</label>
+                    <label class="control-label" for="password">Password</label>
                     <div class="controls">
-                        <input class="span3"  type="password" id="inputPassword">
+                        <input class="span3"  type="password" id="password" name="password">
                     </div>
                 </div>
                 <div class="controls">
