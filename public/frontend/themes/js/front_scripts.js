@@ -191,6 +191,9 @@
                 url: '/update-cart-item-qty',
                 type: 'post',
                 success:function(data){
+                    if(data.status == false){
+                        alert(data.message);
+                    }
                     $('#appendCartItems').html(data.view);
                 },error:function(){
                     alert('Error');

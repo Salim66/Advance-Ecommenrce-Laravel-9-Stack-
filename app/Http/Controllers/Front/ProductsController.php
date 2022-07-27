@@ -234,6 +234,35 @@ class ProductsController extends Controller
     public function updateCartItemQty(Request $request){
         if($request->ajax()){
             $data = $request->all();
+
+            // Get Cart Detials
+            $cartDetails = Cart::where('id', $data['cartid'])->first();
+
+            // Get available product in stock
+            $availableStock = ProductAttribute::select('stock')->where(['product_id'=>$cartDetails['product_id'], 'size'=>$cartDetails['size']])->first()->toArray();
+
+            // Check stock is available or not
+            if($data['qty'] > $availableStock['stock']){
+                $user_cart_items = Cart::userCartItem();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Product stock is not available',
+                    'view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))
+                ]);
+            }
+
+            // Check size is available
+            $availableSize = ProductAttribute::where(['product_id'=>$cartDetails['product_id'], 'size'=>$cartDetails['size'], 'status'=>1])->count();
+            if($availableSize == 0){
+                $user_cart_items = Cart::userCartItem();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Product size is not available',
+                    'view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))
+                ]);
+            }
+
+
             Cart::where('id', $data['cartid'])->update(['quantity' => $data['qty']]);
             $user_cart_items = Cart::userCartItem();
             return response()->json(['view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))]);
