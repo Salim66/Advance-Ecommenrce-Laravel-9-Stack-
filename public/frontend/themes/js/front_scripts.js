@@ -261,6 +261,30 @@
 			}
 		});
 
+        // validate login form on keyup and submit
+		$("#loginForm").validate({
+			rules: {
+                email: {
+					required: true,
+					email: true
+				},
+				password: {
+					required: true,
+					minlength: 6
+				}
+			},
+			messages: {
+				email: {
+					required: "Please enter a email",
+					email: "Please enter your valid email",
+				},
+				password: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 6 characters long"
+				}
+			}
+		});
+
 
 
     });

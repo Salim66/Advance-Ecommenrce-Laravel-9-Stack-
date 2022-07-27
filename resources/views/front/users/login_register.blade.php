@@ -8,7 +8,14 @@
     </ul>
     <h3> Login / Register</h3>
     <hr class="soft"/>
-
+    @if(session()->has('error_message'))
+    <div class="alert alert-danger" role="alert">
+        {{ session()->get('error_message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
     <div class="row">
         <div class="span4">
             <div class="well">
@@ -29,7 +36,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="email">E-mail address</label>
+                    <label class="control-label" for="email">Email address</label>
                     <div class="controls">
                         <input class="span3"  type="email" id="email" name="email" placeholder="Email">
                     </div>
@@ -50,19 +57,20 @@
         <div class="span4">
             <div class="well">
             <h5>ALREADY REGISTERED ?</h5>
-            <form>
-            <div class="control-group">
-                <label class="control-label" for="inputEmail1">Email</label>
-                <div class="controls">
-                <input class="span3"  type="text" id="inputEmail1" placeholder="Email">
+            <form id="loginForm" action="{{ url('login') }}" method="POST">
+                @csrf
+                <div class="control-group">
+                    <label class="control-label" for="email">Email address</label>
+                    <div class="controls">
+                        <input class="span3"  type="email" id="email" name="email" placeholder="Email">
+                    </div>
                 </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="inputPassword1">Password</label>
-                <div class="controls">
-                <input type="password" class="span3"  id="inputPassword1" placeholder="Password">
+                <div class="control-group">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                        <input class="span3"  type="password" id="password" name="password">
+                    </div>
                 </div>
-            </div>
             <div class="control-group">
                 <div class="controls">
                 <button type="submit" class="btn">Sign in</button> <a href="forgetpass.html">Forget password?</a>

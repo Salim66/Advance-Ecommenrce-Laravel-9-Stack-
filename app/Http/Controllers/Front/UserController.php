@@ -69,6 +69,25 @@ class UserController extends Controller
     }
 
     /**
+     * @access public
+     * @route /login
+     * @method POST
+     */
+    public function loginUser(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // check user email and password is match or not
+            if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+                return redirect('cart');
+            }else {
+                $message = "Email and Password not match!";
+                Session::flash('error_message', $message);
+                return redirect()->back();
+            }
+        }
+    }
+
+    /**
      * @access private
      * @route /logout
      * @method GET
