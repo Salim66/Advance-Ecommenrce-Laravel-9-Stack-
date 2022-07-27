@@ -185,7 +185,17 @@
                 let quantity = $(this).prev().prev().val();
                 new_qty = parseInt(quantity) + 1;
             }
-            alert(new_qty);
+            let cartid = $(this).data('cartid');
+            $.ajax({
+                data: { "cartid":cartid, 'qty':new_qty },
+                url: '/update-cart-item-qty',
+                type: 'post',
+                success:function(data){
+                    $('#appendCartItems').html(data.view);
+                },error:function(){
+                    alert('Error');
+                }
+            });
         });
 
 

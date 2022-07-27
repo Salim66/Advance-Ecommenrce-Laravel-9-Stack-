@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 
 class ProductsController extends Controller
 {
@@ -223,5 +224,19 @@ class ProductsController extends Controller
     public function cart(){
         $user_cart_items = Cart::userCartItem();
         return view('front.products.cart', compact('user_cart_items'));
+    }
+
+    /**
+     * @access public
+     * @route /update-cart-item-qty
+     * @method POST
+     */
+    public function updateCartItemQty(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            Cart::where('id', $data['cartid'])->update(['quantity' => $data['qty']]);
+            $user_cart_items = Cart::userCartItem();
+            return response()->json(['view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))]);
+        }
     }
 }
