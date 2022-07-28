@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -45,6 +46,14 @@ class UserController extends Controller
                 $user->save();
 
                 if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+
+                    // User is logged in then update the previous session id cart product
+                    if(!empty(Session::get('session_id'))){
+                        $user_id = Auth::user()->id;
+                        $session_id = Session::get('session_id');
+                        Cart::where('session_id', $session_id)->update(['user_id'=>$user_id]);
+                    }
+
                     return redirect('cart');
                 }
             }
@@ -78,6 +87,14 @@ class UserController extends Controller
             $data = $request->all();
             // check user email and password is match or not
             if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+
+                // User is logged in then update the previous session id cart product
+                if(!empty(Session::get('session_id'))){
+                    $user_id = Auth::user()->id;
+                    $session_id = Session::get('session_id');
+                    Cart::where('session_id', $session_id)->update(['user_id'=>$user_id]);
+                }
+
                 return redirect('cart');
             }else {
                 $message = "Email and Password not match!";
