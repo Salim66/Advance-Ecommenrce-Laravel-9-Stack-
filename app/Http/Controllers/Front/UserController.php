@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Sms;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -53,6 +54,11 @@ class UserController extends Controller
                         $session_id = Session::get('session_id');
                         Cart::where('session_id', $session_id)->update(['user_id'=>$user_id]);
                     }
+
+                    // Send Regiter SMS
+                    $message = "Dear Customer, you have been successfully register with E-Com website. Login to your account to access order and available offers.";
+                    $mobile = $data['mobile'];
+                    Sms::sendSMS($message, $mobile);
 
                     return redirect('cart');
                 }
