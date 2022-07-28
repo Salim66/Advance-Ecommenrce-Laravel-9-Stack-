@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Sms;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -56,9 +57,16 @@ class UserController extends Controller
                     }
 
                     // Send Regiter SMS
-                    $message = "Dear Customer, you have been successfully register with E-Com website. Login to your account to access order and available offers.";
-                    $mobile = $data['mobile'];
-                    Sms::sendSMS($message, $mobile);
+                    // $message = "Dear Customer, you have been successfully register with E-Com website. Login to your account to access order and available offers.";
+                    // $mobile = $data['mobile'];
+                    // Sms::sendSMS($message, $mobile);
+
+                    // Send Mail When your Registation
+                    $email = $data['email'];
+                    $messageData = ['name' => $data['name'], 'mobile' => $data['mobile'], 'email' => $data['email']];
+                    Mail::send('emails.register', $messageData, function($message) use($email){
+                        $message->to($email)->subject('Welcome to E-Commerce Website');
+                    });
 
                     return redirect('cart');
                 }
