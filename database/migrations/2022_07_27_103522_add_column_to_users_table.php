@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('country')->nullable()->after('state');
             $table->string('pincode')->nullable()->after('country');
             $table->string('mobile')->nullable()->after('pincode');
-            $table->tinyInteger('status')->default(1)->after('password');
+            $table->tinyInteger('status')->default(0)->after('password');
         });
     }
 

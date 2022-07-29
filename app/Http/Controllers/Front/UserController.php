@@ -32,6 +32,10 @@ class UserController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
 
+            // Session forget
+            Session::forget('success_message');
+            Session::forget('error_message');
+
             // Check user is already login
             $userCount = User::where('email', $data['email'])->count();
             if($userCount > 0){
@@ -47,29 +51,44 @@ class UserController extends Controller
                 $user->password = bcrypt($data['password']);
                 $user->save();
 
-                if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+                // Send user to email varification link to active account
+                $email = $data['email'];
+                $messageData = [
+                    'email' => $data['email'],
+                    'name' => $data['name'],
+                    'code' => base64_encode($data['email'])
+                ];
+                Mail::send('emails.confirmation', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Confirm your E-Commerce Website');
+                });
 
-                    // User is logged in then update the previous session id cart product
-                    if(!empty(Session::get('session_id'))){
-                        $user_id = Auth::user()->id;
-                        $session_id = Session::get('session_id');
-                        Cart::where('session_id', $session_id)->update(['user_id'=>$user_id]);
-                    }
+                $message = "Please confirm your email to active your account!";
+                Session::put('success_message', $message);
+                return redirect()->back();
 
-                    // Send Regiter SMS
-                    // $message = "Dear Customer, you have been successfully register with E-Com website. Login to your account to access order and available offers.";
-                    // $mobile = $data['mobile'];
-                    // Sms::sendSMS($message, $mobile);
+                // if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
 
-                    // Send Mail When your Registation
-                    $email = $data['email'];
-                    $messageData = ['name' => $data['name'], 'mobile' => $data['mobile'], 'email' => $data['email']];
-                    Mail::send('emails.register', $messageData, function($message) use($email){
-                        $message->to($email)->subject('Welcome to E-Commerce Website');
-                    });
+                //     // User is logged in then update the previous session id cart product
+                //     if(!empty(Session::get('session_id'))){
+                //         $user_id = Auth::user()->id;
+                //         $session_id = Session::get('session_id');
+                //         Cart::where('session_id', $session_id)->update(['user_id'=>$user_id]);
+                //     }
 
-                    return redirect('cart');
-                }
+                //     // Send Regiter SMS
+                //     $message = "Dear Customer, you have been successfully register with E-Com website. Login to your account to access order and available offers.";
+                //     $mobile = $data['mobile'];
+                //     Sms::sendSMS($message, $mobile);
+
+                //     // Send Mail When your Registation
+                //     $email = $data['email'];
+                //     $messageData = ['name' => $data['name'], 'mobile' => $data['mobile'], 'email' => $data['email']];
+                //     Mail::send('emails.register', $messageData, function($message) use($email){
+                //         $message->to($email)->subject('Welcome to E-Commerce Website');
+                //     });
+
+                //     return redirect('cart');
+                // }
             }
         }
     }
@@ -99,8 +118,21 @@ class UserController extends Controller
     public function loginUser(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
+
+            // Session destroy
+            Session::forget('success_message');
+            Session::forget('error_message');
+
             // check user email and password is match or not
             if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+
+                // Check email is activeted or not
+                $userStatus = User::where('email', $data['email'])->first();
+                if($userStatus->status == 0){
+                    $message = "Your account is not activated yet! please confirm your email to ativate";
+                    Session::put('error_message', $message);
+                    return redirect()->back();
+                }
 
                 // User is logged in then update the previous session id cart product
                 if(!empty(Session::get('session_id'))){

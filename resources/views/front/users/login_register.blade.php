@@ -8,6 +8,14 @@
     </ul>
     <h3> Login / Register</h3>
     <hr class="soft"/>
+    @if(session()->has('success_message'))
+    <div class="alert alert-success" role="alert">
+        {{ session()->get('success_message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
     @if(session()->has('error_message'))
     <div class="alert alert-danger" role="alert">
         {{ session()->get('error_message') }}
