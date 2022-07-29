@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
@@ -272,9 +273,25 @@ class UserController extends Controller
      */
     public function account(Request $request){
         $userDetails = User::findOrFail(Auth::user()->id);
+        $countries = Country::all();
+
+        Session::forget('success_message');
+        Session::forget('error_message');
 
         if($request->isMethod('post')){
             $data = $request->all();
+
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile' => 'required|numeric',
+            ];
+            $customMessage = [
+                'name.required' => 'Name is required',
+                'name.alpha'  => 'Valid name is required',
+                'mobile.required' => 'Mobile is required',
+                'mobile.numeric'  => 'Valid mobile is required',
+            ];
+            $this->validate($request, $rules, $customMessage);
 
             $user = User::find(Auth::user()->id);
             $user->name = $data['name'];
@@ -292,6 +309,6 @@ class UserController extends Controller
 
         }
 
-        return view('front.users.account', compact('userDetails'));
+        return view('front.users.account', compact('userDetails', 'countries'));
     }
 }
