@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\Sms;
 use App\Models\Cart;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Sms;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -207,5 +208,60 @@ class UserController extends Controller
     public function logout(){
         Auth::logout();
         return redirect('/');
+    }
+
+    /**
+     * @access public
+     * @route /forgot_password
+     * @method any
+     */
+    public function forgotPassword(Request $request){
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            $emailCount = User::where('email', $data['email'])->count();
+            if($emailCount == 0){
+                $message = "Email dose not exists!";
+                Session::put('error_message', $message);
+                Session::forget('success_message');
+                return redirect()->back();
+            }else {
+
+                // Generate random password
+                $random_password = Str::random(8);
+
+                // Encode/Secure Password
+                $new_password = bcrypt($random_password);
+
+                // Update Password
+                User::where('email', $data['email'])->update(['password' => $new_password]);
+
+                // Get user name
+                $user_name = User::select('name')->where('email', $data['email'])->first();
+
+                // Send forgot password email
+                $name = $user_name->name;
+                $email = $data['email'];
+                $messageData = [
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => $random_password,
+                ];
+
+                Mail::send('emails.forgot_password', $messageData, function($message) use($email){
+                    $message->to($email)->subject('New Password E-Commerce Website');
+                });
+
+                // Redirect to login/register page with success message
+                $message = "Please check your email for new password";
+                Session::put('success_message', $message);
+                Session::forget('error_message');
+                return redirect('login-register');
+
+            }
+        }
+        return view('front.users.forgot_password');
+
     }
 }

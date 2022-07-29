@@ -6,7 +6,7 @@
         <li><a href="index.html">Home</a> <span class="divider">/</span></li>
         <li class="active">Login</li>
     </ul>
-    <h3> Login / Register</h3>
+    <h3> Forgot Password</h3>
     <hr class="soft"/>
     @if(session()->has('success_message'))
     <div class="alert alert-success" role="alert">
@@ -27,36 +27,18 @@
     <div class="row">
         <div class="span4">
             <div class="well">
-            <h5>CREATE YOUR ACCOUNT</h5><br/>
-            Enter your details to create an account.<br/><br/>
-            <form id="registerForm" action="{{ url('register') }}" method="POST">
+            <h5>Forgot Password</h5><br/>
+            Enter your e-mail to create new password.<br/><br/>
+            <form id="forgotPasswordForm" action="{{ url('forgot_password') }}" method="POST">
                 @csrf
-                <div class="control-group">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input class="span3"  type="text" id="name" name="name" placeholder="Name">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="mobile">Mobile</label>
-                    <div class="controls">
-                        <input class="span3"  type="text" id="mobile" name="mobile" placeholder="Mobile">
-                    </div>
-                </div>
                 <div class="control-group">
                     <label class="control-label" for="email">Email address</label>
                     <div class="controls">
-                        <input class="span3"  type="email" id="email" name="email" placeholder="Email">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="password">Password</label>
-                    <div class="controls">
-                        <input class="span3"  type="password" id="password" name="password">
+                        <input class="span3"  type="email" id="email" name="email" placeholder="Email" required>
                     </div>
                 </div>
                 <div class="controls">
-                <button type="submit" class="btn block">Create Your Account</button>
+                <button type="submit" class="btn block">Forgot Password</button>
                 </div>
             </form>
         </div>

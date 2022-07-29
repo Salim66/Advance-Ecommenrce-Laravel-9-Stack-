@@ -143,4 +143,7 @@ Route::namespace('Front')->group(function(){
     // User Logout
     Route::get('/logout', [UserController::class, 'logout']);
 
+    // User Forgot Password
+    Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
+
 });
