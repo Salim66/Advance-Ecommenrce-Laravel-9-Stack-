@@ -12,6 +12,7 @@ use App\Models\Country;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -310,5 +311,48 @@ class UserController extends Controller
         }
 
         return view('front.users.account', compact('userDetails', 'countries'));
+    }
+
+    /**
+     * @access private
+     * @route /check-user-password
+     * @method POST
+     */
+    public function checkUserPassword(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $checkPassword = User::where('id', Auth::user()->id)->first();
+            if(Hash::check($data['current_password'], $checkPassword->password)){
+                return 'true';
+            }else {
+                return 'false';
+            }
+        }
+    }
+
+    /**
+     * @access private
+     * @route /update-user-password
+     * @method POST
+     */
+    public function updateUserPassword(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $checkPassword = User::where('id', Auth::user()->id)->first();
+            if(Hash::check($data['current_password'], $checkPassword->password)){
+                // Update Current Password
+                $new_password = bcrypt($data['new_password']);
+                User::where('id', Auth::user()->id)->update(['password' => $new_password]);
+                $message = "Password update successfully";
+                Session::put('success_message', $message);
+                Session::forget('error_message');
+                return redirect()->back();
+            }else {
+                $message = "Current password is not match!";
+                Session::put('error_message', $message);
+                Session::forget('success_message');
+                return redirect()->back();
+            }
+        }
     }
 }

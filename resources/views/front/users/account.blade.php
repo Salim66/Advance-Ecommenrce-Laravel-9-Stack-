@@ -103,18 +103,19 @@
         <div class="span4">
             <div class="well">
             <h5>Update Password</h5>
-            <form id="updatePasswordForm" action="{{ url('login') }}" method="POST">
+            <form id="updatePasswordForm" action="{{ url('update-user-password') }}" method="POST">
                 @csrf
                 <div class="control-group">
                     <label class="control-label" for="current_password">Current Password</label>
                     <div class="controls">
-                        <input class="span3"  type="password" id="current_password" name="pcurrent_assword">
+                        <input class="span3"  type="password" id="current_password" name="current_password"><br>
+                        <span id="ckPass"></span>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="password">New Password</label>
+                    <label class="control-label" for="new_password">New Password</label>
                     <div class="controls">
-                        <input class="span3"  type="password" id="password" name="password">
+                        <input class="span3"  type="password" id="new_password" name="new_password">
                     </div>
                 </div>
                 <div class="control-group">

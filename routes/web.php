@@ -149,4 +149,10 @@ Route::namespace('Front')->group(function(){
     // User Account
     Route::any('/account', [UserController::class, 'account']);
 
+    // Check user password
+    Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);
+
+    // Update user password
+    Route::post('/update-user-password', [UserController::class, 'updateUserPassword']);
+
 });

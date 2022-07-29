@@ -285,6 +285,70 @@
 			}
 		});
 
+        // validate account form on keyup and submit
+		$("#accountForm").validate({
+			rules: {
+				name: "required",
+				mobile: {
+					required: true,
+					minlength: 11,
+					maxlength: 15,
+                    digits: true
+				}
+			},
+			messages: {
+				name: "Please enter your name",
+				mobile: {
+					required: "Please enter a mobile",
+					minlength: "Your mobile must consist of 11 digits",
+					maxlength: "Your mobile must consist of 15 digits",
+					digits: "Please enter your valid mobile",
+				}
+			}
+		});
+
+
+        // validate user password update form on keyup and submit
+		$("#updatePasswordForm").validate({
+			rules: {
+				current_password: {
+					required: true,
+					minlength: 6,
+					maxlength: 20,
+				},
+                new_password: {
+					required: true,
+					minlength: 6,
+					maxlength: 20,
+				},
+                confirm_password: {
+					required: true,
+					minlength: 6,
+					maxlength: 20,
+                    equalTo: "#new_password"
+				},
+			}
+		});
+
+        // check current user password
+        $("#current_password").keyup(function(){
+            let current_password = $(this).val();
+            $.ajax({
+                type: "post",
+                url: '/check-user-password',
+                data: {current_password:current_password},
+                success:function(data){
+                    if(data == 'false'){
+                        $('#ckPass').html("<font color='red'>Current password is Incorrect</font>")
+                    }else if(data == 'true'){
+                        $('#ckPass').html("<font color='green'>Current password is Correct</font>")
+                    }
+                },error:function(){
+                    alert("Error");
+                }
+            });
+        });
+
 
 
     });
