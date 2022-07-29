@@ -94,6 +94,55 @@ class UserController extends Controller
     }
 
     /**
+     * @access private
+     * @routes /confirm/{email}
+     * @method any
+     */
+    public function confirmAccount($email){
+        $email = base64_decode($email);
+
+        Session::forget('success_message');
+        Session::forget('error_message');
+
+        // Check user email exists
+        $userCount = User::where('email', $email)->count();
+        if($userCount > 0){
+            // User email is already activated or not
+            $userDetails = User::where('email', $email)->first();
+            if($userDetails->status == 1){
+                $message = "Your email account is already activated. Please login.";
+                Session::put('error_message', $message);
+                return redirect('login-register');
+            }else {
+
+                // Update user status to 1 to activated account
+                User::where('email', $email)->update(['status' => 1]);
+
+                // Send Regiter SMS
+                // $message = "Dear Customer, you have been successfully register with E-Com website. Login to your account to access order and available offers.";
+                // $mobile = $userDetails['mobile'];
+                // Sms::sendSMS($message, $mobile);
+
+                // Send Mail When your Registation
+                $messageData = ['name' => $userDetails['name'], 'mobile' => $userDetails['mobile'], 'email' => $userDetails['email']];
+                Mail::send('emails.register', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Welcome to E-Commerce Website');
+                });
+
+                // Redirect to login/register page with success message
+                $message = "Your email account is activated. Please login your account.";
+                Session::put('success_message', $message);
+                return redirect('login-register');
+
+            }
+        }else {
+            abort(404);
+        }
+
+    }
+
+
+    /**
      * @access public
      * @route /check-email
      * @method POST

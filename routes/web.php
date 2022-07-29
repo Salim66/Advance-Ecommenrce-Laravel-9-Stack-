@@ -134,6 +134,9 @@ Route::namespace('Front')->group(function(){
     // Register User
     Route::post('/register', [UserController::class, 'registerUser']);
 
+    // confirm email active account
+    Route::any('/confirm/{email}', [UserController::class, 'confirmAccount']);
+
     // Check if email already exists or not
     Route::any('/check-email', [UserController::class, 'checkEmail']);
 
