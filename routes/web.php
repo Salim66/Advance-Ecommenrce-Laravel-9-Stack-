@@ -146,4 +146,7 @@ Route::namespace('Front')->group(function(){
     // User Forgot Password
     Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
 
+    // User Account
+    Route::any('/account', [UserController::class, 'account']);
+
 });
