@@ -125,8 +125,9 @@ Route::namespace('Front')->group(function(){
     // Delete cart item qty
     Route::post('/delete-cart-item-qty', [ProductsController::class, 'deleteCartItem']);
 
+
     // Login / Register Page
-    Route::get('/login-register', [UserController::class, 'loginRegister']);
+    Route::get('/login-register', ['as'=>'login','uses'=>'\App\Http\Controllers\Front\UserController@loginRegister']);
 
     // Login User
     Route::post('/login', [UserController::class, 'loginUser']);
@@ -140,19 +141,22 @@ Route::namespace('Front')->group(function(){
     // Check if email already exists or not
     Route::any('/check-email', [UserController::class, 'checkEmail']);
 
-    // User Logout
-    Route::get('/logout', [UserController::class, 'logout']);
+    Route::group(['middleware' => ['auth']], function(){
+        // User Logout
+        Route::get('/logout', [UserController::class, 'logout']);
 
-    // User Forgot Password
-    Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
+        // User Forgot Password
+        Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
 
-    // User Account
-    Route::any('/account', [UserController::class, 'account']);
+        // User Account
+        Route::any('/account', [UserController::class, 'account']);
 
-    // Check user password
-    Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);
+        // Check user password
+        Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);
 
-    // Update user password
-    Route::post('/update-user-password', [UserController::class, 'updateUserPassword']);
+        // Update user password
+        Route::post('/update-user-password', [UserController::class, 'updateUserPassword']);
+    });
+
 
 });
