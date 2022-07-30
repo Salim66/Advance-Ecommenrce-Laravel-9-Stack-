@@ -194,6 +194,7 @@
                     if(data.status == false){
                         alert(data.message);
                     }
+                    $('.totalCartItems').html(data.totalCartItems);
                     $('#appendCartItems').html(data.view);
                 },error:function(){
                     alert('Error');
@@ -213,6 +214,7 @@
                     type: 'post',
                     success:function(data){
                         $('#appendCartItems').html(data.view);
+                        $('.totalCartItems').html(data.totalCartItems);
                     },error:function(){
                         alert('Error');
                     }

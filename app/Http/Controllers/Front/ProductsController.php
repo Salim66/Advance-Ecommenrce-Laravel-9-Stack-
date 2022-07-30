@@ -273,7 +273,11 @@ class ProductsController extends Controller
 
             Cart::where('id', $data['cartid'])->update(['quantity' => $data['qty']]);
             $user_cart_items = Cart::userCartItem();
-            return response()->json(['view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))]);
+            $totalCartItems = totalCartItems();
+            return response()->json([
+                'totalCartItems' => $totalCartItems,
+                'view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))
+            ]);
         }
     }
 
@@ -288,7 +292,11 @@ class ProductsController extends Controller
 
             Cart::where('id', $data['cartid'])->delete();
             $user_cart_items = Cart::userCartItem();
-            return response()->json(['view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))]);
+            $totalCartItems = totalCartItems();
+            return response()->json([
+                'totalCartItems' => $totalCartItems,
+                'view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))
+            ]);
         }
     }
 }
