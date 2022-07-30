@@ -158,7 +158,7 @@
             });
         });
 
-        //Admin Brand Status Update Script
+        //Admin Banner Status Update Script
         $('.updateBannersStatus').click(function(e){
             e.preventDefault();
             let status = $(this).children('i').attr('status');
@@ -172,6 +172,29 @@
                         $('#banner-'+banner_id).html('<i class="fas fa-toggle-on" status="Active"></i>');
                     }else if(resp['status'] == 0){
                         $('#banner-'+banner_id).html('<i class="fas fa-toggle-off" status="Inactive"></i>');
+                    }
+
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
+        //Admin Coupon Status Update Script
+        $('.updateCouponsStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).children('i').attr('status');
+            let coupon_id = $(this).attr('coupon_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-coupon-status',
+                data: {status:status, coupon_id:coupon_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#coupon-'+coupon_id).html('<i class="fas fa-toggle-on" status="Active"></i>');
+                    }else if(resp['status'] == 0){
+                        $('#coupon-'+coupon_id).html('<i class="fas fa-toggle-off" status="Inactive"></i>');
                     }
 
                 },

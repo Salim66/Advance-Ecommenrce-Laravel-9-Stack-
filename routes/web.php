@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\ProductsController;
@@ -92,6 +93,14 @@ Route::prefix('admin')->group(function () {
         Route::any('/add-edit-banner/{id?}', [BannerController::class, 'addEditBanner']);
         Route::get('/delete-banner/{id}', [BannerController::class, 'deleteBanner']);
         Route::get('/delete-banner-image/{id}', [BannerController::class, 'deleteBannerImage']);
+
+
+        // Coupon Route
+        Route::get('/coupons', [CouponController::class, 'coupons'])->name('coupons');
+        Route::post('/update-coupon-status', [CouponController::class, 'updateCouponstatus']);
+        Route::any('/add-edit-coupon/{id?}', [CouponController::class, 'addEditCoupon']);
+        Route::get('/delete-coupon/{id}', [CouponController::class, 'deleteCoupon']);
+        Route::get('/delete-coupon-image/{id}', [CouponController::class, 'deleteCouponImage']);
 
     });
 });
