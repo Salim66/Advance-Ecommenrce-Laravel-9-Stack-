@@ -126,34 +126,17 @@ class CouponController extends Controller
         }
     }
 
-    /**
-     * Delete Banner Image
-     */
-    public function deleteBannerImage($id){
-        $banner_data = Banner::findOrFail($id);
 
-        // banner image deleted
-        if(file_exists('images/banner_images/'.$banner_data->image) && !empty($banner_data->image)){
-            unlink('images/banner_images/'.$banner_data->image);
-        }
-
-        Session::put('success_message', 'Banner Image has been Deleted successfully');
-        return redirect()->back();
-    }
 
     /**
-     * Delete Banner
+     * Delete Coupon
      */
-    public function deleteBanner($id){
-        $banner_data = Banner::findOrFail($id);
+    public function deleteCoupon($id){
+        $coupon_data = Coupon::findOrFail($id);
 
-        if(file_exists('images/banner_images/'.$banner_data->image) && !empty($banner_data->image)){
-            unlink('images/banner_images/'.$banner_data->image);
-        }
+        $coupon_data->delete();
 
-        $banner_data->delete();
-
-        Session::put('success_message', 'Banner Deleted Successfully ):');
+        Session::put('success_message', 'Coupon Deleted Successfully ):');
         return redirect()->back();
     }
 }
