@@ -107,6 +107,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="expiry_date">Expiry Date</label>
+                            <input type="text" class="form-control" name="expiry_date" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask>
+                        </div>
                     </div>
                 </div>
             </div>
