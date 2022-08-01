@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Coupon;
 use App\Models\Section;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Session;
 
 class CouponController extends Controller
@@ -38,8 +39,56 @@ class CouponController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            return $data;
 
+            // coupon validation
+            $rules = [
+                'categories' => 'required',
+                'coupon_option' => 'required',
+                'coupon_type' => 'required',
+                'amount_type' => 'required',
+                'amount' => 'required|numeric',
+                'expiry_date' => 'required'
+            ];
+            $customMessage = [
+                'categories.required' => 'Category is required',
+                'coupon_option.required' => 'Coupon Option is required',
+                'coupon_tpye.required' => 'Coupon Type is required',
+                'amount_tpye.required' => 'Amount Type is required',
+                'amount.required' => 'Amount is required',
+                'amount.numeric' => 'Valid amount is required',
+                'expiry_date.required' => 'Expiry Date is required',
+            ];
+            $this->validate($request, $rules, $customMessage);
+
+            if(isset($data['users'])){
+                $users = implode(',', $data['users']);
+            }else {
+                $users = "";
+            }
+
+            if(isset($data['categories'])){
+                $categories = implode(',', $data['categories']);
+            }
+
+            if($data['coupon_option'] == 'Automatic'){
+                $coupon_code = Str::random(8);
+            }else {
+                $coupon_code = $data['coupon_code'];
+            }
+
+            $coupon_data->coupon_option = $data['coupon_option'];
+            $coupon_data->coupon_code = $coupon_code;
+            $coupon_data->coupon_type = $data['coupon_type'];
+            $coupon_data->amount_type = $data['amount_type'];
+            $coupon_data->amount = $data['amount'];
+            $coupon_data->categories = $categories;
+            $coupon_data->users = $users;
+            $coupon_data->expiry_date = $data['expiry_date'];
+            $coupon_data->status = 1;
+            $coupon_data->save();
+
+            Session::flash('success_message', $message);
+            return redirect('admin/coupons');
         }
 
         // Sections with category and subcategory

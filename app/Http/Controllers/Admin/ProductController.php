@@ -86,6 +86,7 @@ class ProductController extends Controller
 
             // echo "<pre>"; print_r($data); die;
 
+            // product validation
             $rules = [
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'product_code' => 'required|regex:/^[\w-]*$/',

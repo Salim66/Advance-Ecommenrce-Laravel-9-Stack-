@@ -62,7 +62,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="coupon_option">Coupon Option</label><br>
-                            <input type="radio" id="automatic_option" name="coupon_option" name="coupon_option" value="Automatic">&nbsp;Automatic&nbsp;&nbsp;
+                            <input type="radio" id="automatic_option" name="coupon_option" name="coupon_option" value="Automatic" checked>&nbsp;Automatic&nbsp;&nbsp;
                             <input type="radio" id="manual_option" name="coupon_option" name="coupon_option" value="Manual">&nbsp;Manual
                         </div>
                         <div class="form-group" style="display: none;" id="coupon_manual_code">
@@ -71,21 +71,21 @@
                         </div>
                         <div class="form-group">
                             <label for="coupon_type">Coupon Type</label><br>
-                            <input type="radio" name="coupon_type" name="coupon_type" id="coupon_type" value="Multiple Times">&nbsp;Multiple Times&nbsp;&nbsp;
+                            <input type="radio" name="coupon_type" name="coupon_type" id="coupon_type" value="Multiple Times" checked>&nbsp;Multiple Times&nbsp;&nbsp;
                             <input type="radio" name="coupon_type" name="coupon_type" id="coupon_type" value="Single Times">&nbsp;Single Times
                         </div>
                         <div class="form-group">
                             <label for="amount_type">Amount Type</label><br>
-                            <input type="radio" name="amount_type" name="amount_type" id="amount_type" value="Percentage">&nbsp;Percentage&nbsp;(in %)&nbsp;
+                            <input type="radio" name="amount_type" name="amount_type" id="amount_type" value="Percentage" checked>&nbsp;Percentage&nbsp;(in %)&nbsp;
                             <input type="radio" name="amount_type" name="amount_type" id="amount_type" value="Fixed">&nbsp;Fixed&nbsp;(in INR or USD)&nbsp;
                         </div>
                         <div class="form-group">
                             <label for="amount">Amount</label>
-                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Amount">
+                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Amount" required>
                         </div>
                         <div class="form-group">
                             <label>Select Categories</label>
-                            <select class="form-control select2" name="categories[]" style="width: 100%;" multiple>
+                            <select class="form-control select2" name="categories[]" style="width: 100%;" multiple required>
                                 <option disabled>Select Categories</option>
                                 @foreach($categories as $section)
                                     <optgroup label="{{ $section->name }}"></optgroup>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="form-group">
                             <label for="expiry_date">Expiry Date</label>
-                            <input type="text" class="form-control" name="expiry_date" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask>
+                            <input type="text" class="form-control" name="expiry_date" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask required>
                         </div>
                     </div>
                 </div>
