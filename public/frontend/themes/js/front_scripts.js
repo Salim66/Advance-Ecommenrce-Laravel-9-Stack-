@@ -351,6 +351,32 @@
             });
         });
 
+        // Cupon apply into product
+        $('#applyCoupon').submit(function(){
+            let user = $(this).attr('user');
+            if(user == 1){
+                // noting do
+            }else {
+                alert('Please login to apply coupon!');
+                return false;
+            }
+            let code = $('#code').val();
+            $.ajax({
+                url: '/apply-coupon',
+                type: 'post',
+                data: {code:code},
+                success:function(data){
+                    if(data.message != ""){
+                        alert(data.message);
+                    }
+                    $('#appendCartItems').html(data.view);
+                    $('.totalCartItems').html(data.totalCartItems);
+                },error:function(){
+                    alert("Error");
+                }
+            });
+        });
+
 
 
     });

@@ -150,12 +150,12 @@ Route::namespace('Front')->group(function(){
     // Check if email already exists or not
     Route::any('/check-email', [UserController::class, 'checkEmail']);
 
+     // User Forgot Password
+     Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
+
     Route::group(['middleware' => ['auth']], function(){
         // User Logout
         Route::get('/logout', [UserController::class, 'logout']);
-
-        // User Forgot Password
-        Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
 
         // User Account
         Route::any('/account', [UserController::class, 'account']);
@@ -165,6 +165,9 @@ Route::namespace('Front')->group(function(){
 
         // Update user password
         Route::post('/update-user-password', [UserController::class, 'updateUserPassword']);
+
+        // Apply Coupon
+        Route::post('/apply-coupon', [ProductsController::class, 'applyCoupon']);
     });
 
 

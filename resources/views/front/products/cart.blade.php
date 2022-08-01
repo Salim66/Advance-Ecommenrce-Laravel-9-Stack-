@@ -33,17 +33,18 @@
     <table class="table table-bordered">
         <tbody>
             <tr>
-            <td>
-            <form class="form-horizontal">
-            <div class="control-group">
-            <label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
-            <div class="controls">
-            <input type="text" class="input-medium" placeholder="CODE">
-            <button type="submit" class="btn"> ADD </button>
-            </div>
-            </div>
-            </form>
-            </td>
+                <td>
+                    <form class="form-horizontal" id="applyCoupon" action="javascript:void(0)" method="POST" @if(Auth::check()) user="1" @endif>
+                        @csrf
+                        <div class="control-group">
+                            <label class="control-label"><strong> COUPON CODE: </strong> </label>
+                            <div class="controls">
+                                <input type="text" name="code" id="code" class="input-medium" placeholder="CODE" required>
+                                <button type="submit" class="btn"> ADD </button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
             </tr>
 
         </tbody>
