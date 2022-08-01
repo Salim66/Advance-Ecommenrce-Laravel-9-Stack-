@@ -6,6 +6,7 @@ use App\Models\Coupon;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 
 class CouponController extends Controller
@@ -35,47 +36,21 @@ class CouponController extends Controller
             $message = "Coupon Updated Successfully";
         }
 
-        // if($request->isMethod('post')){
-        //     $data = $request->all();
+        if($request->isMethod('post')){
+            $data = $request->all();
+            return $data;
 
-        //     $banner_image = "";
-        //     // Upload Banner Image
-        //     if($request->hasFile('image')){
-        //         $image_tmp = $request->file('image');
-        //         if($image_tmp->isValid()){
-        //             // Get orginal image name
-        //             $image_name = $image_tmp->getClientOriginalName();
-        //             // Get Image Extension
-        //             $extension = $image_tmp->getClientOriginalExtension();
-        //             // Generate new image name
-        //             $imageName = $image_name . '-'. rand(111,9999) . '.' . $extension;
-        //             // Set path
-        //             $image_path = 'images/banner_images/' . $imageName;
-        //             // Upload image after resize
-        //             Image::make($image_tmp)->resize(1170,480)->save($image_path);
-        //             // Save banner image in banner table
-        //             $banner_image = $imageName;
-        //         }
-        //     }else {
-        //         $banner_image = $banner_data->image;
-        //     }
-
-        //     $banner_data->image = $banner_image;
-        //     $banner_data->title = $data['title'];
-        //     $banner_data->link = $data['link'];
-        //     $banner_data->alt = $data['alt'];
-        //     $banner_data->save();
-
-        //     Session::flash('success_message', $message);
-        //     return redirect('admin/banners');
-        // }
+        }
 
         // Sections with category and subcategory
         $categories = Section::with('categories')->get();
         $categories = json_decode(json_encode($categories));
 
+        // Active all user get
+        $users = User::select('email')->where('status', 1)->get();
 
-        return view('admin.coupons.add_edit_coupon', compact('title', 'coupon_data', 'categories'));
+
+        return view('admin.coupons.add_edit_coupon', compact('title', 'coupon_data', 'categories', 'users'));
     }
 
 

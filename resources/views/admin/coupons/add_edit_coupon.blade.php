@@ -55,24 +55,38 @@
                     </ul>
                 </div>
             @endif
-          <form id="couponForm" @if(empty($coupon_data)) action="{{ url('admin/add-edit-coupon') }}" @else action="{{ url('admin/add-edit-banner/'.$coupon_data->id) }}" @endif method="POST">
+          <form id="couponForm" @if(empty($coupon_data)) action="{{ url('admin/add-edit-coupon') }}" @else action="{{ url('admin/add-edit-coupon/'.$coupon_data->id) }}" @endif method="POST">
             @csrf
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="coupon_option">Coupon Option</label><br>
-                            <input type="radio" id="automatic_option" name="coupon_option" name="coupon_option" id="coupon_option" value="Automatic">&nbsp;Automatic&nbsp;&nbsp;
-                            <input type="radio" id="manual_option" name="coupon_option" name="coupon_option" id="coupon_option" value="Manual">&nbsp;Manual
+                            <input type="radio" id="automatic_option" name="coupon_option" name="coupon_option" value="Automatic">&nbsp;Automatic&nbsp;&nbsp;
+                            <input type="radio" id="manual_option" name="coupon_option" name="coupon_option" value="Manual">&nbsp;Manual
                         </div>
                         <div class="form-group" style="display: none;" id="coupon_manual_code">
                             <label for="coupon_code">Coupon Code</label>
                             <input type="text" class="form-control" name="coupon_code" id="coupon_code" placeholder="Enter Coupon Code">
                         </div>
                         <div class="form-group">
+                            <label for="coupon_type">Coupon Type</label><br>
+                            <input type="radio" name="coupon_type" name="coupon_type" id="coupon_type" value="Multiple Times">&nbsp;Multiple Times&nbsp;&nbsp;
+                            <input type="radio" name="coupon_type" name="coupon_type" id="coupon_type" value="Single Times">&nbsp;Single Times
+                        </div>
+                        <div class="form-group">
+                            <label for="amount_type">Amount Type</label><br>
+                            <input type="radio" name="amount_type" name="amount_type" id="amount_type" value="Percentage">&nbsp;Percentage&nbsp;(in %)&nbsp;
+                            <input type="radio" name="amount_type" name="amount_type" id="amount_type" value="Fixed">&nbsp;Fixed&nbsp;(in INR or USD)&nbsp;
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Amount">
+                        </div>
+                        <div class="form-group">
                             <label>Select Categories</label>
                             <select class="form-control select2" name="categories[]" style="width: 100%;" multiple>
-                                <option selected disabled>Select Categories</option>
+                                <option disabled>Select Categories</option>
                                 @foreach($categories as $section)
                                     <optgroup label="{{ $section->name }}"></optgroup>
                                     @foreach ($section->categories as $category)
@@ -81,6 +95,15 @@
                                             <option value="{{ $sub->id }}" @if(!empty(@old('category_id')) && $sub->id==@old('category_id')) selected @elseif(!empty($product_data->category_id) && $product_data->category_id==$sub->id) selected @endif>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $sub->category_name }}</option>
                                         @endforeach
                                     @endforeach
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Users</label>
+                            <select class="form-control select2" name="users[]" style="width: 100%;" multiple>
+                                <option disabled>Select Users</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->email }}">{{ $user->email }}</option>
                                 @endforeach
                             </select>
                         </div>
