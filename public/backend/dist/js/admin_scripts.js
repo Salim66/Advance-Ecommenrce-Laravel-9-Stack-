@@ -241,7 +241,7 @@
             })
         });
 
-        //<!-- Start -->
+        //<!-- Start Input Multiple Input Field -->
         // Product Attributes Add/Remove script
         var maxField = 10; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
@@ -264,7 +264,17 @@
             $(this).parent('div').remove(); //Remove field html
             x--; //Decrement field counter
         });
-        //<!-- End -->
+        //<!-- End Input Multiple Input Field -->
+
+        // Show/Hine Manual Coupon Code
+        $('#automatic_option').click(function(){
+            $('#coupon_manual_code').hide();
+        });
+
+        $('#manual_option').click(function(){
+            $('#coupon_manual_code').show();
+        });
+
 
     });
 })(jQuery);

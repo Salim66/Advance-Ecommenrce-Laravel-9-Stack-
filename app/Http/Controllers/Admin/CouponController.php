@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\Section;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class CouponController extends Controller
@@ -21,57 +22,60 @@ class CouponController extends Controller
     /**
      * Add Edit Banner
      */
-    public function addEditBanner(Request $request, $id = null){
+    public function addEditCoupon(Request $request, $id = null){
         if($id == ""){
-            // Add Banner
-            $title = "Add Banner Image";
-            $banner_data = new Banner;
-            $message = "Banner Added Successfully";
+            // Add Coupon
+            $title = "Add Coupon Image";
+            $coupon_data = new Coupon;
+            $message = "Coupon Added Successfully";
         }else {
-            // Edit Banner
-            $title = "Edit Banner Image";
-            $banner_data = Banner::find($id);
-            $message = "Banner Updated Successfully";
+            // Edit Coupon
+            $title = "Edit Coupon Image";
+            $coupon_data = Coupon::find($id);
+            $message = "Coupon Updated Successfully";
         }
 
-        if($request->isMethod('post')){
-            $data = $request->all();
+        // if($request->isMethod('post')){
+        //     $data = $request->all();
 
-            $banner_image = "";
-            // Upload Banner Image
-            if($request->hasFile('image')){
-                $image_tmp = $request->file('image');
-                if($image_tmp->isValid()){
-                    // Get orginal image name
-                    $image_name = $image_tmp->getClientOriginalName();
-                    // Get Image Extension
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    // Generate new image name
-                    $imageName = $image_name . '-'. rand(111,9999) . '.' . $extension;
-                    // Set path
-                    $image_path = 'images/banner_images/' . $imageName;
-                    // Upload image after resize
-                    Image::make($image_tmp)->resize(1170,480)->save($image_path);
-                    // Save banner image in banner table
-                    $banner_image = $imageName;
-                }
-            }else {
-                $banner_image = $banner_data->image;
-            }
+        //     $banner_image = "";
+        //     // Upload Banner Image
+        //     if($request->hasFile('image')){
+        //         $image_tmp = $request->file('image');
+        //         if($image_tmp->isValid()){
+        //             // Get orginal image name
+        //             $image_name = $image_tmp->getClientOriginalName();
+        //             // Get Image Extension
+        //             $extension = $image_tmp->getClientOriginalExtension();
+        //             // Generate new image name
+        //             $imageName = $image_name . '-'. rand(111,9999) . '.' . $extension;
+        //             // Set path
+        //             $image_path = 'images/banner_images/' . $imageName;
+        //             // Upload image after resize
+        //             Image::make($image_tmp)->resize(1170,480)->save($image_path);
+        //             // Save banner image in banner table
+        //             $banner_image = $imageName;
+        //         }
+        //     }else {
+        //         $banner_image = $banner_data->image;
+        //     }
 
-            $banner_data->image = $banner_image;
-            $banner_data->title = $data['title'];
-            $banner_data->link = $data['link'];
-            $banner_data->alt = $data['alt'];
-            $banner_data->save();
+        //     $banner_data->image = $banner_image;
+        //     $banner_data->title = $data['title'];
+        //     $banner_data->link = $data['link'];
+        //     $banner_data->alt = $data['alt'];
+        //     $banner_data->save();
 
-            Session::flash('success_message', $message);
-            return redirect('admin/banners');
-        }
+        //     Session::flash('success_message', $message);
+        //     return redirect('admin/banners');
+        // }
+
+        // Sections with category and subcategory
+        $categories = Section::with('categories')->get();
+        $categories = json_decode(json_encode($categories));
 
 
-
-        return view('admin.banners.add_edit_banner', compact('title', 'banner_data'));
+        return view('admin.coupons.add_edit_coupon', compact('title', 'coupon_data', 'categories'));
     }
 
 
