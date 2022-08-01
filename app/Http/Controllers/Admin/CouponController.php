@@ -28,12 +28,16 @@ class CouponController extends Controller
         if($id == ""){
             // Add Coupon
             $title = "Add Coupon Image";
+            $selCats = [];
+            $selUsers = [];
             $coupon_data = new Coupon;
             $message = "Coupon Added Successfully";
         }else {
             // Edit Coupon
             $title = "Edit Coupon Image";
             $coupon_data = Coupon::find($id);
+            $selCats = explode(',', $coupon_data['categories']);
+            $selUsers = explode(',', $coupon_data['users']);
             $message = "Coupon Updated Successfully";
         }
 
@@ -99,7 +103,7 @@ class CouponController extends Controller
         $users = User::select('email')->where('status', 1)->get();
 
 
-        return view('admin.coupons.add_edit_coupon', compact('title', 'coupon_data', 'categories', 'users'));
+        return view('admin.coupons.add_edit_coupon', compact('title', 'coupon_data', 'categories', 'users', 'selCats', 'selUsers'));
     }
 
 
