@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductAttribute;
+use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -320,6 +321,65 @@ class ProductsController extends Controller
                     'view' => (String)View::make('front.products.cart_items', compact('user_cart_items'))
                 ]);
             }else {
+                // Check for other coupon conditions
+
+                // Get Coupon Details
+                $couponDetails = Coupon::where('coupon_code', $data['code'])->first();
+
+                // If coupon is inactive
+                if($couponDetails->status == 0){
+                    $message = "This coupon is not active";
+                }
+
+                // Check If coupon is expired
+                $expiry_date = $couponDetails->expiry_date;
+                $current_date = date('Y-m-d');
+                if($expiry_date < $current_date){
+                    $message = "This coupon is expired!";
+                }
+
+                // Check if coupon is from selected categories
+                // Get all selected categories form coupon
+                $catArr = explode(",", $couponDetails->categories);
+
+                // Check if coupon belong to logged in user
+                // Get all selected user from user
+                $userArr = explode(",", $couponDetails->users);
+
+                // Get user ID's of the selected user because coupon contain email
+                foreach($userArr as $user){
+                    $getUserId = User::select('id')->where('email', $user)->first();
+                    $userId[] = $getUserId->id;
+                }
+
+                // Get Cart Items
+                $user_cart_items = Cart::userCartItem();
+
+
+                // Check if any item belong to coupon category
+                //  Check if any user belong to coupon
+                foreach($user_cart_items as $item){
+                    if(!in_array($item->product->category_id, $catArr)){
+                        $message = "This coupon code is not for one of the selected product!";
+                    }
+
+                    if(!in_array($item->user_id, $userId)){
+                        $message = "This coupon code is not for you!";
+                    }
+                }
+
+
+
+                if(!empty($message)){
+                    $user_cart_items = Cart::userCartItem();
+                    $totalCartItems = totalCartItems();
+                    return response()->json([
+                        'status' => false,
+                        'message' => $message,
+                        'totalCartItems' => $totalCartItems,
+                        'view' => (String)View::make('front.products.cart_items', compact('user_cart_items'))
+                    ]);
+                }
 
             }
         }
