@@ -42,12 +42,18 @@
         <td> Rs.{{ $total_price }}</td>
         </tr>
         <tr>
-        <td colspan="6" style="text-align:right">Voucher Discount:	</td>
-        <td> Rs.0.00</td>
+        <td colspan="6" style="text-align:right">Coupon Discount:	</td>
+        <td class="coupon_amount">
+            @if(Session::get('coupon_amount'))
+             Rs. {{ Session::get('coupon_amount') }}
+            @else
+             Rs. 0.00
+            @endif
+        </td>
         </tr>
         <tr>
-        <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.{{ $total_price }} - Rs.0) =</strong></td>
-        <td class="label label-important" style="display:block"> <strong> Rs.{{ $total_price }} </strong></td>
+        <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.{{ $total_price }} - <span class="coupon_amount">Rs.0</span>) =</strong></td>
+        <td class="label label-important" style="display:block"> <strong class="grand_total"> Rs. {{ $total_price - Session::get('coupon_amount') }} </strong></td>
         </tr>
     </tbody>
 </table>

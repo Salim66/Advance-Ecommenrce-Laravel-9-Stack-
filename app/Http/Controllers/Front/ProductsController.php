@@ -355,6 +355,8 @@ class ProductsController extends Controller
                 // Get Cart Items
                 $user_cart_items = Cart::userCartItem();
 
+                // Get total cart ammount
+                $total_amount = 0;
 
                 // Check if any item belong to coupon category
                 //  Check if any user belong to coupon
@@ -366,6 +368,9 @@ class ProductsController extends Controller
                     if(!in_array($item->user_id, $userId)){
                         $message = "This coupon code is not for you!";
                     }
+
+                    $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);
+                    $total_amount = $total_amount + ($attrPrice['final_price'] * $item['quantity']);
                 }
 
 
@@ -379,6 +384,34 @@ class ProductsController extends Controller
                         'totalCartItems' => $totalCartItems,
                         'view' => (String)View::make('front.products.cart_items', compact('user_cart_items'))
                     ]);
+                }else {
+                    // echo "coupon is successufully applied!";
+
+                    // Check if amount type is Fixed or Percentage
+                    if($couponDetails->amount_type == 'Fixed'){
+                        $coupon_amount = $couponDetails->amount;
+                    }else {
+                        $coupon_amount = ($total_amount * $couponDetails->amount)/100;
+                    }
+
+                    $grand_total = $total_amount - $coupon_amount;
+
+                    Session::put('coupon_amount', $coupon_amount);
+                    Session::put('coupon_code', $data['code']);
+
+                    $message = "Coupon code is successfully applied. You are availing discount !";
+
+                    $user_cart_items = Cart::userCartItem();
+                    $totalCartItems = totalCartItems();
+                    return response()->json([
+                        'status' => true,
+                        'message' => $message,
+                        'totalCartItems' => $totalCartItems,
+                        'coupon_amount' => $coupon_amount,
+                        'grand_total' => $grand_total,
+                        'view' => (String)View::make('front.products.cart_items', compact('user_cart_items'))
+                    ]);
+
                 }
 
             }

@@ -371,6 +371,8 @@
                     }
                     $('#appendCartItems').html(data.view);
                     $('.totalCartItems').html(data.totalCartItems);
+                    $('.coupon_amount').text("Rs. "+data.coupon_amount);
+                    $('.grand_total').text("Rs. "+data.grand_total);
                 },error:function(){
                     alert("Error");
                 }
