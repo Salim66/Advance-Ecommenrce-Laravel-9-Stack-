@@ -3,7 +3,7 @@
 @section('content')
 <div class="span9">
     <ul class="breadcrumb">
-        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li><a href="{{ url('/') }}">Home</a> <span class="divider">/</span></li>
         <li class="active">ORDERS</li>
     </ul>
     <h3> ORDERS</h3>
@@ -18,6 +18,7 @@
                     <th>Payment Method</th>
                     <th>Grand Total</th>
                     <th>Created On</th>
+                    <th>Action</th>
                 </tr>
                 @foreach($orders as $order)
                 <tr>
@@ -30,6 +31,7 @@
                     <td>{{ $order->payment_method }}</td>
                     <td>{{ $order->grand_total }}</td>
                     <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
+                    <td><a href="{{ url('order-details/'.$order->id) }}">View Details</a></td>
                 </tr>
                 @endforeach
            </table>

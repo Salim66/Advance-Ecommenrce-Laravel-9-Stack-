@@ -161,8 +161,11 @@ Route::namespace('Front')->group(function(){
         // User Account
         Route::any('/account', [UserController::class, 'account']);
 
-        // Orders
+        // User Orders
         Route::get('/orders', [OrdersController::class, 'orders']);
+
+        // User Order Details
+        Route::get('order-details/{id}', [OrdersController::class, 'orderDetials']);
 
         // Check user password
         Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);

@@ -19,4 +19,15 @@ class OrdersController extends Controller
         // dd($orders); die;
         return view('front.orders.orders', compact('orders'));
     }
+
+    /**
+     * @access private
+     * @rotue /order-details
+     * @method GET
+     */
+    public function orderDetials($id){
+        $orderDetails = Order::with('order_products')->where('id', $id)->first();
+        // dd($orderDetails);
+        return view('front.orders.order_details', compact('orderDetails'));
+    }
 }
