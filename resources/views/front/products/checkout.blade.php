@@ -104,7 +104,10 @@
                 </tr>
                 <tr>
                 <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.{{ $total_price }} - <span class="coupon_amount">Rs.0</span>) =</strong></td>
-                <td class="label label-important" style="display:block"> <strong class="grand_total"> Rs. {{ $total_price - Session::get('coupon_amount') }} </strong></td>
+                <td class="label label-important" style="display:block"> <strong class="grand_total">
+                    Rs. {{ $grand_total = $total_price - Session::get('coupon_amount') }}
+                    @php Session::put('grand_total', $grand_total); @endphp
+                </strong></td>
                 </tr>
             </tbody>
         </table>
@@ -117,8 +120,8 @@
                         <div class="control-group">
                             <label class="control-label"><strong> PAYMENT METHOD: </strong> </label>
                             <div class="controls">
-                                <input type="radio" name="payment_method" id="COD" class="input-medium" value="COD" style="margin-top: -6px; margin-right: 4px;"><strong>COD</strong>&nbsp;&nbsp;
-                                <input type="radio" name="payment_method" id="Paypal" class="input-medium" value="Paypal" style="margin-top: -6px; margin-right: 4px;"><strong>Paypal</strong>
+                                <input type="radio" name="payment_gateway" id="COD" class="input-medium" value="COD" style="margin-top: -6px; margin-right: 4px;"><strong>COD</strong>&nbsp;&nbsp;
+                                <input type="radio" name="payment_gateway" id="Paypal" class="input-medium" value="Paypal" style="margin-top: -6px; margin-right: 4px;"><strong>Paypal</strong>
                             </div>
                         </div>
                     </td>

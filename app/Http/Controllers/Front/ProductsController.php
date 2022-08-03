@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
-use App\Models\Category;
-use App\Models\Country;
-use App\Models\Coupon;
-use App\Models\DeliveryAddress;
-use App\Models\Product;
-use App\Models\ProductAttribute;
 use App\Models\User;
-use Illuminate\Pagination\Paginator;
+use App\Models\Order;
+use App\Models\Coupon;
+use App\Models\Country;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\DeliveryAddress;
+use App\Models\ProductAttribute;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\OrdersProduct;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
 
 class ProductsController extends Controller
 {
@@ -442,13 +445,74 @@ class ProductsController extends Controller
                 return redirect()->back();
             }
 
-            if(empty($data['payment_method'])){
+            if(empty($data['payment_gateway'])){
                 $message = "Please Select Payment Method!";
                 Session::flash('error_message', $message);
                 return redirect()->back();
             }
 
-            return $data;
+            if($data['payment_gateway'] == "COD"){
+                $payment_method = "COD";
+            }else {
+                $payment_method = "Prepaid";
+            }
+
+            // Get delivery address from address_id
+            $deliveryAddress = DeliveryAddress::where('id', $data['address_id'])->first();
+
+            DB::beginTransaction();
+
+            // Insert order details
+            $order = new Order;
+            $order->user_id = Auth::user()->id;
+            $order->name = $deliveryAddress->name;
+            $order->address = $deliveryAddress->address;
+            $order->city = $deliveryAddress->city;
+            $order->state = $deliveryAddress->state;
+            $order->country = $deliveryAddress->country;
+            $order->pincode = $deliveryAddress->pincode;
+            $order->mobile = $deliveryAddress->mobile;
+            $order->email = Auth::user()->email;
+            $order->shopping_charges = 0;
+            $order->coupon_code = Session::get('coupon_code');
+            $order->coupon_amount = Session::get('coupon_amount');
+            $order->order_status = "New";
+            $order->payment_method = $payment_method;
+            $order->payment_geteway = $data['payment_gateway'];
+            $order->grand_total = Session::get('grand_total');
+            $order->save();
+
+            // Get last inserted order id
+            $order_id = DB::getPdo()->lastInsertId();
+
+            // Get User Cart Items
+            $cart_items = Cart::where('user_id', Auth::user()->id)->get();
+            foreach($cart_items as $item){
+                $ordersProduct = new OrdersProduct;
+                $ordersProduct->order_id = $order_id;
+                $ordersProduct->user_id = Auth::user()->id;
+
+                // Get Product Details
+                $productDetails = Product::select('product_code', 'product_name', 'product_color')->where('id', $item->product_id)->first();
+
+                $ordersProduct->product_id =  $item->product_id;
+                $ordersProduct->product_code = $productDetails->product_code;
+                $ordersProduct->product_name = $productDetails->product_name;
+                $ordersProduct->product_color = $productDetails->product_color;
+                $ordersProduct->product_size = $item->size;
+                $getDiscountedAttrPrice = Product::getDiscountedAttrPrice($item->product_id, $item->size);
+                $ordersProduct->product_price = $getDiscountedAttrPrice['final_price'];
+                $ordersProduct->product_qty = $item['quantity'];
+                $ordersProduct->save();
+            }
+
+            // Empty the user cart
+            Cart::where('user_id', Auth::user()->id)->delete();
+
+            DB::commit();
+
+            echo "Order Placed"; die;
+
         }
 
         $user_cart_items = Cart::userCartItem();
