@@ -389,6 +389,14 @@
             });
         });
 
+        // Delete Delivery Address Confirm script
+        $('#delete_delivery_address').click(function(){
+            let result = confirm('Are you sure you want to delete!');
+            if(!result){
+                return false;
+            }
+        });
+
 
 
     });

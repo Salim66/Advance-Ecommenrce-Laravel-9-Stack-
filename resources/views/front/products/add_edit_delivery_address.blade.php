@@ -37,7 +37,7 @@
         <div class="span4">
             <div class="well">
             Enter your delivery address details.<br/><br/>
-            <form id="deliveryAddressForm" action="{{ url('add-edit-delivery-address') }}" method="POST">
+            <form id="deliveryAddressForm" @if(empty($address->id)) action="{{ url('add-edit-delivery-address') }}" @else action="{{ url('add-edit-delivery-address/'.$address->id) }}" @endif method="POST">
                 @csrf
                 <div class="control-group">
                     <label class="control-label" for="name">Name</label>
@@ -90,6 +90,7 @@
                 </div>
                 <div class="controls">
                 <button type="submit" class="btn block">Submit</button>
+                <a href="{{ url('/checkout') }}" class="btn block float-right">Back</a>
                 </div>
             </form>
         </div>

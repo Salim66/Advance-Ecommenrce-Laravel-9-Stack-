@@ -491,4 +491,16 @@ class ProductsController extends Controller
         $countries = Country::all();
         return view('front.products.add_edit_delivery_address', compact('title', 'countries', 'address'));
     }
+
+    /**
+     * @access private
+     * @routes /delete-delivery-address/id
+     * @method GET
+     */
+    public function deleteDeliveryAddress($id){
+        DeliveryAddress::where('id', $id)->delete();
+        Session::put('success_message', "Delivery Address Delete Successfully!");
+        Session::forget('error_message');
+        return redirect()->back();
+    }
 }

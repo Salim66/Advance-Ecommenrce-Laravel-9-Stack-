@@ -174,6 +174,9 @@ Route::namespace('Front')->group(function(){
 
         // Add Edit Delivery Address
         Route::any('/add-edit-delivery-address/{id?}', [ProductsController::class, 'addEditDeliveryAddress']);
+
+        // Delete Delivery Address
+        Route::get('/delete-delivery-address/{id}', [ProductsController::class, 'deleteDeliveryAddress']);
     });
 
 

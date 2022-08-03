@@ -42,8 +42,11 @@
                 </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">{{ $address->name }}, {{ $address->address }}, {{ $address->city }}, {{ $address->state }}, {{ $address->country }}</label>
+                    <label class="control-label">{{ $address->name }}, {{ $address->address }}, {{ $address->city }} - {{ $address->pincode }}, {{ $address->state }}, {{ $address->country }}, (M: {{ $address->mobile }})</label>
                 </div>
+            </td>
+            <td>
+                <a href="{{ url('add-edit-delivery-address/'.$address->id) }}">Edit</a> | <a href="{{ url('delete-delivery-address/'.$address->id) }}" id="delete_delivery_address">Delete</a>
             </td>
         </tr>
         @endforeach
