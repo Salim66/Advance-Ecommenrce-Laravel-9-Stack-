@@ -171,6 +171,9 @@ Route::namespace('Front')->group(function(){
 
         // Checkout
         Route::any('/checkout', [ProductsController::class, 'checkout']);
+
+        // Add Edit Delivery Address
+        Route::any('/add-edit-delivery-address/{id?}', [ProductsController::class, 'addEditDeliveryAddress']);
     });
 
 
