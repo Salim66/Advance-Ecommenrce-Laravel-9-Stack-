@@ -177,6 +177,9 @@ Route::namespace('Front')->group(function(){
 
         // Delete Delivery Address
         Route::get('/delete-delivery-address/{id}', [ProductsController::class, 'deleteDeliveryAddress']);
+
+        // Thanks
+        Route::get('/thanks', [ProductsController::class, 'thanks']);
     });
 
 

@@ -506,18 +506,37 @@ class ProductsController extends Controller
                 $ordersProduct->save();
             }
 
-            // Empty the user cart
-            Cart::where('user_id', Auth::user()->id)->delete();
+            // Insert order id in session variables
+            Session::put('order_id', $order_id);
 
             DB::commit();
 
-            echo "Order Placed"; die;
+            if($data['payment_gateway'] == "COD"){
+                return redirect('/thanks');
+            }else {
+                echo "Prepaid method comming soon!"; die;
+            }
 
         }
 
         $user_cart_items = Cart::userCartItem();
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses'));
+    }
+
+    /**
+     * @access private
+     * @route /thanks
+     * @method GET
+     */
+    public function thanks(){
+        if(Session::get('order_id')){
+            // Empty the user cart
+            Cart::where('user_id', Auth::user()->id)->delete();
+            return view('front.products.thanks');
+        }else {
+            return redirect('/cart');
+        }
     }
 
     /**
