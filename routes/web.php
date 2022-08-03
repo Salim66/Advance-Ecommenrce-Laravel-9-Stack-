@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Front\UserController;
 use App\Models\Category;
@@ -159,6 +160,9 @@ Route::namespace('Front')->group(function(){
 
         // User Account
         Route::any('/account', [UserController::class, 'account']);
+
+        // Orders
+        Route::get('/orders', [OrdersController::class, 'orders']);
 
         // Check user password
         Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);
