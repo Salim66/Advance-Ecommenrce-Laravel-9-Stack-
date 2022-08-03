@@ -168,6 +168,9 @@ Route::namespace('Front')->group(function(){
 
         // Apply Coupon
         Route::post('/apply-coupon', [ProductsController::class, 'applyCoupon']);
+
+        // Checkout
+        Route::any('/checkout', [ProductsController::class, 'checkout']);
     });
 
 

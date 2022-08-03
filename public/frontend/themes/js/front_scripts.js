@@ -366,13 +366,23 @@
                 type: 'post',
                 data: {code:code},
                 success:function(data){
+
                     if(data.message != ""){
                         alert(data.message);
                     }
+
                     $('#appendCartItems').html(data.view);
                     $('.totalCartItems').html(data.totalCartItems);
-                    $('.coupon_amount').text("Rs. "+data.coupon_amount);
-                    $('.grand_total').text("Rs. "+data.grand_total);
+
+                    if(data.coupon_amount >= 0){
+                        $('.coupon_amount').text("Rs. "+data.coupon_amount);
+                    }else {
+                        $('.coupon_amount').text("Rs. 0");
+                    }
+
+                    if(data.grand_total >= 0){
+                        $('.grand_total').text("Rs. "+data.grand_total);
+                    }
                 },error:function(){
                     alert("Error");
                 }

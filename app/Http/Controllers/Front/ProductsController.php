@@ -342,15 +342,19 @@ class ProductsController extends Controller
                 // Get all selected categories form coupon
                 $catArr = explode(",", $couponDetails->categories);
 
-                // Check if coupon belong to logged in user
-                // Get all selected user from user
-                $userArr = explode(",", $couponDetails->users);
+                // Check any User belong to coupon facility
+                if(!empty($couponDetails->users)){
+                    // Check if coupon belong to logged in user
+                    // Get all selected user from user
+                    $userArr = explode(",", $couponDetails->users);
 
-                // Get user ID's of the selected user because coupon contain email
-                foreach($userArr as $user){
-                    $getUserId = User::select('id')->where('email', $user)->first();
-                    $userId[] = $getUserId->id;
+                    // Get user ID's of the selected user because coupon contain email
+                    foreach($userArr as $user){
+                        $getUserId = User::select('id')->where('email', $user)->first();
+                        $userId[] = $getUserId->id;
+                    }
                 }
+
 
                 // Get Cart Items
                 $user_cart_items = Cart::userCartItem();
@@ -365,8 +369,10 @@ class ProductsController extends Controller
                         $message = "This coupon code is not for one of the selected product!";
                     }
 
-                    if(!in_array($item->user_id, $userId)){
-                        $message = "This coupon code is not for you!";
+                    if(!empty($couponDetails->users)){
+                        if(!in_array($item->user_id, $userId)){
+                            $message = "This coupon code is not for you!";
+                        }
                     }
 
                     $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);
