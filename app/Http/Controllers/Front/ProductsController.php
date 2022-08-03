@@ -431,7 +431,26 @@ class ProductsController extends Controller
      * @route /checkout
      * @method Any
      */
-    public function checkout(){
+    public function checkout(Request $request){
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            if(empty($data['address_id'])){
+                $message = "Please Select Delivery Address!";
+                Session::flash('error_message', $message);
+                return redirect()->back();
+            }
+
+            if(empty($data['payment_method'])){
+                $message = "Please Select Payment Method!";
+                Session::flash('error_message', $message);
+                return redirect()->back();
+            }
+
+            return $data;
+        }
+
         $user_cart_items = Cart::userCartItem();
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses'));
