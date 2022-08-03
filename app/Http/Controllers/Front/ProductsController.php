@@ -462,13 +462,28 @@ class ProductsController extends Controller
 
             $rules = [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'mobile' => 'required|numeric',
+                'address' => 'required',
+                'city' => 'required|regex:/^[\pL\s\-]+$/u',
+                'state' => 'required|regex:/^[\pL\s\-]+$/u',
+                'country' => 'required',
+                'pincode' => 'required|numeric|digits:4',
+                'mobile' => 'required|numeric|digits:11',
             ];
             $customMessage = [
                 'name.required' => 'Name is required',
                 'name.alpha'  => 'Valid name is required',
+                'address.required' => 'Address is required',
+                'city.required' => 'City name is required',
+                'city.alpha'  => 'Valid city name is required',
+                'state.required' => 'State name is required',
+                'state.alpha'  => 'Valid state name is required',
+                'country.required' => 'Country is required',
+                'pincode.required' => 'Pincode is required',
+                'pincode.numeric'  => 'Valid pincode is required',
+                'pincode.digits'  => 'Pincode must be of 11 digits',
                 'mobile.required' => 'Mobile is required',
                 'mobile.numeric'  => 'Valid mobile is required',
+                'mobile.digits'  => 'Mobile must be of 11 digits',
             ];
             $this->validate($request, $rules, $customMessage);
 
