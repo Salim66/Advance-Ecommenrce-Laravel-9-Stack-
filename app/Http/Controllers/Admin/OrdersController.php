@@ -17,4 +17,13 @@ class OrdersController extends Controller
         $orders = Order::with('order_products')->get();
         return view('admin.orders.orders', compact('orders'));
     }
+
+    /**
+     * Order Details
+     */
+    public function orderDetails($id){
+        $orderDetails = Order::with('order_products')->where('id', $id)->first();
+        // dd($orderDetails);
+        return view('admin.orders.order_details', compact('orderDetails'));
+    }
 }

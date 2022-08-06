@@ -68,7 +68,7 @@
                         <td>{{ $data->order_status }}</td>
                         <td>{{ $data->payment_method }}</td>
                         <td style="width: 120px;">
-                            <a title="View Details" href="{{ url('admin/add-attribute/'. $data->id) }}"><i class="fas fa-file"></i></a>
+                            <a title="View Details" href="{{ url('admin/orders/'. $data->id) }}"><i class="fas fa-file"></i></a>
                         </td>
                     </tr>
                     @endforeach
