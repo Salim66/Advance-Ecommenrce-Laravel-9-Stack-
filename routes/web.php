@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\OrdersController;
@@ -102,6 +103,10 @@ Route::prefix('admin')->group(function () {
         Route::any('/add-edit-coupon/{id?}', [CouponController::class, 'addEditCoupon']);
         Route::get('/delete-coupon/{id}', [CouponController::class, 'deleteCoupon']);
         Route::get('/delete-coupon-image/{id}', [CouponController::class, 'deleteCouponImage']);
+
+
+        // Order Route
+        Route::get('/orders', [AdminOrdersController::class, 'orders']);
 
     });
 });

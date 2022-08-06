@@ -92,7 +92,7 @@
 
 
           <!-- Catalogues -->
-          @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'brands' || Session::get('page') == 'products' || Session::get('page') == 'banners' || Session::get('page') == 'coupons')
+          @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'brands' || Session::get('page') == 'products' || Session::get('page') == 'banners' || Session::get('page') == 'coupons' || Session::get('page') == 'orders')
              @php $active = "active"; @endphp
           @else
              @php $active = ""; @endphp
@@ -172,6 +172,18 @@
                   <p>Coupons</p>
                 </a>
               </li>
+                @if (Session::get('page') == 'orders')
+                    @php $active = "active"; @endphp
+                @else
+                    @php $active = ""; @endphp
+                @endif
+              <li class="nav-item">
+                <a href="{{ url('/admin/orders') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Orders</p>
+                </a>
+              </li>
+
             </ul>
           </li>
 
