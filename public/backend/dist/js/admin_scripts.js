@@ -282,6 +282,20 @@
         //Money Euro
         $('[data-mask]').inputmask()
 
+        // Show Courier Name and Tracking Number in case of shipped order status
+        $('#courier_name').hide();
+        $('#tracking_number').hide();
+
+        $('#order_status').click(function(){
+            if(this.value == 'Shipped'){
+                $('#courier_name').show();
+                $('#tracking_number').show();
+            }else {
+                $('#courier_name').hide();
+                $('#tracking_number').hide();
+            }
+        });
+
 
     });
 })(jQuery);

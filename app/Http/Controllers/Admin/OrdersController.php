@@ -47,6 +47,14 @@ class OrdersController extends Controller
 
             Session::put('success_message', 'Order Status updated has been successfully');
 
+            // Update Courier Name and Tracking Number
+            if(!empty($data['courier_name']) && !empty($data['tracking_number'])){
+                Order::where('id', $data['order_id'])->update([
+                    'courier_name' => $data['courier_name'],
+                    'tracking_number' => $data['tracking_number']
+                ]);
+            }
+
             // Get Delivery Details
             $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $data['order_id'])->first();
 

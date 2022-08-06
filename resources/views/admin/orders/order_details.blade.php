@@ -204,11 +204,13 @@
                                 <form action="{{ url('admin/update-order-status') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="order_id" value="{{ $orderDetails->id }}">
-                                    <select name="order_status" id="">
+                                    <select name="order_status" id="order_status">
                                         @foreach($orderStatuses as $order)
                                         <option value="{{ $order->name }}" @if( isset($orderDetails->order_status) && $orderDetails->order_status == $order->name ) selected @endif>{{ $order->name }}</option>
                                         @endforeach
                                     </select>&nbsp;&nbsp;
+                                    <input style="width: 120px;" type="text" name="courier_name" id="courier_name" placeholder="Courier Name">
+                                    <input style="width: 120px;" type="text" name="tracking_number" id="tracking_number" placeholder="Tracking Number">
                                     <button type="submit">Update</button>
                                 </form>
                             </td>
