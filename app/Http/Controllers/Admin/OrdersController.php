@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -23,7 +24,8 @@ class OrdersController extends Controller
      */
     public function orderDetails($id){
         $orderDetails = Order::with('order_products')->where('id', $id)->first();
+        $customerDetials = User::where('id', $orderDetails->user_id)->first();
         // dd($orderDetails);
-        return view('admin.orders.order_details', compact('orderDetails'));
+        return view('admin.orders.order_details', compact('orderDetails', 'customerDetials'));
     }
 }
