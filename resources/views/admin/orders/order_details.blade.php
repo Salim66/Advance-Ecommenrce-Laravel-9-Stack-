@@ -6,6 +6,17 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
+          <div class="col-sm-12">
+            @if(session()->has('success_message'))
+                <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                    {{ session()->get('success_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?php Session::forget('success_message'); ?>
+            @endif
+          </div>
           <div class="col-sm-6">
             <h1>Catalogues</h1>
           </div>
@@ -190,11 +201,13 @@
                     <tbody>
                         <tr>
                             <td colspan="2">
-                                <form action="">
-                                    <select name="" id="">
-                                        <option value="">Select Status</option>
-                                        <option value="">New</option>
-                                        <option value="">Pending</option>
+                                <form action="{{ url('admin/update-order-status') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="order_id" value="{{ $orderDetails->id }}">
+                                    <select name="order_status" id="">
+                                        @foreach($orderStatuses as $order)
+                                        <option value="{{ $order->name }}" @if( isset($orderDetails->order_status) && $orderDetails->order_status == $order->name ) selected @endif>{{ $order->name }}</option>
+                                        @endforeach
                                     </select>&nbsp;&nbsp;
                                     <button type="submit">Update</button>
                                 </form>
