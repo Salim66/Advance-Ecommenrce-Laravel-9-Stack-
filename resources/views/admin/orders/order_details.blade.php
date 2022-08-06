@@ -51,6 +51,18 @@
                             <td>Order Status</td>
                             <td>{{ $orderDetails->order_status }}</td>
                         </tr>
+                        @if(!empty($orderDetails->courier_name))
+                        <tr>
+                            <td>Courier Name</td>
+                            <td>{{ $orderDetails->courier_name }}</td>
+                        </tr>
+                        @endif
+                        @if(!empty($orderDetails->tracking_number))
+                        <tr>
+                            <td>Tracking Number</td>
+                            <td>{{ $orderDetails->tracking_number }}</td>
+                        </tr>
+                        @endif
                         <tr>
                             <td>Order Total</td>
                             <td>{{ $orderDetails->grand_total }}</td>
@@ -209,8 +221,8 @@
                                         <option value="{{ $order->name }}" @if( isset($orderDetails->order_status) && $orderDetails->order_status == $order->name ) selected @endif>{{ $order->name }}</option>
                                         @endforeach
                                     </select>&nbsp;&nbsp;
-                                    <input style="width: 120px;" type="text" name="courier_name" id="courier_name" placeholder="Courier Name">
-                                    <input style="width: 120px;" type="text" name="tracking_number" id="tracking_number" placeholder="Tracking Number">
+                                    <input style="width: 120px;" type="text" name="courier_name" @if(empty($orderDetails->courier_name)) id="courier_name" @endif placeholder="Courier Name" value="{{ $orderDetails->courier_name }}">
+                                    <input style="width: 120px;" type="text" name="tracking_number" @if(empty($orderDetails->tracking_number)) id="tracking_number" @endif placeholder="Tracking Number" value="{{ $orderDetails->tracking_number }}">
                                     <button type="submit">Update</button>
                                 </form>
                             </td>

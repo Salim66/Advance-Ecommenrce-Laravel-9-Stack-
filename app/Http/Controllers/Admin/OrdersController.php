@@ -74,6 +74,8 @@ class OrdersController extends Controller
                 'name' => $deliveryDetails->name,
                 'order_id' => $data['order_id'],
                 'order_status' => $data['order_status'],
+                'courier_name' => $data['courier_name'],
+                'tracking_number' => $data['tracking_number'],
                 'orderDetials' => $orderDetails
             ];
 
