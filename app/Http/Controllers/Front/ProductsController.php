@@ -15,8 +15,10 @@ use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\OrdersProduct;
+use App\Models\Sms;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -512,6 +514,30 @@ class ProductsController extends Controller
             DB::commit();
 
             if($data['payment_gateway'] == "COD"){
+
+                // Send Order SMS
+                $message = "Dear Customer, your order ".$order_id." has been successfully placed with ThreeSixtyDegree. We will intimate you once your order is shipped.";
+                $mobile = Auth::user()->mobile;
+                Sms::sendSMS($message, $mobile);
+
+                // Get Order details
+                $orderDetails = Order::with('order_products')->where('id', $order_id)->first();
+
+                return $orderDetails; die;
+
+                // Send Order Email
+                $email = Auth::user()->email;
+                $messageData = [
+                    'email' => $email,
+                    'name' => Auth::user()->name,
+                    'order_id' => $order_id,
+                    'orderDetials' => $orderDetails
+                ];
+
+                Mail::send('emails.order', $messageData,function($message) use($email){
+                    $message->to($email)->subject('Order Placed --- ThreeSixtyDegree');
+                });
+
                 return redirect('/thanks');
             }else {
                 echo "Prepaid method comming soon!"; die;
