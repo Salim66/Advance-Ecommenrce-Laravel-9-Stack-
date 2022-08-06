@@ -90,6 +90,7 @@
         <div class="span8">
            <table class="table table-striped table-bordered">
                 <tr>
+                    <th>Product Image</th>
                     <th>Product Code</th>
                     <th>Product Name</th>
                     <th>Product Size</th>
@@ -98,6 +99,12 @@
                 </tr>
                 @foreach($orderDetails->order_products as $pro)
                 <tr>
+                    <td>
+                        @php
+                            $getProductImage = \App\Models\Product::getProductImage($pro->id);
+                        @endphp
+                        <a target="_blank" href="{{ url('/product/'.$pro->id) }}"><img style="width: 50px;" src="{{ URL::to('images/product_images/small/'.$getProductImage->main_image) }}" alt=""></a>
+                    </td>
                     <td>{{ $pro->product_code }}</td>
                     <td>{{ $pro->product_name }}</td>
                     <td>{{ $pro->product_size }}</td>

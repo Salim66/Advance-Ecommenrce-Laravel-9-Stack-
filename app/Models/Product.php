@@ -76,4 +76,9 @@ class Product extends Model
 
     }
 
+    public static function getProductImage($product_id){
+        $getProductImage = Product::select('main_image')->where('id', $product_id)->first();
+        return $getProductImage;
+    }
+
 }
