@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Sms;
+use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderStatus;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class OrdersController extends Controller
@@ -42,6 +44,33 @@ class OrdersController extends Controller
             Order::where('id', $data['order_id'])->update(['order_status' => $data['order_status']]);
 
             Session::put('success_message', 'Order Status updated has been successfully');
+
+            // Get Delivery Details
+            $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $data['order_id'])->first();
+
+            // Send order status update SMS
+            $message = "Dear Customer, your order #".$data['order_id']." status has been updated to".$data['order_status']. " placed with ThreeSixtyDegree.";
+            $mobile = $deliveryDetails->mobile;
+            Sms::sendSMS($message, $mobile);
+
+            // Get Order details
+            $orderDetails = Order::with('order_products')->where('id', $data['order_id'])->first();
+
+
+            // Send Order status update Email
+            $email = $deliveryDetails->email;
+            $messageData = [
+                'email' => $email,
+                'name' => $deliveryDetails->name,
+                'order_id' => $data['order_id'],
+                'order_status' => $data['order_status'],
+                'orderDetials' => $orderDetails
+            ];
+
+            Mail::send('emails.order_status', $messageData,function($message) use($email){
+                $message->to($email)->subject('Order Status Updated --- ThreeSixtyDegree');
+            });
+
             return redirect()->back();
 
         }
