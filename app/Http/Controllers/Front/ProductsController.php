@@ -523,7 +523,7 @@ class ProductsController extends Controller
                 // Get Order details
                 $orderDetails = Order::with('order_products')->where('id', $order_id)->first();
 
-                return $orderDetails; die;
+                // return $orderDetails; die;
 
                 // Send Order Email
                 $email = Auth::user()->email;
