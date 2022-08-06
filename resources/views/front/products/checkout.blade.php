@@ -79,8 +79,8 @@
                     <td colspan="2">
                         {{ $item->quantity }}
                     </td>
-                    <td>Rs.{{ $get_attr_price['product_price'] }}</td>
-                    <td>Rs.{{ $get_attr_price['discount'] }}</td>
+                    <td>Rs.{{ $get_attr_price['product_price'] * $item->quantity }}</td>
+                    <td>Rs.{{ $get_attr_price['discount'] * $item->quantity }}</td>
                     <td>Rs.{{ $item->quantity * $get_attr_price['final_price'] }}</td>
                 </tr>
                 @php

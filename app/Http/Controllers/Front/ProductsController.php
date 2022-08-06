@@ -546,6 +546,14 @@ class ProductsController extends Controller
         }
 
         $user_cart_items = Cart::userCartItem();
+
+        // Check cart is empty then redirect to cart
+        if(count($user_cart_items) == 0){
+            $message = "Shopping cart is empty. Please add product to checkout";
+            Session::put('error_message', $message);
+            return redirect('/cart');
+        }
+
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses'));
     }
