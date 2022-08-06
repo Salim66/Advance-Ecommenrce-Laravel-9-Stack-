@@ -69,6 +69,9 @@
                         <td>{{ $data->payment_method }}</td>
                         <td style="width: 120px;">
                             <a title="View Details" href="{{ url('admin/orders/'. $data->id) }}"><i class="fas fa-file"></i></a>
+                            @if($data->order_status == "Shipped" || $data->order_status == "Delivered")
+                            <a title="Print Invoice" href="{{ url('admin/view-order-invoice/'. $data->id) }}"><i class="fas fa-print"></i></a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

@@ -94,5 +94,14 @@ class OrdersController extends Controller
         }
     }
 
+    /**
+     * View order invoice
+     */
+    public function viewOrderInvoice($id){
+        $orderDetails = Order::with('order_products')->where('id', $id)->first();
+        $customerDetials = User::where('id', $orderDetails->user_id)->first();
+        return view('admin.orders.order_invoice', compact('orderDetails', 'customerDetials'));
+    }
+
 
 }
