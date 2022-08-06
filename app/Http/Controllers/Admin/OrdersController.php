@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\OrdersLog;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
@@ -29,8 +30,9 @@ class OrdersController extends Controller
         $orderDetails = Order::with('order_products')->where('id', $id)->first();
         $customerDetials = User::where('id', $orderDetails->user_id)->first();
         $orderStatuses = OrderStatus::where('status', 1)->get();
+        $odersLog = OrdersLog::where('order_id', $id)->orderBy('id', 'DESC')->get();
         // dd($orderStatuses);
-        return view('admin.orders.order_details', compact('orderDetails', 'customerDetials', 'orderStatuses'));
+        return view('admin.orders.order_details', compact('orderDetails', 'customerDetials', 'orderStatuses', 'odersLog'));
     }
 
     /**
@@ -70,6 +72,12 @@ class OrdersController extends Controller
             Mail::send('emails.order_status', $messageData,function($message) use($email){
                 $message->to($email)->subject('Order Status Updated --- ThreeSixtyDegree');
             });
+
+            // Update Order Log
+            $log = new OrdersLog;
+            $log->order_id = $data['order_id'];
+            $log->order_status = $data['order_status'];
+            $log->save();
 
             return redirect()->back();
 
