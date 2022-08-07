@@ -110,6 +110,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/orders/{id}', [AdminOrdersController::class, 'orderDetails']);
         Route::post('/update-order-status', [AdminOrdersController::class, 'updateOrderStatus']);
         Route::get('/view-order-invoice/{id}', [AdminOrdersController::class, 'viewOrderInvoice']);
+        Route::get('/print-pdf-invoice/{id}', [AdminOrdersController::class, 'printPDFInvoice']);
 
     });
 });
