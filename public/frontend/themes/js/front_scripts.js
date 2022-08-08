@@ -402,6 +402,9 @@
             let shipping_charges = $(this).attr('shipping_charges');
             let total_price = $(this).attr('total_price');
             let coupon_amount = $(this).attr('coupon_amount');
+            if(coupon_amount == ""){
+                coupon_amount = 0;
+            }
             let grand_total = parseInt(total_price) - parseInt(coupon_amount) + parseInt(shipping_charges);
             $('.coupon_amount').text('Rs. '+coupon_amount);
             $('.shipping_charges').text('Rs. '+shipping_charges);

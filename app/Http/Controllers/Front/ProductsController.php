@@ -322,6 +322,8 @@ class ProductsController extends Controller
             if($couponCount == 0){
                 $user_cart_items = Cart::userCartItem();
                 $totalCartItems = totalCartItems();
+                Session::forget('coupon_code');
+                Session::forget('coupon_amount');
                 return response()->json([
                     'status' => false,
                     'message' => 'This coupon is not valid!',
@@ -448,6 +450,30 @@ class ProductsController extends Controller
      */
     public function checkout(Request $request){
 
+        $user_cart_items = Cart::userCartItem();
+
+        // Check cart is empty then redirect to cart
+        if(count($user_cart_items) == 0){
+            $message = "Shopping cart is empty. Please add product to checkout";
+            Session::put('error_message', $message);
+            return redirect('/cart');
+        }
+
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+
+        // dd($deliveryAddresses);
+        foreach($deliveryAddresses as $key => $value){
+            $shippingCharges = ShippingCharge::getShippingCharges($value->country);
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+        }
+
+        $total_price = 0;
+        foreach($user_cart_items as $item){
+            $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
+            $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
+        }
+
+
         if($request->isMethod('post')){
             $data = $request->all();
 
@@ -472,6 +498,15 @@ class ProductsController extends Controller
             // Get delivery address from address_id
             $deliveryAddress = DeliveryAddress::where('id', $data['address_id'])->first();
 
+            // Get shopping charges
+            $shipping_charges = ShippingCharge::getShippingCharges($deliveryAddress->country);
+            
+            // Calculate grand total
+            $grand_total = $total_price + $shipping_charges - Session::get('coupon_amount');
+
+            // Insert grand total in session variable
+            Session::put('grand_total', $grand_total);
+
             DB::beginTransaction();
 
             // Insert order details
@@ -485,7 +520,7 @@ class ProductsController extends Controller
             $order->pincode = $deliveryAddress->pincode;
             $order->mobile = $deliveryAddress->mobile;
             $order->email = Auth::user()->email;
-            $order->shopping_charges = 0;
+            $order->shipping_charges = $shipping_charges;
             $order->coupon_code = Session::get('coupon_code');
             $order->coupon_amount = Session::get('coupon_amount');
             $order->order_status = "New";
@@ -555,28 +590,7 @@ class ProductsController extends Controller
 
         }
 
-        $user_cart_items = Cart::userCartItem();
-
-        // Check cart is empty then redirect to cart
-        if(count($user_cart_items) == 0){
-            $message = "Shopping cart is empty. Please add product to checkout";
-            Session::put('error_message', $message);
-            return redirect('/cart');
-        }
-
-        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
-
-        // dd($deliveryAddresses);
-        foreach($deliveryAddresses as $key => $value){
-            $shippingCharges = ShippingCharge::getShippingCharges($value->country);
-            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
-        }
-
-        $total_price = 0;
-        foreach($user_cart_items as $item){
-            $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
-            $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
-        }
+        
         
         return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses', 'total_price'));
     }

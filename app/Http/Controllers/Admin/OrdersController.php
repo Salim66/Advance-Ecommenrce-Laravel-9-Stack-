@@ -20,7 +20,7 @@ class OrdersController extends Controller
      */
     public function orders(){
         Session::put('page', 'orders');
-        $orders = Order::with('order_products')->get();
+        $orders = Order::with('order_products')->orderBy('id', 'DESC')->get();
         return view('admin.orders.orders', compact('orders'));
     }
 

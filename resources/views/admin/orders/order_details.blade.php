@@ -272,7 +272,9 @@
                                 @php
                                     $getProductImage = \App\Models\Product::getProductImage($pro->id);
                                 @endphp
+                                @if(!empty($getProductImage->main_image))
                                 <a target="_blank" href="{{ url('/product/'.$pro->id) }}"><img style="width: 50px;" src="{{ URL::to('images/product_images/small/'.$getProductImage->main_image) }}" alt=""></a>
+                                @endif
                             </td>
                             <td>{{ $pro->product_code }}</td>
                             <td>{{ $pro->product_name }}</td>
