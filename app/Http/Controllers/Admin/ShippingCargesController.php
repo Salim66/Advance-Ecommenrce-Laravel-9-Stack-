@@ -14,7 +14,7 @@ class ShippingCargesController extends Controller
      */
     public function viewShippingCharges(){
         Session::put('page', 'shopping-charges');
-        $shipping_charges = ShippingCharge::get();
+        $shipping_charges = ShippingCharge::get()->toArray();
         return view('admin.shipping.view_shipping_charges', compact('shipping_charges'));
     }
 
@@ -25,7 +25,14 @@ class ShippingCargesController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            $shippingDetails = ShippingCharge::where('id', $id)->update(['shipping_charges' => $data['shipping_charges']]);
+            
+            $shippingDetails = ShippingCharge::where('id', $id)->update([
+                '0_500g' => $data['0_500g'],
+                '501_1000g' => $data['501_1000g'],
+                '1001_2000g' => $data['1001_2000g'],
+                '2001_5000g' => $data['2001_5000g'],
+                'above_5000g' => $data['above_5000g'],
+            ]);
             
             $message = "Shipping Charges Updated Successfully!";
             Session::flash('success_message', $message);

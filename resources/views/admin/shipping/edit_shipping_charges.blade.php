@@ -69,8 +69,40 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="shipping_charges">Shipping Charges</label>
-                            <input type="text" class="form-control" name="shipping_charges" id="shipping_charges" value="{{ $shippingDetails->shipping_charges }}" >
+                            <label for="0_500g">Shipping Charges (0-500g)</label>
+                            <input type="text" class="form-control" name="0_500g" id="0_500g" value="{{ $shippingDetails['0_500g'] }}" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="501_1000g">Shipping Charges (501-1000g)</label>
+                            <input type="text" class="form-control" name="501_1000g" id="501_1000g" value="{{ $shippingDetails['501_1000g'] }}" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="1001_2000g">Shipping Charges (1001-2000)</label>
+                            <input type="text" class="form-control" name="1001_2000g" id="1001_2000g" value="{{ $shippingDetails['1001_2000g'] }}" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="2001_5000g">Shipping Charges (2001-5000g)</label>
+                            <input type="text" class="form-control" name="2001_5000g" id="2001_5000g" value="{{ $shippingDetails['2001_5000g'] }}" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="above_5000g">Shipping Charges (above-5000g)</label>
+                            <input type="text" class="form-control" name="above_5000g" id="above_5000g" value="{{ $shippingDetails['above_5000g'] }}" >
                         </div>
                     </div>
                 </div>

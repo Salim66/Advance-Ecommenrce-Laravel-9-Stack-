@@ -43,7 +43,11 @@
                   <tr>
                     <th>ID</th>
                     <th>Country</th>
-                    <th>Shipping Charge</th>
+                    <th>0_500g</th>
+                    <th>501_1000g</th>
+                    <th>1001_2000g</th>
+                    <th>2001_5000g</th>
+                    <th>above_5000g</th>
                     <th>Status</th>
                     <th>Updated At</th>
                     <th>Action</th>
@@ -52,19 +56,23 @@
                   <tbody>
                     @foreach ($shipping_charges as $data)
                     <tr>
-                        <td>{{ $data->id }}</td>
-                        <td>{{ $data->country }}</td>
-                        <td>{{ $data->shipping_charges }}</td>
+                        <td>{{ $data['id'] }}</td>
+                        <td>{{ $data['country'] }}</td>
+                        <td>INR {{ $data['0_500g'] }}</td>
+                        <td>INR {{ $data['501_1000g'] }}</td>
+                        <td>INR {{ $data['1001_2000g'] }}</td>
+                        <td>INR {{ $data['2001_5000g'] }}</td>
+                        <td>INR {{ $data['above_5000g'] }}</td>
                         <td>
-                            @if($data->status == 1)
-                                <a class="updateShippingStatus" id="shipping-{{ $data->id }}" shipping_id="{{ $data->id }}" href="javascript:void(0)"><i class="fas fa-toggle-on" status="Active"></i></a>
+                            @if($data['status'] == 1)
+                                <a class="updateShippingStatus" id="shipping-{{ $data['id'] }}" shipping_id="{{ $data['id'] }}" href="javascript:void(0)"><i class="fas fa-toggle-on" status="Active"></i></a>
                             @else
-                            <a class="updateShippingStatus" id="shipping-{{ $data->id }}" shipping_id="{{ $data->id }}" href="javascript:void(0)"><i class="fas fa-toggle-off" status="Inactive"></i></a>
+                            <a class="updateShippingStatus" id="shipping-{{ $data['id'] }}" shipping_id="{{ $data['id'] }}" href="javascript:void(0)"><i class="fas fa-toggle-off" status="Inactive"></i></a>
                             @endif
                         </td>
-                        <td>{{ date('d-m-Y', strtotime($data->updated_at)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($data['updated_at'])) }}</td>
                         <td style="width: 120px;">
-                            <a title="Update Shipping Charges" href="{{ url('admin/edit-shipping-charges/'. $data->id) }}"><i class="fas fa-edit"></i></a>
+                            <a title="Update Shipping Charges" href="{{ url('admin/edit-shipping-charges/'. $data['id']) }}"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                     @endforeach
