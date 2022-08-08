@@ -15,6 +15,7 @@ use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\OrdersProduct;
+use App\Models\ShippingCharge;
 use App\Models\Sms;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -564,7 +565,20 @@ class ProductsController extends Controller
         }
 
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
-        return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses'));
+
+        // dd($deliveryAddresses);
+        foreach($deliveryAddresses as $key => $value){
+            $shippingCharges = ShippingCharge::getShippingCharges($value->country);
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+        }
+
+        $total_price = 0;
+        foreach($user_cart_items as $item){
+            $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
+            $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
+        }
+        
+        return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses', 'total_price'));
     }
 
     /**
