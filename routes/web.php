@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ShippingCargesController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductsController;
@@ -111,6 +112,13 @@ Route::prefix('admin')->group(function () {
         Route::post('/update-order-status', [AdminOrdersController::class, 'updateOrderStatus']);
         Route::get('/view-order-invoice/{id}', [AdminOrdersController::class, 'viewOrderInvoice']);
         Route::get('/print-pdf-invoice/{id}', [AdminOrdersController::class, 'printPDFInvoice']);
+      
+      
+        // Shipping Charges Route
+        Route::get('/shipping-charges', [ShippingCargesController::class, 'viewShippingCharges']);
+        Route::any('/edit-shipping-charges/{id}', [ShippingCargesController::class, 'editShippingCharges']);
+        Route::post('/update-shipping-status', [ShippingCargesController::class, 'updateShippingStatus']);
+       
 
     });
 });
