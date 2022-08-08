@@ -459,18 +459,22 @@ class ProductsController extends Controller
             return redirect('/cart');
         }
 
+        $total_weight = 0;
+        $total_price = 0;
+        foreach($user_cart_items as $item){
+            $product_weight = $item->product->product_weight;
+            $total_weight = $total_weight + $product_weight;
+            $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
+            $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
+        }
+
+
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
 
         // dd($deliveryAddresses);
         foreach($deliveryAddresses as $key => $value){
-            $shippingCharges = ShippingCharge::getShippingCharges($value->country);
+            $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value->country);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
-        }
-
-        $total_price = 0;
-        foreach($user_cart_items as $item){
-            $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
-            $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
         }
 
 
@@ -499,7 +503,7 @@ class ProductsController extends Controller
             $deliveryAddress = DeliveryAddress::where('id', $data['address_id'])->first();
 
             // Get shopping charges
-            $shipping_charges = ShippingCharge::getShippingCharges($deliveryAddress->country);
+            $shipping_charges = ShippingCharge::getShippingCharges($total_weight, $deliveryAddress->country);
             
             // Calculate grand total
             $grand_total = $total_price + $shipping_charges - Session::get('coupon_amount');
