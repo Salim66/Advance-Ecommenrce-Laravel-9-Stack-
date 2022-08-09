@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\Sms;
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class PaypalController extends Controller
@@ -48,5 +50,47 @@ class PaypalController extends Controller
      */
     public function fail(){
         return view('front.paypal.fail');
+    }
+
+    /**
+     * @access private
+     * @route /paypal/ipn
+     * @method GET
+     */
+    public function ipn(Request $request){
+        $data = $request->all();
+        $data['payment_status'] = "Completed";
+        if($data['payment_status'] == "Completed"){
+
+            $order_id = Session::get('order_id');
+
+            // Update order status to paid
+            Order::where('id', $order_id)->update(['order_status' => 'Paid']);
+
+            // Send Order SMS
+            $message = "Dear Customer, your order ".$order_id." has been successfully placed with ThreeSixtyDegree. We will intimate you once your order is shipped.";
+            $mobile = Auth::user()->mobile;
+            Sms::sendSMS($message, $mobile);
+
+            // Get Order details
+            $orderDetails = Order::with('order_products')->where('id', $order_id)->first();
+
+            // return $orderDetails; die;
+
+            // Send Order Email
+            $email = Auth::user()->email;
+            $messageData = [
+                'email' => $email,
+                'name' => Auth::user()->name,
+                'order_id' => $order_id,
+                'orderDetials' => $orderDetails
+            ];
+
+            Mail::send('emails.order', $messageData,function($message) use($email){
+                $message->to($email)->subject('Order Placed --- ThreeSixtyDegree');
+            });
+
+
+        }
     }
 }

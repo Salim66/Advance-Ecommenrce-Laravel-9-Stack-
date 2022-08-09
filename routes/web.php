@@ -212,8 +212,11 @@ Route::namespace('Front')->group(function(){
         // Paypal Success
         Route::get('/paypal/success', [PaypalController::class, 'success']);
 
-        // Paypal
+        // Paypal Fail
         Route::get('/paypal/fail', [PaypalController::class, 'fail']);
+
+        // Paypal IPN (instant payment notification)
+        Route::any('/paypal/ipn', [PaypalController::class, 'ipn']);
     });
 
 

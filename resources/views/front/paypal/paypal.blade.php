@@ -31,6 +31,7 @@
             <input type="hidden" name="country" value="{{ $orderDetails['country'] }}"> 
             <input type="hidden" name="return" value="{{ url('/paypal/success') }}"> 
             <input type="hidden" name="cancel_return" value="{{ url('/paypal/fail') }}"> 
+            <input type="hidden" name="notify_url" value="{{ url('/paypal/ipn') }}"> 
             <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal - The safer, easier way to pay online"> 
         </form>
     </div>
