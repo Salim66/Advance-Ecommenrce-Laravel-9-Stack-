@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShippingCargesController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\OrdersController;
+use App\Http\Controllers\Front\PaypalController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Front\UserController;
 use App\Models\Category;
@@ -204,6 +205,9 @@ Route::namespace('Front')->group(function(){
 
         // Thanks
         Route::get('/thanks', [ProductsController::class, 'thanks']);
+
+        // Paypal
+        Route::get('/paypal', [PaypalController::class, 'paypal']);
     });
 
 

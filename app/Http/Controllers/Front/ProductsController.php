@@ -588,8 +588,11 @@ class ProductsController extends Controller
                 });
 
                 return redirect('/thanks');
-            }else {
-                echo "Prepaid method comming soon!"; die;
+            }else if($data['payment_gateway'] == "Paypal"){
+                //Paypal - Redirect user to paypal page after placing the order
+                return redirect('/paypal');
+            }else{
+                echo "Other Prepaid method comming soon!"; die;
             }
 
         }
