@@ -555,6 +555,17 @@ class ProductsController extends Controller
                 $ordersProduct->product_price = $getDiscountedAttrPrice['final_price'];
                 $ordersProduct->product_qty = $item['quantity'];
                 $ordersProduct->save();
+
+                // Update product quantity after successfully placed order by customer
+                if($data['payment_gateway'] == "COD"){
+                    // Current product stock
+                    $getProductStock = ProductAttribute::where(['product_id'=>$item->product_id, 'size'=>$item->size])->first()->toArray();
+                    // Calculate new stock
+                    $newStock = $getProductStock['stock'] - $item['quantity'];
+                    //Update product stock
+                    ProductAttribute::where(['product_id'=>$item->product_id, 'size'=>$item->size])->update(['stock'=>$newStock]);
+                }
+
             }
 
             // Insert order id in session variables
@@ -571,8 +582,6 @@ class ProductsController extends Controller
 
                 // Get Order details
                 $orderDetails = Order::with('order_products')->where('id', $order_id)->first();
-
-                // return $orderDetails; die;
 
                 // Send Order Email
                 $email = Auth::user()->email;

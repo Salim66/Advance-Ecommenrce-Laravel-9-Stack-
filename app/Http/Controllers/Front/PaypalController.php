@@ -6,6 +6,7 @@ use App\Models\Sms;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\ProductAttribute;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -35,6 +36,20 @@ class PaypalController extends Controller
      */
     public function success(){
         if(Session::get('order_id')){
+
+            // Get Order details
+            $orderDetails = Order::with('order_products')->where('id', Session::get('order_id'))->first();
+
+            // Update product quantity after successfully placed order by customer
+            foreach($orderDetails->order_products as $item){
+                // Current product stock
+                $getProductStock = ProductAttribute::where(['product_id'=>$item->product_id, 'size'=>$item->product_size])->first()->toArray();
+                // Calculate new stock
+                $newStock = $getProductStock['stock'] - $item->product_qty;
+                //Update product stock
+                ProductAttribute::where(['product_id'=>$item->product_id, 'size'=>$item->product_size])->update(['stock'=>$newStock]);
+            }
+
             // Empty the user cart
             Cart::where('user_id', Auth::user()->id)->delete();
             return view('front.paypal.success');
