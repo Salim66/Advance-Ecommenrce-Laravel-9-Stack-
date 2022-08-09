@@ -11,7 +11,7 @@
     <hr class="soft" />
 
     <div align="center">
-        <h3>YOUT ORDER HAS BEEN PLACED</h3>
+        <h3>YOUR ORDER HAS BEEN PLACED</h3>
         <p>Your order number is {{ Session::get('order_id') }} and total payable amount is INR {{ Session::get('grand_total') }}</p>
         <p>Please make payment by clicking on below payment button</p>
         <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post"> 
@@ -29,6 +29,8 @@
             <input type="hidden" name="zip" value="{{ $orderDetails['pincode'] }}"> 
             <input type="hidden" name="email" value="{{ $orderDetails['email'] }}"> 
             <input type="hidden" name="country" value="{{ $orderDetails['country'] }}"> 
+            <input type="hidden" name="return" value="{{ url('/paypal/success') }}"> 
+            <input type="hidden" name="cancel_return" value="{{ url('/paypal/fail') }}"> 
             <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal - The safer, easier way to pay online"> 
         </form>
     </div>

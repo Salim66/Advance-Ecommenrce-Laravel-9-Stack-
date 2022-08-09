@@ -208,6 +208,12 @@ Route::namespace('Front')->group(function(){
 
         // Paypal
         Route::get('/paypal', [PaypalController::class, 'paypal']);
+
+        // Paypal Success
+        Route::get('/paypal/success', [PaypalController::class, 'success']);
+
+        // Paypal
+        Route::get('/paypal/fail', [PaypalController::class, 'fail']);
     });
 
 
