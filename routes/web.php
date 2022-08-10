@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShippingCargesController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaypalController;
@@ -119,6 +120,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/shipping-charges', [ShippingCargesController::class, 'viewShippingCharges']);
         Route::any('/edit-shipping-charges/{id}', [ShippingCargesController::class, 'editShippingCharges']);
         Route::post('/update-shipping-status', [ShippingCargesController::class, 'updateShippingStatus']);
+
+        // Users Route
+        Route::get('/users', [UsersController::class, 'users']);
+        Route::post('/update-user-status', [UsersController::class, 'updateUserStatus']);
        
 
     });
