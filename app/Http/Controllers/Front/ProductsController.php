@@ -185,6 +185,10 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
 
+            if($data['quantity'] <= 0){
+                $data['quantity'] = 1;
+            }
+
             // Check product stock is available or not
             $getProductStock = ProductAttribute::where(['product_id' => $data['product_id'], 'size' => $data['size']])->first();
             if($getProductStock->stock < $data['quantity']){
@@ -469,7 +473,7 @@ class ProductsController extends Controller
         $total_price = 0;
         foreach($user_cart_items as $item){
             $product_weight = $item->product->product_weight;
-            $total_weight = $total_weight + $product_weight;
+            $total_weight = $total_weight + ($product_weight * $item->quantity);
             $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
             $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
         }
