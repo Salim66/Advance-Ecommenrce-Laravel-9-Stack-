@@ -505,6 +505,22 @@ class ProductsController extends Controller
                     Session::flash('error_message', $message);
                     return redirect('/cart');
                 }
+
+                $getAttributeCount = Product::getAttributeCount($cart->product_id, $cart->size);
+                if($getAttributeCount == 0){
+                    // Product::deleteCartProduct($item->product_id);
+                    $message = $item->product->product_name . " is not available so plesae remove from cart.";
+                    Session::flash('error_message', $message);
+                    return redirect('/cart');
+                }
+
+                $getCategoryStatus = Product::getCategoryStatus($cart->product->category_id);
+                if($getCategoryStatus == 0){
+                    // Product::deleteCartProduct($item->product_id);
+                    $message = $item->product->product_name . " is not available so plesae remove from cart.";
+                    Session::flash('error_message', $message);
+                    return redirect('/cart');
+                }
             }
 
 
