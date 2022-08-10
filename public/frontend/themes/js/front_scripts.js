@@ -156,7 +156,7 @@
                 data: {size:size,product_id:product_id},
                 success: function(data){
                     if(data['discount']>0){
-                        $('.setProductPrice').html('<del>Rs. ' + data['product_price']+"</del> Rs. "+data['discount']);
+                        $('.setProductPrice').html('<del>Rs. ' + data['product_price']+"</del> Rs. "+data['final_price']);
                     }else {
                         $('.setProductPrice').html('Rs. ' + data['product_price']);
                     }
@@ -397,7 +397,7 @@
             }
         });
 
-        // Shipping Chages Applied
+        // Shipping Charges Applied
         $('input[name=address_id]').bind('change', function(){
             let shipping_charges = $(this).attr('shipping_charges');
             let total_price = $(this).attr('total_price');
@@ -428,6 +428,25 @@
             $('.coupon_amount').text('Rs. '+coupon_amount);
             $('.shipping_charges').text('Rs. '+shipping_charges);
             $('.grand_total').text('Rs. '+grand_total);
+        });
+
+        // Check delivery pincode valid or not
+        $('#checkPincode').click(function(){
+            let pincode = $('#pincode').val();
+            if(pincode == ""){
+                alert('Please insert pincode');
+            }else {
+                $.ajax({
+                    type: 'post',
+                    data: {pincode:pincode},
+                    url: '/check-pincode',
+                    success: function(data){
+                        alert(data);
+                    },error: function(){
+                        alert('Error');
+                    }
+                });
+            }
         });
 
 

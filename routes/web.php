@@ -169,8 +169,11 @@ Route::namespace('Front')->group(function(){
     // Check if email already exists or not
     Route::any('/check-email', [UserController::class, 'checkEmail']);
 
-     // User Forgot Password
-     Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
+    // User Forgot Password
+    Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
+
+    // Check Delivery Pincode
+    Route::post('/check-pincode', [ProductsController::class, 'checkPincode']); 
 
     Route::group(['middleware' => ['auth']], function(){
         // User Logout

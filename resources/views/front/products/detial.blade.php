@@ -81,7 +81,10 @@
                             @endforeach
                         </select>
                         <input type="number" name="quantity" class="span1" placeholder="Qty." required />
-                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button><br><br>
+                        <strong>Delivery</strong>
+                        <input type="text" style="width: 120px;" name="pincode" id="pincode" placeholder="Pin">
+                        <button type="button" id="checkPincode">Check Pin</button>
                     </div>
                 </div>
             </form>

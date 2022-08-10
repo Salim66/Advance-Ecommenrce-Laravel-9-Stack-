@@ -711,4 +711,27 @@ class ProductsController extends Controller
         Session::forget('error_message');
         return redirect()->back();
     }
+
+    /**
+     * @access public
+     * @routes /check-pincode
+     * @method POST
+     */
+    public function checkPincode(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            if( is_numeric($data['pincode']) && $data['pincode'] > 0 && $data['pincode'] == round($data['pincode'], 0) ) {
+                $codPincodeCount = DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count();
+                $prepaidPincodeCount = DB::table('prepaid_pincode')->where('pincode', $data['pincode'])->count();
+                
+                if($codPincodeCount == 0 && $prepaidPincodeCount == 0){
+                    echo "This pincode is not available for delivery"; die;
+                }else {
+                    echo "This pincode is available for delivery"; die;
+                }
+            }else {
+                echo "Please insert valid pincode!"; die;
+            }
+        }
+    }
 }
