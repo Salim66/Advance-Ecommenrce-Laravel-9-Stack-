@@ -153,7 +153,13 @@ class ProductsController extends Controller
         //get related product
         $related_product = Product::where('category_id', $product_detail->category_id)->where('id', '!=', $id)->inRandomOrder()->get();
         // dd($related_product);
-        return view('front.products.detial', compact('product_detail', 'total_stock', 'related_product'));
+
+        $groupProducts = [];
+        if(!empty($product_detail->group_code)){
+            $groupProducts = Product::select('id', 'main_image')->where('id', '!=', $id)->where(['group_code'=>$product_detail->group_code, 'status' => 1])->get();
+        }
+
+        return view('front.products.detial', compact('product_detail', 'total_stock', 'related_product', 'groupProducts'));
 
     }
 

@@ -131,6 +131,10 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="group_code">Group Code</label>
+                        <input type="text" class="form-control" name="group_code" id="group_code" placeholder="Enter group code" @if(!empty($product_data->group_code)) value="{{ $product_data->group_code }}" @else value="{{ old('group_code') }}" @endif>
+                    </div>
+                    <div class="form-group">
                         <label>product Description</label>
                         <textarea class="form-control" name="description" rows="3" placeholder="Enter product Description">@if(!empty($product_data->description)) {{ $product_data->description }} @else {{ old('description') }} @endif</textarea>
                     </div>

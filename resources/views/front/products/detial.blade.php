@@ -57,6 +57,18 @@
             <h3>{{ $product_detail->product_name }}  </h3>
             <small>- {{ $product_detail->brand->name }}</small>
             <hr class="soft"/>
+
+            @if(count($groupProducts) > 0)
+                <div>
+                    <div><strong>More Colors</strong></div>
+                    <div>
+                        @foreach ($groupProducts as $product)
+                            <a href="{{ url('/product/'.$product->id) }}"><img style="width: 50px; margin-bottom: 10px;" src="{{ URL::to('images/product_images/small/'.$product->main_image) }}" alt=""></a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <small>{{ $total_stock }} items in stock</small>
             <form action="{{ url('/add-to-cart') }}" method="POST" class="form-horizontal qtyFrm">
                 @csrf
