@@ -41,7 +41,7 @@
             <tr>
                 <td>
                     <div class="control-group" style="float: left; margin-top: -2px; margin-right: 5px;">
-                        <input type="radio" id="address{{ $address->id }}" name="address_id" value="{{ $address->id }}" shipping_charges="{{ $address->shipping_charges }}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('coupon_amount') }}">
+                        <input type="radio" id="address{{ $address->id }}" name="address_id" value="{{ $address->id }}" shipping_charges="{{ $address->shipping_charges }}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('coupon_amount') }}" codPincodeCount="{{ $address->codPincodeCount }}" prepaidPincodeCount="{{ $address->prepaidPincodeCount }}">
                     </div>
                     </div>
                     <div class="control-group">
@@ -126,8 +126,12 @@
                         <div class="control-group">
                             <label class="control-label"><strong> PAYMENT METHOD: </strong> </label>
                             <div class="controls">
-                                <input type="radio" name="payment_gateway" id="COD" class="input-medium" value="COD" style="margin-top: -6px; margin-right: 4px;"><strong>COD</strong>&nbsp;&nbsp;
-                                <input type="radio" name="payment_gateway" id="Paypal" class="input-medium" value="Paypal" style="margin-top: -6px; margin-right: 4px;"><strong>Paypal</strong>
+                                <span class="isCod">
+                                    <input type="radio" name="payment_gateway" id="COD" class="input-medium" value="COD" style="margin-top: -6px; margin-right: 4px;"><strong>COD</strong>&nbsp;&nbsp;
+                                </span>
+                                <span class="isPrepaid">
+                                    <input type="radio" name="payment_gateway" id="Paypal" class="input-medium" value="Paypal" style="margin-top: -6px; margin-right: 4px;"><strong>Paypal</strong>
+                                </span>
                             </div>
                         </div>
                     </td>

@@ -475,6 +475,10 @@ class ProductsController extends Controller
         foreach($deliveryAddresses as $key => $value){
             $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value->country);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+            // Check if delivery pincode exists in COD Pincode list
+            $deliveryAddresses[$key]['codPincodeCount'] = DB::table('cod_pincodes')->where('pincode', $value->pincode)->count();
+            // Check if delivery pincode exists in Prepaid pincode list
+            $deliveryAddresses[$key]['prepaidPincodeCount'] = DB::table('prepaid_pincode')->where('pincode', $value->pincode)->count();
         }
 
 
@@ -669,7 +673,7 @@ class ProductsController extends Controller
                 'country.required' => 'Country is required',
                 'pincode.required' => 'Pincode is required',
                 'pincode.numeric'  => 'Valid pincode is required',
-                'pincode.digits'  => 'Pincode must be of 11 digits',
+                'pincode.digits'  => 'Pincode must be of 4 digits',
                 'mobile.required' => 'Mobile is required',
                 'mobile.numeric'  => 'Valid mobile is required',
                 'mobile.digits'  => 'Mobile must be of 11 digits',

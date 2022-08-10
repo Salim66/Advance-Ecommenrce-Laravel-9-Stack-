@@ -402,6 +402,25 @@
             let shipping_charges = $(this).attr('shipping_charges');
             let total_price = $(this).attr('total_price');
             let coupon_amount = $(this).attr('coupon_amount');
+            let codPincodeCount = $(this).attr('codPincodeCount');
+            let prepaidPincodeCount = $(this).attr('prepaidPincodeCount');
+
+            if(codPincodeCount > 0){
+                // COD Method Show
+                $('.isCod').show();
+            }else {
+                // COD Method Hide
+                $('.isCod').hide();
+            }
+
+            if(prepaidPincodeCount > 0){
+                // COD Method Show
+                $('.isPrepaid').show();
+            }else {
+                // COD Method Hide
+                $('.isPrepaid').hide();
+            }
+
             if(coupon_amount == ""){
                 coupon_amount = 0;
             }
