@@ -249,6 +249,28 @@
             });
         });
 
+        //Admin CMS Page Status Update Script
+        $('.updateCmsPageStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).children('i').attr('status');
+            let page_id = $(this).attr('page_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-cms-page-status',
+                data: {status:status, page_id:page_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#page-'+page_id).html('<i class="fas fa-toggle-on" status="Active"></i>');
+                    }else if(resp['status'] == 0){
+                        $('#page-'+page_id).html('<i class="fas fa-toggle-off" status="Inactive"></i>');
+                    }
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
         // Append Category Level
         $('#section_id').change(function(){
             let section_id = $(this).val();

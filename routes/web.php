@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\ProductController;
@@ -124,7 +125,13 @@ Route::prefix('admin')->group(function () {
         // Users Route
         Route::get('/users', [UsersController::class, 'users']);
         Route::post('/update-user-status', [UsersController::class, 'updateUserStatus']);
-       
+
+        // CMS Pages Route
+        Route::get('/cms-pages', [CmsController::class, 'cmsPages']);
+        Route::post('/update-cms-page-status', [CmsController::class, 'updateCmsPagetatus']);
+        Route::any('/add-edit-cms-page/{id?}', [CmsController::class, 'addEditCmsPage']);
+        Route::get('/delete-cms-page/{id}', [CmsController::class, 'deleteCmsPage']);
+
 
     });
 });
