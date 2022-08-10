@@ -81,4 +81,18 @@ class Product extends Model
         return $getProductImage;
     }
 
+    public static function getProductStatus($product_id){
+        $getProductStatus = Product::select('status')->where('id', $product_id)->first()->toArray();
+        return $getProductStatus['status'];
+    }
+
+    public static function getProductStock($product_id, $product_size){
+        $getProductStock = ProductAttribute::select('stock')->where(['product_id'=>$product_id, 'size'=>$product_size])->first()->toArray();
+        return $getProductStock['stock'];
+    }
+
+    public static function deleteCartProduct($product_id){
+        Cart::where('product_id', $product_id)->delete();
+    }
+
 }

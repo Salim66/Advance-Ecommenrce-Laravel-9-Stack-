@@ -485,6 +485,29 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
 
+            // Website security checks
+
+            // Fetch user cart item
+            foreach($user_cart_items as $key => $cart){
+                //Prevent disbaled product to order
+                $product_status = Product::getProductStatus($cart->product_id);
+                if($product_status == 0){
+                    // Product::deleteCartProduct($item->product_id);
+                    $message = $item->product->product_name . " is not available so plesae remove from cart.";
+                    Session::flash('error_message', $message);
+                    return redirect('/cart');
+                }
+
+                $product_stock = Product::getProductStock($cart->product_id, $cart->size);
+                if($product_stock == 0){
+                    // Product::deleteCartProduct($item->product_id);
+                    $message = $item->product->product_name . " is not available so plesae remove from cart.";
+                    Session::flash('error_message', $message);
+                    return redirect('/cart');
+                }
+            }
+
+
             if(empty($data['address_id'])){
                 $message = "Please Select Delivery Address!";
                 Session::flash('error_message', $message);
