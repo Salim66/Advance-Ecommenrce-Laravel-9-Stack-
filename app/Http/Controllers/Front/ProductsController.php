@@ -96,7 +96,23 @@ class ProductsController extends Controller
             $url = Route::getFacadeRoot()->current()->uri(); // get current path/uri
             // echo "<pre>"; print_r($url); die;
             $categoryCount = Category::where(['url'=>$url, 'status'=>1])->count();
-            if($categoryCount > 0){
+            if(isset($_REQUEST['search'])  && !empty($_REQUEST['search'])){
+                $search_product = $_REQUEST['search'];
+                $catDetails['breadcrumbs'] = $search_product;
+                $catDetails['categoryDetails']['category_name'] = $search_product;
+                $catDetails['categoryDetails']['description'] = "Search Result for ".$search_product;
+                $catProducts = Product::with('brand')->where(function($query) use($search_product){
+                    $query->where('product_name', 'like', '%'.$search_product.'%')
+                    ->orWhere('product_code', 'like', '%'.$search_product.'%')
+                    ->orWhere('product_color', 'like', '%'.$search_product.'%')
+                    ->orWhere('description', 'like', '%'.$search_product.'%');
+                })->where('status', 1);
+                $catProducts = $catProducts->get();
+
+                $page_name = 'Search Result';
+                return view('front.products.listing', compact('catDetails', 'catProducts', 'page_name'));
+
+            }else if($categoryCount > 0){
                 $catDetails = Category::categoryDetails($url);
                 $catProducts = Product::with('brand')->where('category_id', $catDetails['catIds'])->where('status', 1);
 

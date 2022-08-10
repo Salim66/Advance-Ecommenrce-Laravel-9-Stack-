@@ -180,6 +180,9 @@ Route::namespace('Front')->group(function(){
     // Check Delivery Pincode
     Route::post('/check-pincode', [ProductsController::class, 'checkPincode']); 
 
+    // Search Product
+    Route::get('/search-products', [ProductsController::class, 'listing']);
+
     Route::group(['middleware' => ['auth']], function(){
         // User Logout
         Route::get('/logout', [UserController::class, 'logout']);

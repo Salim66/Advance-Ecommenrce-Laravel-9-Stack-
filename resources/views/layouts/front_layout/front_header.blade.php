@@ -21,7 +21,7 @@
 		          <span class="icon-bar"></span>
 		          <span class="icon-bar"></span>
 		        </a>
-		        <a class="brand" href="{{ url('/') }}">Stack Developers</a>
+		        <a class="brand" href="{{ url('/') }}">ThreeSixtyDegree</a>
 		        <div class="nav-collapse">
 		          <ul class="nav">
 		            <li class="active"><a href="{{ url('/') }}">Home</a></li>
@@ -43,8 +43,10 @@
 		            @endforeach
 		            <li><a href="#">About</a></li>
 		          </ul>
-		          <form class="navbar-search pull-left" action="#">
-		            <input type="text" class="search-query span2" placeholder="Search"/>
+		          <form class="navbar-search pull-left" action="{{ url('/search-products') }}" method="GET">
+                    @csrf
+		            <input type="text" name="search" class="search-query span2" placeholder="Search"/>
+                    <button type="submit">Go</button>
 		          </form>
 		          <ul class="nav pull-right">
 		            <li><a href="{{ url('orders') }}">Orders</a></li>

@@ -21,7 +21,7 @@
     </ul>
     <br>
     <br>
-    @if(isset($page_name) && $page_name == 'listing')
+    @if(isset($page_name) && $page_name == 'listing' && !isset($_REQUEST['search']))
     <div class="well well-small">
         <h5>Fabric</h5>
         @foreach ($fabricArray as $fabric)
@@ -30,7 +30,7 @@
     </div>
     @endif
     <br>
-    @if(isset($page_name) && $page_name == 'listing')
+    @if(isset($page_name) && $page_name == 'listing'  && !isset($_REQUEST['search']))
     <div class="well well-small">
         <h5>Sleeve</h5>
         @foreach ($sleeveArray as $sleeve)
@@ -39,7 +39,7 @@
     </div>
     @endif
     <br>
-    @if(isset($page_name) && $page_name == 'listing')
+    @if(isset($page_name) && $page_name == 'listing'  && !isset($_REQUEST['search']))
     <div class="well well-small">
         <h5>Pattern</h5>
         @foreach ($patternArray as $pattern)
@@ -48,7 +48,7 @@
     </div>
     @endif
     <br>
-    @if(isset($page_name) && $page_name == 'listing')
+    @if(isset($page_name) && $page_name == 'listing'  && !isset($_REQUEST['search']))
     <div class="well well-small">
         <h5>Fit</h5>
         @foreach ($fitArray as $fit)
@@ -57,7 +57,7 @@
     </div>
     @endif
     <br>
-    @if(isset($page_name) && $page_name == 'listing')
+    @if(isset($page_name) && $page_name == 'listing'  && !isset($_REQUEST['search']))
     <div class="well well-small">
         <h5>Occasion</h5>
         @foreach ($occasionArray as $occasion)
