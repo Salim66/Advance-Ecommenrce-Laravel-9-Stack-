@@ -86,8 +86,11 @@ class ProductsController extends Controller
 
                 $catProducts = $catProducts->paginate(30);
 
+                $meta_title = $catDetails['categoryDetails']['meta_title'];
+                $meta_description =$catDetails['categoryDetails']['meta_description'];
+                $meta_keyword = $catDetails['categoryDetails']['meta_keyword'];
                 // return $catDetails; die;
-                return view('front.products.ajax_products_listing', compact('catDetails', 'catProducts', 'url'));
+                return view('front.products.ajax_products_listing', compact('catDetails', 'catProducts', 'url', 'meta_title', 'meta_description', 'meta_keyword'));
             }else {
                 abort(404);
             }
@@ -145,7 +148,10 @@ class ProductsController extends Controller
 
                 $page_name = 'listing';
                 // return $catDetails; die;
-                return view('front.products.listing', compact('catDetails', 'catProducts', 'url', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'page_name'));
+                $meta_title = $catDetails['categoryDetails']['meta_title'];
+                $meta_description =$catDetails['categoryDetails']['meta_description'];
+                $meta_keyword = $catDetails['categoryDetails']['meta_keyword'];
+                return view('front.products.listing', compact('catDetails', 'catProducts', 'url', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'page_name', 'meta_title', 'meta_description', 'meta_keyword'));
             }else {
                 abort(404);
             }

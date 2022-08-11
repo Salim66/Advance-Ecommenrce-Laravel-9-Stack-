@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    @if(!empty($meta_title))
+    <title>{{ $meta_title }}</title>
+    @else  
 	<title>Stack Developers online Shopping cart</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
+    @endif
+
+    @if(!empty($meta_description))
+    <meta name="description" content="{{ $meta_description }}">
+    @else   
+	<meta name="description" content="Three Sixty Degree E-Commerce Shipping , Selling Product in online market place.">
+    @endif
+
+    @if(!empty($meta_keyword))
+    <meta name="keyword" content="{{ $meta_keyword }}">
+    @else   
+	<meta name="keyword" content="Man, Women, Kids Cloths">
+    @endif
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

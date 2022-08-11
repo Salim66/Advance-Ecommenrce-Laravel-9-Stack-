@@ -27,7 +27,7 @@ class Category extends Model
      * Category Detalis find
      */
     public static function categoryDetails($url){
-        $categoryDetails = Category::select('id', 'parent_id', 'category_name', 'url', 'description')->with(['subCategories' => function($query){
+        $categoryDetails = Category::select('id', 'parent_id', 'category_name', 'url', 'description', 'meta_title', 'meta_description', 'meta_keyword')->with(['subCategories' => function($query){
             $query->select('id','parent_id', 'category_name', 'url', 'description')->where('status', 1);
         }])->where('url', $url)->first()->toArray();
         $categories = Category::with('subCategories')->where('url', $url)->first();

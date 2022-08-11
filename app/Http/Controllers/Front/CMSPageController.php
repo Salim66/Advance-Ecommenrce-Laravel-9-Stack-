@@ -20,7 +20,12 @@ class CMSPageController extends Controller
         $cmsRoute = CmsPage::where('status', 1)->get()->pluck('url')->toArray();
         if(in_array($currentRoute, $cmsRoute)){
             $cmsPageDetails = CmsPage::where('url',$currentRoute)->first()->toArray();
-            return view('front.pages.cms_page', compact('cmsPageDetails'));
+
+            $meta_title = "E-commerce Website by ThereeSixtyDegree";
+            $meta_description = "ThreeSixty Degree E-Commerce is big shop place, we are welcome to by easy to good quality products.";
+            $meta_keyword = "Cloth for Man, Woman, Kids";
+
+            return view('front.pages.cms_page', compact('cmsPageDetails', 'meta_title', 'meta_description','meta_keyword'));
         }
     }
 
