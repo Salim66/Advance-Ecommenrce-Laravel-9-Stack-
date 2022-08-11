@@ -12,12 +12,14 @@ use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShippingCargesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Front\CMSPageController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaypalController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Front\UserController;
 use App\Models\Category;
+use App\Models\CmsPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -145,6 +147,12 @@ Route::namespace('Front')->group(function(){
     $catURL = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
     foreach($catURL as $url){
         Route::get('/'.$url, [ProductsController::class, 'listing']);
+    }
+
+    //CMS Page Route;
+    $cmsURL = CmsPage::select('url')->where('status', 1)->get()->pluck('url')->toArray();
+    foreach($cmsURL as $url){
+        Route::get('/'.$url, [CMSPageController::class, 'cmsPage']);
     }
 
     // product detail page
