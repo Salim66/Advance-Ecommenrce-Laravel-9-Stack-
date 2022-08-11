@@ -198,6 +198,9 @@ Route::namespace('Front')->group(function(){
     // Search Product
     Route::get('/search-products', [ProductsController::class, 'listing']);
 
+    // Contact Route
+    Route::any('/contact', [CMSPageController::class, 'contact']);
+
     Route::group(['middleware' => ['auth']], function(){
         // User Logout
         Route::get('/logout', [UserController::class, 'logout']);
