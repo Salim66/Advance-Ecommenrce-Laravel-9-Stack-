@@ -194,4 +194,81 @@ class AdminController extends Controller
         Session::put('success_message', 'Admins / Subadmins Deleted Successfully ):');
         return redirect()->back();
     }
+
+    /**
+     * Add Edit Admin / Subadmin
+     */
+    public function addEditAdminsSubadmins(Request $request, $id = null){
+        
+        if($id == ""){
+            // Add Admin / Subadmin
+            $title = "Add Admin / Subadmin";
+            $admindata = new Admin;
+            $message = "Admin/Subadmin added successfully";
+        }else {
+            // Edit Admin / Subadmin
+            $title = "Edit Admin / Subadmin";
+            $admindata = Admin::find($id);
+            $message = "Admin/Subadmin updated successfully";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            
+            $adminCount = Admin::where('email', $data['admin_email'])->count();
+            if($adminCount > 0){
+                $message = "This email already exists";
+                Session::put('error_message', $message);
+                return redirect()->back();
+            }
+
+            $rules = [
+                'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'admin_mobile' => 'required|numeric',
+                'admin_image' => 'image',
+            ];
+            $customMessage = [
+                'admin_name.required' => 'Name is required',
+                'admin_name.alpha'  => 'Valid name is required',
+                'admin_mobile.required' => 'Mobile is required',
+                'admin_mobile.numeric'  => 'Valid mobile is required',
+                'admin_image.image'  => 'Valid image is required'
+            ];
+            $this->validate($request, $rules, $customMessage);
+
+            if($request->hasFile('admin_image')){
+                $image_tmp = $request->file('admin_image');
+                if($image_tmp->isValid()){
+                    //Generate new image name
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    //Image Name
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'images/admin_images/admin_photos/'.$imageName;
+                    // Upload the image
+                    Image::make($image_tmp)->save($imagePath);
+                }else if(!empty($data['current_admin_image'])){
+                    $imageName = $data['current_admin_image'];
+                }else {
+                    $imageName = "";
+                }
+            }
+
+            
+            $admindata->name = $data['admin_name'];
+            $admindata->mobile = $data['admin_mobile'];
+            $admindata->image = $imageName;
+            if(empty($admindata->id)){
+                $admindata->email = $data['admin_email'];
+                $admindata->type = $data['admin_type'];
+            }
+            $admindata->password = bcrypt($data['admin_password']);
+            $admindata->save();
+
+            Session::flash('success_message', 'Admin/Subadmin successfully :)');
+            return redirect('/admin/admins-subadmins');
+
+        }
+
+        return view('admin.admins_subadmins.add_edit_admins_subadmins', compact('title', 'admindata'));
+    }
 }

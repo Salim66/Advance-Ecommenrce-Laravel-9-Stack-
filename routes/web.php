@@ -138,7 +138,7 @@ Route::prefix('admin')->group(function () {
         // Admins / SubAdmins Route
         Route::get('/admins-subadmins', [AdminController::class, 'adminsSubadmins']);
         Route::post('/update-admins-subadmins-status', [AdminController::class, 'updateAdminsSubadminsstatus']);
-        Route::any('/add-edit-coupon/{id?}', [CouponController::class, 'addEditCoupon']);
+        Route::any('/add-edit-admins-subadmins/{id?}', [AdminController::class, 'addEditAdminsSubadmins']);
         Route::get('/delete-admins-subadmins/{id}', [AdminController::class, 'deleteAdminsSubadmins']);
 
     });
