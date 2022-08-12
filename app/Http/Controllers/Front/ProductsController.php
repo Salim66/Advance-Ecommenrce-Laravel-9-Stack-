@@ -501,6 +501,20 @@ class ProductsController extends Controller
             $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
         }
 
+        // Check Min Cart Amount
+        if($total_price < 500){
+            $message = "Min cart amount must be Rs. 500";
+            Session::flash('error_message', $message);
+            return redirect()->back();
+        }
+
+        // Check Min Cart Amount
+        if($total_price > 50000){
+            $message = "Max cart amount must be Rs. 50000";
+            Session::flash('error_message', $message);
+            return redirect()->back();
+        }
+
 
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
 
