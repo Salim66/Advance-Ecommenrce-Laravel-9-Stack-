@@ -271,6 +271,28 @@
             });
         });
 
+        //Admin Admins/Subadmins Status Update Script
+        $('.updateAdminsSubAdminsStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).children('i').attr('status');
+            let admin_id = $(this).attr('admin_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-admins-subadmins-status',
+                data: {status:status, admin_id:admin_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#admin-'+admin_id).html('<i class="fas fa-toggle-on" status="Active"></i>');
+                    }else if(resp['status'] == 0){
+                        $('#admin-'+admin_id).html('<i class="fas fa-toggle-off" status="Inactive"></i>');
+                    }
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
         // Append Category Level
         $('#section_id').change(function(){
             let section_id = $(this).val();

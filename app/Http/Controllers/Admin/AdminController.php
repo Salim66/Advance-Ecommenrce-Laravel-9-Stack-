@@ -50,7 +50,7 @@ class AdminController extends Controller
             $this->validate($request, $rules, $customMessage);
 
             $data = $request->all();
-            if(Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])){
+            if(Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])){
                 return redirect('/admin/dashboard');
             }else {
                 Session::flash('error_message', 'Invalid Email Or Password!');
@@ -153,5 +153,45 @@ class AdminController extends Controller
             return redirect()->back();
         }
         return view('admin.admin_update_details');
+    }
+
+    /**
+     * Admins / Subadmins
+     */
+    public function adminsSubadmins(){
+        Session::put('page', 'admins_subadmins');
+        $admins = Admin::all();
+        return view('admin.admins_subadmins.admins_subadmins', compact('admins'));
+    }
+
+    /**
+     * Admin Subadmins Status Update
+     */
+    public function updateAdminsSubadminsstatus(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            if($data['status'] == 'Active'){
+                $status = 0;
+            }else {
+                $status = 1;
+            }
+            Admin::where('id', $data['admin_id'])->update(['status' => $status]);
+            return response()->json([
+                'status' => $status,
+                'admin_id' => $data['admin_id']
+            ]);
+        }
+    }
+
+    /**
+     * Delete Admins / Subadmins
+     */
+    public function deleteAdminsSubadmins($id){
+        $admin_data = Admin::findOrFail($id);
+
+        $admin_data->delete();
+
+        Session::put('success_message', 'Admins / Subadmins Deleted Successfully ):');
+        return redirect()->back();
     }
 }

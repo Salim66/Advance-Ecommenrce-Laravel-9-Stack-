@@ -135,6 +135,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete-cms-page/{id}', [CmsController::class, 'deleteCmsPage']);
 
 
+        // Admins / SubAdmins Route
+        Route::get('/admins-subadmins', [AdminController::class, 'adminsSubadmins']);
+        Route::post('/update-admins-subadmins-status', [AdminController::class, 'updateAdminsSubadminsstatus']);
+        Route::any('/add-edit-coupon/{id?}', [CouponController::class, 'addEditCoupon']);
+        Route::get('/delete-admins-subadmins/{id}', [AdminController::class, 'deleteAdminsSubadmins']);
+
     });
 });
 

@@ -216,6 +216,20 @@
                 </a>
               </li>
 
+              @if(Auth::guard('admin')->user()->type == "super admin" || Auth::guard('admin')->user()->type == "admin")
+                @if (Session::get('page') == 'admins_subadmins')
+                    @php $active = "active"; @endphp
+                @else
+                    @php $active = ""; @endphp
+                @endif
+              <li class="nav-item">
+                <a href="{{ url('/admin/admins-subadmins') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Admins / Subadmins</p>
+                </a>
+              </li>
+             @endif
+
             </ul>
           </li>
 
