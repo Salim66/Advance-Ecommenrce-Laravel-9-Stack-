@@ -15,6 +15,7 @@ use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\OrdersProduct;
+use App\Models\OtherSetting;
 use App\Models\ShippingCharge;
 use App\Models\Sms;
 use Illuminate\Pagination\Paginator;
@@ -501,16 +502,18 @@ class ProductsController extends Controller
             $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
         }
 
+        $otherSettings = OtherSetting::where('id', 1)->first();
+
         // Check Min Cart Amount
-        if($total_price < 500){
-            $message = "Min cart amount must be Rs. 500";
+        if($total_price < $otherSettings->min_cart_value){
+            $message = "Min cart amount must be Rs. ".$otherSettings->min_cart_value;
             Session::flash('error_message', $message);
             return redirect()->back();
         }
 
         // Check Min Cart Amount
-        if($total_price > 50000){
-            $message = "Max cart amount must be Rs. 50000";
+        if($total_price > $otherSettings->max_cart_value){
+            $message = "Max cart amount must be Rs. ".$otherSettings->max_cart_value;
             Session::flash('error_message', $message);
             return redirect()->back();
         }
@@ -594,7 +597,7 @@ class ProductsController extends Controller
 
             // Get shopping charges
             $shipping_charges = ShippingCharge::getShippingCharges($total_weight, $deliveryAddress->country);
-            
+
             // Calculate grand total
             $grand_total = $total_price + $shipping_charges - Session::get('coupon_amount');
 
@@ -696,8 +699,8 @@ class ProductsController extends Controller
 
         }
 
-        
-        
+
+
         return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses', 'total_price'));
     }
 
@@ -809,7 +812,7 @@ class ProductsController extends Controller
             if( is_numeric($data['pincode']) && $data['pincode'] > 0 && $data['pincode'] == round($data['pincode'], 0) ) {
                 $codPincodeCount = DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count();
                 $prepaidPincodeCount = DB::table('prepaid_pincode')->where('pincode', $data['pincode'])->count();
-                
+
                 if($codPincodeCount == 0 && $prepaidPincodeCount == 0){
                     echo "This pincode is not available for delivery"; die;
                 }else {

@@ -86,6 +86,17 @@
                   <p>Update Admin Details</p>
                 </a>
               </li>
+                @if (Session::get('page') == 'update-other-settings')
+                    @php $active = "active"; @endphp
+                @else
+                    @php $active = ""; @endphp
+                @endif
+              <li class="nav-item">
+                <a href="{{ url('/admin/update-other-settings') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update Other Settings</p>
+                </a>
+              </li>
 
             </ul>
           </li>

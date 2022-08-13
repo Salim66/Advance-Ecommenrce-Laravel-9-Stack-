@@ -142,6 +142,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete-admins-subadmins/{id}', [AdminController::class, 'deleteAdminsSubadmins']);
         Route::any('/update-roles/{id}', [AdminController::class, 'UpdateRoles']);
 
+        // Other Settings Route
+        Route::any('/update-other-settings', [AdminController::class, 'updateOtherSettings']);
+
     });
 });
 

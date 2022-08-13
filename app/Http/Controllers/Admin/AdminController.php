@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Ui\Presets\React;
 use App\Http\Controllers\Controller;
 use App\Models\AdminRole;
+use App\Models\OtherSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -324,5 +325,28 @@ class AdminController extends Controller
         $adminRoles = AdminRole::where('admin_id', $id)->get();
         $title = "Update <strong>".$admindata->name."</strong> (".$admindata->type.") Roles/Permissions";
         return view('admin.admins_subadmins.update_roles', compact('title', 'admindata', 'adminRoles'));
+    }
+
+    /**
+     * Update other settings
+     */
+    public function updateOtherSettings(Request $request){
+        Session::put('page', 'update-other-settings');
+        $otherSettings = OtherSetting::find(1);
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            OtherSetting::where('id', 1)->update([
+                'min_cart_value' => $data['min_cart_value'],
+                'max_cart_value' => $data['max_cart_value']
+            ]);
+
+            $message = "Other Settings Update Successfully";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+        }
+
+        return view('admin.other_settings', compact('otherSettings'));
+
     }
 }
