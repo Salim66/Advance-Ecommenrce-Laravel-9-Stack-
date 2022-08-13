@@ -16,6 +16,16 @@
               <li class="breadcrumb-item active">Dashboard v1</li>
             </ol>
           </div><!-- /.col -->
+          <div class="col-md-12">
+            @if(session()->has('error_message'))
+            <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+              {{ session()->get('error_message') }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            @endif
+          </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -88,7 +98,7 @@
           <!-- ./col -->
         </div>
         <!-- /.row -->
-    
+
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

@@ -68,10 +68,12 @@
                         <td>{{ $data->order_status }}</td>
                         <td>{{ $data->payment_method }}</td>
                         <td style="width: 120px;">
+                            @if($orderModule->edit_access == 1 || $orderModule->full_access == 1)
                             <a title="View Details" href="{{ url('admin/orders/'. $data->id) }}"><i class="fas fa-file"></i></a> &nbsp;
                             @if($data->order_status == "Shipped" || $data->order_status == "Delivered")
                             <a title="Print Order Invoice" href="{{ url('admin/view-order-invoice/'. $data->id) }}"><i class="fas fa-print"></i></a> &nbsp;
                             <a title="Print PDF Invoice" href="{{ url('admin/print-pdf-invoice/'. $data->id) }}"><i class="far fa-file-pdf"></i></a> &nbsp;
+                            @endif
                             @endif
                         </td>
                     </tr>

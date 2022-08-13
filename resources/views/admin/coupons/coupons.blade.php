@@ -72,15 +72,21 @@
                         </td>
                         <td>{{ $data->expiry_date }}</td>
                         <td>
+                            @if($couponModule->edit_access == 1 || $couponModule->full_access == 1)
                             @if($data->status == 1)
                                 <a class="updateCouponsStatus" id="coupon-{{ $data->id }}" coupon_id="{{ $data->id }}" href="javascript:void(0)"><i class="fas fa-toggle-on" status="Active"></i></a>
                             @else
                             <a class="updateCouponsStatus" id="coupon-{{ $data->id }}" coupon_id="{{ $data->id }}" href="javascript:void(0)"><i class="fas fa-toggle-off" status="Inactive"></i></a>
                             @endif
+                            @endif
                         </td>
                         <td>
+                            @if($couponModule->edit_access == 1 || $couponModule->full_access == 1)
                             <a href="{{ url('admin/add-edit-coupon/'. $data->id) }}"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                            @endif
+                            @if($couponModule->full_access == 1)
                             <a href="javascript:void(0)" class="confirmDelete" record="coupon" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

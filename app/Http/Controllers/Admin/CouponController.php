@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Coupon;
 use App\Models\Section;
+use App\Models\AdminRole;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CouponController extends Controller
@@ -18,7 +20,18 @@ class CouponController extends Controller
     public function coupons(){
         Session::put('page', 'coupons');
         $all_data = Coupon::all();
-        return view('admin.coupons.coupons', compact('all_data'));
+
+        // Set Admins/Subadmins Permission for Coupons
+        $couponModuleCount = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'coupons'])->count();
+        if($couponModuleCount == 0){
+            $message = "This feature restricted for you!";
+            Session::flash('error_message', $message);
+            return redirect('admin/dashboard');
+        }else {
+            $couponModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'coupons'])->first();
+        }
+
+        return view('admin.coupons.coupons', compact('all_data', 'couponModule'));
     }
 
     /**

@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductAttribute;
-use App\Models\ProductImages;
-use App\Models\Section;
-use Illuminate\Support\Facades\Session;
 use Image;
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\Section;
+use App\Models\Category;
+use App\Models\AdminRole;
+use Illuminate\Http\Request;
+use App\Models\ProductImages;
+use App\Models\ProductAttribute;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -25,7 +27,18 @@ class ProductController extends Controller
         }, 'section' => function($query){
             $query->select('id', 'name');
         }])->get();
-        return view('admin.products.products', compact('all_data'));
+
+         // Set Admins/Subadmins Permission for Products
+         $productModuleCount = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'products'])->count();
+         if($productModuleCount == 0){
+             $message = "This feature restricted for you!";
+             Session::flash('error_message', $message);
+             return redirect('admin/dashboard');
+         }else {
+             $productModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'products'])->first();
+         }
+
+        return view('admin.products.products', compact('all_data', 'productModule'));
     }
 
     /**

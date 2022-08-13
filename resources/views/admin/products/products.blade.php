@@ -75,17 +75,23 @@
                         <td>{{ $data->category->category_name }}</td>
                         <td>{{ $data->section->name }}</td>
                         <td>
+                            @if($productModule->edit_access == 1 || $productModule->full_access == 1)
                             @if($data->status == 1)
                                 <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
                             @else
                             <a class="updateProductStatus" id="product-{{ $data->id }}" product_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
                             @endif
+                            @endif
                         </td>
                         <td style="width: 120px;">
+                            @if($productModule->edit_access == 1 || $productModule->full_access == 1)
                             <a title="Add Attribute" href="{{ url('admin/add-attribute/'. $data->id) }}"><i class="fas fa-plus"></i></a>
                             <a title="Add Images" href="{{ url('admin/add-images/'. $data->id) }}"><i class="fas fa-plus-circle"></i></a>
                             <a title="Edit Product" href="{{ url('admin/add-edit-product/'. $data->id) }}"><i class="fas fa-edit"></i></a>
+                            @endif
+                            @if( $productModule->full_access == 1)
                             <a title="Delete Product" href="javascript:void(0)" <?php /* href="{{ url('admin/delete-product/'. $data->id) }}" */ ?> class="confirmDelete" record="product" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

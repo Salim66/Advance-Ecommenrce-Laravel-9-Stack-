@@ -6,6 +6,8 @@ use App\Models\Section;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\AdminRole;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Image;
 
@@ -17,7 +19,18 @@ class CategoryController extends Controller
     public function categories(){
         Session::put('page', 'categories');
         $all_data = Category::with(['section','parentCategory'])->get();
-        return view('admin.categories.categories', compact('all_data'));
+
+        // Set Admins/Subadmins Permission for Category
+        $categoryModuleCount = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'categories'])->count();
+        if($categoryModuleCount == 0){
+            $message = "This feature restricted for you!";
+            Session::flash('error_message', $message);
+            return redirect('admin/dashboard');
+        }else {
+            $categoryModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'categories'])->first();
+        }
+
+        return view('admin.categories.categories', compact('all_data', 'categoryModule'));
     }
 
     /**

@@ -65,15 +65,21 @@
                         <td>{{ $data->section->name }}</td>
                         <td>{{ $data->url }}</td>
                         <td>
+                            @if($categoryModule->edit_access == 1 || $categoryModule->full_access == 1)
                             @if($data->status == 1)
                                 <a class="updateCategoryStatus" id="category-{{ $data->id }}" category_id="{{ $data->id }}" href="javascript:void(0)">Active</a>
                             @else
                             <a class="updateCategoryStatus" id="category-{{ $data->id }}" category_id="{{ $data->id }}" href="javascript:void(0)">Inactive</a>
                             @endif
+                            @endif
                         </td>
                         <td>
+                            @if($categoryModule->edit_access == 1 || $categoryModule->full_access == 1)
                             <a href="{{ url('admin/add-edit-category/'. $data->id) }}" class="btn btn-info">Edit</a>
+                            @endif
+                            @if($categoryModule->full_access == 1)
                             <a href="javascript:void(0)" <?php /* href="{{ url('admin/delete-category/'. $data->id) }}" */ ?> class="btn btn-danger confirmDelete" record="category" recordId="{{ $data->id }}">Delete</a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
