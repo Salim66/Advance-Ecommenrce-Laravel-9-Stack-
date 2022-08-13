@@ -117,8 +117,8 @@ Route::prefix('admin')->group(function () {
         Route::post('/update-order-status', [AdminOrdersController::class, 'updateOrderStatus']);
         Route::get('/view-order-invoice/{id}', [AdminOrdersController::class, 'viewOrderInvoice']);
         Route::get('/print-pdf-invoice/{id}', [AdminOrdersController::class, 'printPDFInvoice']);
-      
-      
+
+
         // Shipping Charges Route
         Route::get('/shipping-charges', [ShippingCargesController::class, 'viewShippingCharges']);
         Route::any('/edit-shipping-charges/{id}', [ShippingCargesController::class, 'editShippingCharges']);
@@ -140,6 +140,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/update-admins-subadmins-status', [AdminController::class, 'updateAdminsSubadminsstatus']);
         Route::any('/add-edit-admins-subadmins/{id?}', [AdminController::class, 'addEditAdminsSubadmins']);
         Route::get('/delete-admins-subadmins/{id}', [AdminController::class, 'deleteAdminsSubadmins']);
+        Route::any('/update-roles/{id}', [AdminController::class, 'UpdateRoles']);
 
     });
 });
@@ -199,7 +200,7 @@ Route::namespace('Front')->group(function(){
     Route::any('/forgot_password', [UserController::class, 'forgotPassword']);
 
     // Check Delivery Pincode
-    Route::post('/check-pincode', [ProductsController::class, 'checkPincode']); 
+    Route::post('/check-pincode', [ProductsController::class, 'checkPincode']);
 
     // Search Product
     Route::get('/search-products', [ProductsController::class, 'listing']);

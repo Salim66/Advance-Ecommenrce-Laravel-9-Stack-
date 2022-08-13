@@ -6,6 +6,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Laravel\Ui\Presets\React;
 use App\Http\Controllers\Controller;
+use App\Models\AdminRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -276,5 +277,52 @@ class AdminController extends Controller
         }
 
         return view('admin.admins_subadmins.add_edit_admins_subadmins', compact('title', 'admindata'));
+    }
+
+    /**
+     * Update Role
+     */
+    public function UpdateRoles(Request $request, $id){
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            unset($data['_token']);
+
+            AdminRole::where('admin_id', $id)->delete();
+
+            foreach($data as $key => $value){
+                if(isset($value['view'])){
+                    $view = $value['view'];
+                }else {
+                    $view = 0;
+                }
+                if(isset($value['edit'])){
+                    $edit = $value['edit'];
+                }else {
+                    $edit = 0;
+                }
+                if(isset($value['full'])){
+                    $full = $value['full'];
+                }else {
+                    $full = 0;
+                }
+
+                AdminRole::where('admin_id', $id)->insert([
+                    "admin_id" => $id,
+                    "module" => $key,
+                    "view_access" => $view,
+                    "edit_access" => $edit,
+                    "full_access" => $full,
+                ]);
+            }
+            $message = "Roles updated successfully :)";
+            Session::put('success_message', $message);
+            return redirect()->back();
+        }
+
+        $admindata = Admin::where('id', $id)->first();
+        $adminRoles = AdminRole::where('admin_id', $id)->get();
+        $title = "Update <strong>".$admindata->name."</strong> (".$admindata->type.") Roles/Permissions";
+        return view('admin.admins_subadmins.update_roles', compact('title', 'admindata', 'adminRoles'));
     }
 }

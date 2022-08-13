@@ -72,7 +72,7 @@
                             @endif
                         </td>
                         <td style="width: 120px;">
-                            <a title="Add Roles and Permission" href="{{ url('admin/roles-permission/'. $data->id) }}"><i class="fas fa-unlock"></i></a>&nbsp;&nbsp;
+                            <a title="Add Roles and Permission" href="{{ url('admin/update-roles/'. $data->id) }}"><i class="fas fa-unlock"></i></a>&nbsp;&nbsp;
                             <a title="Edit Admins Subadmins" href="{{ url('admin/add-edit-admins-subadmins/'. $data->id) }}"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
                             <a title="Delete Admins Subadmins" href="javascript:void(0)" class="confirmDelete" record="admins-subadmins" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
                         </td>
