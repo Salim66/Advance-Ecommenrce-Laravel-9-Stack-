@@ -22,12 +22,16 @@ class CategoryController extends Controller
 
         // Set Admins/Subadmins Permission for Category
         $categoryModuleCount = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'categories'])->count();
-        if($categoryModuleCount == 0){
+        if(Auth::guard('admin')->user()->type == 'super admin'){
+            $categoryModule['view_access'] = 1;
+            $categoryModule['edit_access'] = 1;
+            $categoryModule['full_access'] = 1;
+        }else if($categoryModuleCount == 0){
             $message = "This feature restricted for you!";
             Session::flash('error_message', $message);
             return redirect('admin/dashboard');
         }else {
-            $categoryModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'categories'])->first();
+            $categoryModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'categories'])->first()->toArray();
         }
 
         return view('admin.categories.categories', compact('all_data', 'categoryModule'));

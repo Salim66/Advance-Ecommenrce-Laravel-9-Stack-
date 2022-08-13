@@ -30,12 +30,16 @@ class ProductController extends Controller
 
          // Set Admins/Subadmins Permission for Products
          $productModuleCount = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'products'])->count();
-         if($productModuleCount == 0){
+         if(Auth::guard('admin')->user()->type == 'super admin'){
+            $productModule['view_access'] = 1;
+            $productModule['edit_access'] = 1;
+            $productModule['full_access'] = 1;
+         }else if($productModuleCount == 0){
              $message = "This feature restricted for you!";
              Session::flash('error_message', $message);
              return redirect('admin/dashboard');
          }else {
-             $productModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'products'])->first();
+             $productModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'products'])->first()->toArray();
          }
 
         return view('admin.products.products', compact('all_data', 'productModule'));

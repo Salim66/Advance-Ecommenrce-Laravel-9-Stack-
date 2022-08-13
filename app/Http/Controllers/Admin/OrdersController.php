@@ -26,12 +26,16 @@ class OrdersController extends Controller
 
          // Set Admins/Subadmins Permission for Orders
          $orderModuleCount = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'orders'])->count();
-         if($orderModuleCount == 0){
+         if(Auth::guard('admin')->user()->type == 'super admin'){
+            $orderModule['view_access'] = 1;
+            $orderModule['edit_access'] = 1;
+            $orderModule['full_access'] = 1;
+         }else if($orderModuleCount == 0){
              $message = "This feature restricted for you!";
              Session::flash('error_message', $message);
              return redirect('admin/dashboard');
          }else {
-             $orderModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'orders'])->first();
+             $orderModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'orders'])->first()->toArray();
          }
 
         return view('admin.orders.orders', compact('orders', 'orderModule'));

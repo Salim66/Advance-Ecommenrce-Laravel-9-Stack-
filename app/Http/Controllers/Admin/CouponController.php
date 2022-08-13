@@ -23,12 +23,16 @@ class CouponController extends Controller
 
         // Set Admins/Subadmins Permission for Coupons
         $couponModuleCount = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'coupons'])->count();
-        if($couponModuleCount == 0){
+        if(Auth::guard('admin')->user()->type == 'super admin'){
+            $couponModule['view_access'] = 1;
+            $couponModule['edit_access'] = 1;
+            $couponModule['full_access'] = 1;
+        }else if($couponModuleCount == 0){
             $message = "This feature restricted for you!";
             Session::flash('error_message', $message);
             return redirect('admin/dashboard');
         }else {
-            $couponModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'coupons'])->first();
+            $couponModule = AdminRole::where(['admin_id'=>Auth::guard('admin')->user()->id, 'module'=>'coupons'])->first()->toArray();
         }
 
         return view('admin.coupons.coupons', compact('all_data', 'couponModule'));
