@@ -88,10 +88,17 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    @if(!empty($admindata->email))
+                    <div class="form-group">
+                        <label for="admin_email">Admin Email</label>
+                        <input type="email" class="form-control" value="{{ $admindata->email }}" readonly disabled>
+                    </div>
+                    @else
                     <div class="form-group">
                         <label for="admin_email">Admin Email</label>
                         <input type="email" class="form-control" name="admin_email" id="admin_email" placeholder="Enter Email" @if(!empty($admindata->email)) readonly value="{{ $admindata->email }}" @else value="{{ old('admin_email') }}" @endif>
                     </div>
+                    @endif
                     <div class="form-group">
                         <label>Admin Type</label>
                         <select class="form-control select2" name="admin_type" id="admin_type" style="width: 100%;">

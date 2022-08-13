@@ -199,7 +199,7 @@ class AdminController extends Controller
      * Add Edit Admin / Subadmin
      */
     public function addEditAdminsSubadmins(Request $request, $id = null){
-        
+
         if($id == ""){
             // Add Admin / Subadmin
             $title = "Add Admin / Subadmin";
@@ -214,12 +214,15 @@ class AdminController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            
-            $adminCount = Admin::where('email', $data['admin_email'])->count();
-            if($adminCount > 0){
-                $message = "This email already exists";
-                Session::put('error_message', $message);
-                return redirect()->back();
+            // return $data;
+            // Check email already exists
+            if(empty($admindata->id)){
+                $adminCount = Admin::where('email', $data['admin_email'])->count();
+                if($adminCount > 0){
+                    $message = "This email already exists";
+                    Session::put('error_message', $message);
+                    return redirect()->back();
+                }
             }
 
             $rules = [
@@ -236,6 +239,7 @@ class AdminController extends Controller
             ];
             $this->validate($request, $rules, $customMessage);
 
+            $imageName = '';
             if($request->hasFile('admin_image')){
                 $image_tmp = $request->file('admin_image');
                 if($image_tmp->isValid()){
@@ -251,16 +255,18 @@ class AdminController extends Controller
                 }else {
                     $imageName = "";
                 }
+            }else {
+                $imageName = $data['current_admin_image'];
             }
 
-            
+
             $admindata->name = $data['admin_name'];
             $admindata->mobile = $data['admin_mobile'];
             $admindata->image = $imageName;
             if(empty($admindata->id)){
                 $admindata->email = $data['admin_email'];
-                $admindata->type = $data['admin_type'];
             }
+            $admindata->type = $data['admin_type'];
             $admindata->password = bcrypt($data['admin_password']);
             $admindata->save();
 
