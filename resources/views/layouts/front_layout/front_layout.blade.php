@@ -4,19 +4,19 @@
 	<meta charset="utf-8">
     @if(!empty($meta_title))
     <title>{{ $meta_title }}</title>
-    @else  
+    @else
 	<title>Stack Developers online Shopping cart</title>
     @endif
 
     @if(!empty($meta_description))
     <meta name="description" content="{{ $meta_description }}">
-    @else   
+    @else
 	<meta name="description" content="Three Sixty Degree E-Commerce Shipping , Selling Product in online market place.">
     @endif
 
     @if(!empty($meta_keyword))
     <meta name="keyword" content="{{ $meta_keyword }}">
-    @else   
+    @else
 	<meta name="keyword" content="Man, Women, Kids Cloths">
     @endif
 
@@ -45,6 +45,7 @@
             font-style: italic;
         }
     </style>
+    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=621cb8f8b846610019d3dc86&product=inline-share-buttons' async='async'></script>
 </head>
 <body>
 @include('layouts.front_layout.front_header')
@@ -72,6 +73,6 @@
 <script src="{{ asset('frontend/') }}/themes/js/front.js"></script>
 <script src="{{ asset('frontend/') }}/themes/js/front_scripts.js"></script>
 <script src="{{ asset('frontend/') }}/themes/js/jquery.lightbox-0.5.js"></script>
-
+<!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-62f92c34c64d77f2"></script>
 </body>
 </html>

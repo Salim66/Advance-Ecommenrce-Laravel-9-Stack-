@@ -168,7 +168,7 @@
                     </div>
                 </div>
             </form>
-
+<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
             <hr class="soft clr"/>
             <p class="span6">
                 {{ $product_detail->description }}
