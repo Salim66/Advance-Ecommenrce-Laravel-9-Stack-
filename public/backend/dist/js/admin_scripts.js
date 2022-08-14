@@ -293,6 +293,28 @@
             });
         });
 
+        //Admin Currency Status Update Script
+        $('.updateCurrenciesStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).children('i').attr('status');
+            let currency_id = $(this).attr('currency_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-currency-status',
+                data: {status:status, currency_id:currency_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#currency-'+currency_id).html('<i class="fas fa-toggle-on" status="Active"></i>');
+                    }else if(resp['status'] == 0){
+                        $('#currency-'+currency_id).html('<i class="fas fa-toggle-off" status="Inactive"></i>');
+                    }
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
         // Append Category Level
         $('#section_id').change(function(){
             let section_id = $(this).val();
@@ -385,7 +407,7 @@
             }
         });
 
-        
+
 
 
     });

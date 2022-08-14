@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShippingCargesController;
@@ -144,6 +145,12 @@ Route::prefix('admin')->group(function () {
 
         // Other Settings Route
         Route::any('/update-other-settings', [AdminController::class, 'updateOtherSettings']);
+
+        // Currency Route
+        Route::get('/currencies', [CurrencyController::class, 'currencies']);
+        Route::post('/update-currency-status', [CurrencyController::class, 'updateCurrencyStatus']);
+        Route::any('/add-edit-cms-page/{id?}', [CmsController::class, 'addEditCmsPage']);
+        Route::get('/delete-cms-page/{id}', [CmsController::class, 'deleteCmsPage']);
 
     });
 });
