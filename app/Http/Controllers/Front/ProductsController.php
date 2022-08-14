@@ -15,6 +15,7 @@ use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Currency;
 use App\Models\OrdersProduct;
 use App\Models\OtherSetting;
 use App\Models\ShippingCharge;
@@ -193,7 +194,10 @@ class ProductsController extends Controller
             $groupProducts = Product::select('id', 'main_image')->where('id', '!=', $id)->where(['group_code'=>$product_detail->group_code, 'status' => 1])->get();
         }
 
-        return view('front.products.detial', compact('product_detail', 'total_stock', 'related_product', 'groupProducts'));
+        // Currency Converter
+        $getCurrency = Currency::select('currency_code', 'exchange_rate')->where('status', 1)->get();
+
+        return view('front.products.detial', compact('product_detail', 'total_stock', 'related_product', 'groupProducts', 'getCurrency'));
 
     }
 
@@ -206,6 +210,18 @@ class ProductsController extends Controller
         if($request->ajax()){
             $data = $request->all();
             $getDiscountedAttrPrice = Product::getDiscountedAttrPrice($data['product_id'], $data['size']);
+
+            // Currency Converter
+            $getCurrency = Currency::select('currency_code', 'exchange_rate')->where('status', 1)->get();
+
+            $getDiscountedAttrPrice['currency'] = '<span style="font-weight: normal; font-size: 14px;">';
+            foreach($getCurrency as $currency){
+                $getDiscountedAttrPrice['currency'] .= "<br>";
+                $getDiscountedAttrPrice['currency'] .= $currency->currency_code." ";
+                $getDiscountedAttrPrice['currency'] .= round($getDiscountedAttrPrice['final_price']/$currency->exchange_rate, 2);
+            }
+            $getDiscountedAttrPrice['currency'] .= "</span>";
+
             return $getDiscountedAttrPrice;
         }
     }

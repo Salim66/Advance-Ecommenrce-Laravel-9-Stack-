@@ -188,10 +188,13 @@
                 type: 'post',
                 data: {size:size,product_id:product_id},
                 success: function(data){
+
+                    $('.mainCurrencyPrice').hide();
+
                     if(data['discount']>0){
-                        $('.setProductPrice').html('<del>Rs. ' + data['product_price']+"</del> Rs. "+data['final_price']);
+                        $('.setProductPrice').html('<del>Rs. ' + data['product_price']+"</del> Rs. "+data['final_price']+data['currency']);
                     }else {
-                        $('.setProductPrice').html('Rs. ' + data['product_price']);
+                        $('.setProductPrice').html('Rs. ' + data['product_price']+data['currency']);
                     }
 
                 },

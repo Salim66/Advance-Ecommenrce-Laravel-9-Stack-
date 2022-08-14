@@ -84,8 +84,20 @@
                         @else
                             Rs. {{ $product_detail->product_price }}
                         @endif
-
                     </h4>
+
+                    <span class="mainCurrencyPrice">
+                        @foreach($getCurrency as $currency)
+                            {{ $currency->currency_code }}
+                            @if($discount_price > 0 )
+                                @php echo round($discount_price/$currency->exchange_rate); @endphp <br>
+                            @else
+                                @php echo round($product_detail->product_price/$currency->exchange_rate) @endphp <br>
+                            @endif
+                        @endforeach
+                    </span><br>
+
+
                         <select name="size" class="getProductPrice" product_id="{{ $product_detail->id }}" class="span2 pull-left" required>
                             <option value="" disabled selected>Select Size</option>
                             @foreach($product_detail->attributes as $att)
