@@ -49,10 +49,8 @@
                     <th>Mobile</th>
                     <th>Email</th>
                     <th>Type</th>
-                    @if(Auth::guard('admin')->user()->type == "super admin")
                     <th>Status</th>
                     <th>Action</th>
-                    @endif
                   </tr>
                   </thead>
                   <tbody>
@@ -63,20 +61,22 @@
                         <td>{{ $data->mobile }}</td>
                         <td>{{ $data->email }}</td>
                         <td>{{ $data->type }}</td>
-                        @if(Auth::guard('admin')->user()->type == "super admin")
                         <td>
+                            @if( $data->id != 1 )
                             @if($data->status == 1)
                                 <a class="updateAdminsSubAdminsStatus" id="admin-{{ $data->id }}" admin_id="{{ $data->id }}" href="javascript:void(0)"><i class="fas fa-toggle-on" status="Active"></i></a>
                             @else
                             <a class="updateAdminsSubAdminsStatus" id="admin-{{ $data->id }}" admin_id="{{ $data->id }}" href="javascript:void(0)"><i class="fas fa-toggle-off" status="Inactive"></i></a>
                             @endif
+                            @endif
                         </td>
                         <td style="width: 120px;">
+                            @if( $data->id != 1)
                             <a title="Add Roles and Permission" href="{{ url('admin/update-roles/'. $data->id) }}"><i class="fas fa-unlock"></i></a>&nbsp;&nbsp;
                             <a title="Edit Admins Subadmins" href="{{ url('admin/add-edit-admins-subadmins/'. $data->id) }}"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
                             <a title="Delete Admins Subadmins" href="javascript:void(0)" class="confirmDelete" record="admins-subadmins" recordId="{{ $data->id }}"><i class="fas fa-trash"></i></a>
+                            @endif
                         </td>
-                        @endif
                     </tr>
                     @endforeach
                   </tbody>
