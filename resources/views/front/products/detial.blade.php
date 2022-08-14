@@ -100,7 +100,16 @@
                 @php Session::forget('error_message'); @endphp
             @endif
             <h3>{{ $product_detail->product_name }}  </h3>
-            <small>- {{ $product_detail->brand->name }}</small>
+            <small>- {{ $product_detail->brand->name }}</small><br>
+
+            <div>
+                @php $star = 1; @endphp
+                @while($star <= $avgStarRating)
+                    &#9733;
+                    @php $star++; @endphp
+                @endwhile
+                ({{ $avgRating }})
+            </div>
             <hr class="soft"/>
 
             @if(count($groupProducts) > 0)
@@ -319,6 +328,21 @@
                         </div>
                         <div class="span4">
                             <h4>Users Reviews</h4>
+                            <div>
+                                <p>
+                                @foreach($ratings as $rating)
+                                    @php $count = 1; @endphp
+                                    @while($count <= $rating->rating)
+                                        &#9733;
+                                        @php $count++; @endphp
+                                    @endwhile
+                                </p>
+                                <p>{{ $rating->review }}</p>
+                                <p>By {{ $rating->user->name }}</p>
+                                <p>{{ date('d F, Y, H:i:s', strtotime($rating->created_at)) }}</p>
+                                @endforeach
+                                <hr>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -18,6 +18,7 @@ use App\Models\Brand;
 use App\Models\Currency;
 use App\Models\OrdersProduct;
 use App\Models\OtherSetting;
+use App\Models\Rating;
 use App\Models\ShippingCharge;
 use App\Models\Sms;
 use Illuminate\Pagination\Paginator;
@@ -197,7 +198,22 @@ class ProductsController extends Controller
         // Currency Converter
         $getCurrency = Currency::select('currency_code', 'exchange_rate')->where('status', 1)->get();
 
-        return view('front.products.detial', compact('product_detail', 'total_stock', 'related_product', 'groupProducts', 'getCurrency'));
+        // Get all rating of product
+        $ratings = Rating::with('user')->where('status', 1)->where('product_id', $id)->latest()->get();
+
+        // Get average rating of this product
+        $ratingSum = Rating::with('user')->where('status', 1)->where('product_id', $id)->sum('rating');
+        $ratingCount = Rating::with('user')->where('status', 1)->where('product_id', $id)->count();
+
+
+        $avgRating = round($ratingSum/$ratingCount,2);
+        $avgStarRating = round($ratingSum/$ratingCount);
+
+
+        $meta_title = $product_detail->product_name;
+        $meta_description = $product_detail->description;
+        $meta_keyword = $product_detail->product_name;
+        return view('front.products.detial', compact('product_detail', 'total_stock', 'related_product', 'groupProducts', 'getCurrency', 'meta_title', 'meta_description', 'meta_keyword', 'ratings', 'avgRating', 'avgStarRating'));
 
     }
 

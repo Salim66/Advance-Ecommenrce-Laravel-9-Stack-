@@ -40,7 +40,7 @@ class RatingsController extends Controller
                     'user_id' => Auth::user()->id,
                     'product_id' => $data['product_id'],
                     'rating' => $data['rating'],
-                    'review' => $data['product_id'],
+                    'review' => $data['review'],
                 ]);
 
                 $message = "Thanks for rating this product! It will be shown once approved.";
