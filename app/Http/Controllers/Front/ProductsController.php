@@ -112,7 +112,7 @@ class ProductsController extends Controller
                 $catDetails['breadcrumbs'] = $search_product;
                 $catDetails['categoryDetails']['category_name'] = $search_product;
                 $catDetails['categoryDetails']['description'] = "Search Result for ".$search_product;
-                $catProducts = Product::with('brand')->join('categories', 'categories.id', '=', 'products.category_id')->where(function($query) use($search_product){
+                $catProducts = Product::with('brand')->join('categories', 'categories.id', '=', 'products.category_id')->select('products.*','categories.category_name')->where(function($query) use($search_product){
                     $query->where('product_name', 'like', '%'.$search_product.'%')
                     ->orWhere('products.product_code', 'like', '%'.$search_product.'%')
                     ->orWhere('products.product_color', 'like', '%'.$search_product.'%')
