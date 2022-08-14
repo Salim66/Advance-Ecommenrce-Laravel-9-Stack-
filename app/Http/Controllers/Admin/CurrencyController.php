@@ -36,4 +36,46 @@ class CurrencyController extends Controller
             ]);
         }
     }
+
+    /**
+     * Add Edit Currency
+     */
+    public function addEditCurrency(Request $request, $id=null){
+        if($id==""){
+            // Add Currency
+            $title = "Add Currency";
+            $currency = new Currency;
+            $message = "Add Currency Successfully";
+        }else {
+            //Edit Currency
+            $title = "Edit Currency";
+            $currency = Currency::find($id);
+            $message = "Update Currency Successfully";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $currency->currency_code = $data['currency_code'];
+            $currency->exchange_rate = $data['exchange_rate'];
+            $currency->save();
+
+            Session::put('success_message', $message);
+            return redirect('/admin/currencies');
+        }
+
+        return view('admin.currencies.add_edit_currency', compact('title', 'currency'));
+
+    }
+
+    /**
+     * Currency Delete
+     */
+    public function deleteCurrency($id){
+        $currency_data = Currency::findOrFail($id);
+
+        $currency_data->delete();
+
+        Session::put('success_message', 'Currency Deleted Successfully ):');
+        return redirect()->back();
+    }
 }

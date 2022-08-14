@@ -149,8 +149,8 @@ Route::prefix('admin')->group(function () {
         // Currency Route
         Route::get('/currencies', [CurrencyController::class, 'currencies']);
         Route::post('/update-currency-status', [CurrencyController::class, 'updateCurrencyStatus']);
-        Route::any('/add-edit-cms-page/{id?}', [CmsController::class, 'addEditCmsPage']);
-        Route::get('/delete-cms-page/{id}', [CmsController::class, 'deleteCmsPage']);
+        Route::any('/add-edit-currency/{id?}', [CurrencyController::class, 'addEditCurrency']);
+        Route::get('/delete-currency/{id}', [CurrencyController::class, 'deleteCurrency']);
 
     });
 });
