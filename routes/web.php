@@ -19,6 +19,7 @@ use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaypalController;
 use App\Http\Controllers\Front\ProductsController;
+use App\Http\Controllers\Front\RatingsController as FrontRatingsController;
 use App\Http\Controllers\Front\UserController;
 use App\Models\Category;
 use App\Models\CmsPage;
@@ -222,6 +223,9 @@ Route::namespace('Front')->group(function(){
 
     // Contact Route
     Route::any('/contact', [CMSPageController::class, 'contact']);
+
+    // Review & Rating Route
+    Route::any('/add-rating', [FrontRatingsController::class, 'addRating']);
 
     Route::group(['middleware' => ['auth']], function(){
         // User Logout

@@ -3,7 +3,7 @@
 @section('content')
 <div class="span9">
     <div id="mainBody">
-        <div class="container">	
+        <div class="container">
             <div class="row">
                 <div class="span4">
                 <h4>Contact Details</h4>
@@ -13,7 +13,7 @@
                     ﻿Tel 00000-00000<br/>
                     Fax 00000-00000<br/>
                     web: https://www.youtube.com/threesixtydegree
-                </p>		
+                </p>
                 </div>
                 <div class="span4">
                 <h4>Email Us</h4>
@@ -38,27 +38,27 @@
                     @csrf
                 <fieldset>
                   <div class="control-group">
-                   
+
                       <input type="text" name="name" placeholder="name" class="input-xlarge"/>
-                   
+
                   </div>
                    <div class="control-group">
-                   
+
                       <input type="text" name="email" placeholder="email" class="input-xlarge"/>
-                   
+
                   </div>
                    <div class="control-group">
-                   
+
                       <input type="text" name="subject" placeholder="subject" class="input-xlarge"/>
-                  
+
                   </div>
                   <div class="control-group">
                       <textarea rows="3" name="message" id="message" class="input-xlarge"></textarea>
-                   
+
                   </div>
-        
+
                     <button class="btn btn-large" type="submit">Send Messages</button>
-        
+
                 </fieldset>
               </form>
                 </div>
