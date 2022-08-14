@@ -88,6 +88,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+                @php Session::forget('success_message'); @endphp
             @endif
             @if(session()->has('error_message'))
             <div class="alert alert-danger" role="alert">
@@ -96,6 +97,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+                @php Session::forget('error_message'); @endphp
             @endif
             <h3>{{ $product_detail->product_name }}  </h3>
             <small>- {{ $product_detail->brand->name }}</small>
@@ -294,15 +296,15 @@
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product_detail->id }}">
                                 <div class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
+                                    <input type="radio" id="star5" name="rating" value="5" />
                                     <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
+                                    <input type="radio" id="star4" name="rating" value="4" />
                                     <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
+                                    <input type="radio" id="star3" name="rating" value="3" />
                                     <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
+                                    <input type="radio" id="star2" name="rating" value="2" />
                                     <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
+                                    <input type="radio" id="star1" name="rating" value="1" />
                                     <label for="star1" title="text">1 star</label>
                                 </div>
                                 <div class="control-group"></div>
