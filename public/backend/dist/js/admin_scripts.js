@@ -315,6 +315,28 @@
             });
         });
 
+        //Admin Ratings Status Update Script
+        $('.updateRatingsStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).children('i').attr('status');
+            let rating_id = $(this).attr('rating_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-rating-status',
+                data: {status:status, rating_id:rating_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#rating-'+rating_id).html('<i class="fas fa-toggle-on" status="Active"></i>');
+                    }else if(resp['status'] == 0){
+                        $('#rating-'+rating_id).html('<i class="fas fa-toggle-off" status="Inactive"></i>');
+                    }
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
         // Append Category Level
         $('#section_id').change(function(){
             let section_id = $(this).val();

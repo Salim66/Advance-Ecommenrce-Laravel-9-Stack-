@@ -237,6 +237,17 @@
                   <p>Currencies</p>
                 </a>
               </li>
+                @if (Session::get('page') == 'ratings')
+                    @php $active = "active"; @endphp
+                @else
+                    @php $active = ""; @endphp
+                @endif
+              <li class="nav-item">
+                <a href="{{ url('/admin/ratings') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ratings & Review</p>
+                </a>
+              </li>
 
               @if(Auth::guard('admin')->user()->type == "super admin" || Auth::guard('admin')->user()->type == "admin")
                 @if (Session::get('page') == 'admins_subadmins')
