@@ -14,6 +14,7 @@ use App\Models\DeliveryAddress;
 use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\OrdersProduct;
 use App\Models\OtherSetting;
 use App\Models\ShippingCharge;
@@ -41,6 +42,12 @@ class ProductsController extends Controller
             if($categoryCount > 0){
                 $catDetails = Category::categoryDetails($url);
                 $catProducts = Product::with('brand')->where('category_id', $catDetails['catIds'])->where('status', 1);
+
+                // If brand filter is selected
+                if(isset($data['brand']) && !empty($data['brand']) == 'brand'){
+                    $brandIds = Brand::select('id')->whereIn('name', $data['brand'])->pluck('id');
+                    $catProducts->whereIn('products.brand_id', $brandIds);
+                }
 
                 // If fabric filter is selected
                 if(isset($data['fabric']) && !empty($data['fabric']) == 'fabric'){
@@ -148,12 +155,15 @@ class ProductsController extends Controller
                 $fitArray = $productFilters['fitArray'];
                 $occasionArray = $productFilters['occasionArray'];
 
+                // Get all brand
+                $brandArray = Brand::select('name')->where('status', 1)->pluck('name');
+
                 $page_name = 'listing';
                 // return $catDetails; die;
                 $meta_title = $catDetails['categoryDetails']['meta_title'];
                 $meta_description =$catDetails['categoryDetails']['meta_description'];
                 $meta_keyword = $catDetails['categoryDetails']['meta_keyword'];
-                return view('front.products.listing', compact('catDetails', 'catProducts', 'url', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'page_name', 'meta_title', 'meta_description', 'meta_keyword'));
+                return view('front.products.listing', compact('catDetails', 'catProducts', 'url', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'brandArray', 'page_name', 'meta_title', 'meta_description', 'meta_keyword'));
             }else {
                 abort(404);
             }
