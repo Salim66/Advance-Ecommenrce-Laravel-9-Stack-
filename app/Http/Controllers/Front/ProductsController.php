@@ -206,8 +206,14 @@ class ProductsController extends Controller
         $ratingCount = Rating::with('user')->where('status', 1)->where('product_id', $id)->count();
 
 
-        $avgRating = round($ratingSum/$ratingCount,2);
-        $avgStarRating = round($ratingSum/$ratingCount);
+        if($ratingCount > 0){
+            $avgRating = round($ratingSum/$ratingCount,2);
+            $avgStarRating = round($ratingSum/$ratingCount);
+        }else {
+            $avgRating = 0;
+            $avgStarRating = 0;
+        }
+
 
 
         $meta_title = $product_detail->product_name;

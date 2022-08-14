@@ -102,6 +102,7 @@
             <h3>{{ $product_detail->product_name }}  </h3>
             <small>- {{ $product_detail->brand->name }}</small><br>
 
+            @if($avgStarRating > 0)
             <div>
                 @php $star = 1; @endphp
                 @while($star <= $avgStarRating)
@@ -110,6 +111,7 @@
                 @endwhile
                 ({{ $avgRating }})
             </div>
+            @endif
             <hr class="soft"/>
 
             @if(count($groupProducts) > 0)
