@@ -21,6 +21,7 @@ use App\Models\OtherSetting;
 use App\Models\Rating;
 use App\Models\ShippingCharge;
 use App\Models\Sms;
+use App\Models\Wishlist;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -868,6 +869,29 @@ class ProductsController extends Controller
                 }
             }else {
                 echo "Please insert valid pincode!"; die;
+            }
+        }
+    }
+
+    /**
+     * @access private
+     * @routes /update-wishlist
+     * @method POST
+     */
+    public function updateWishlist(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            // Check this product already has or not in wishlist
+            $countWishlist = Wishlist::countWishlist($data['product_id']);
+            if($countWishlist == 0){
+                $list = new Wishlist;
+                $list->user_id = Auth::user()->id;
+                $list->product_id = $data['product_id'];
+                $list->save();
+                return response()->json(['status'=>true,'action'=>'add']);
+            }else {
+                Wishlist::where(['user_id'=>Auth::user()->id, 'product_id'=>$data['product_id']])->delete();
+                return response()->json(['status'=>true,'action'=>'remove']);
             }
         }
     }

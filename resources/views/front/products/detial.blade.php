@@ -162,16 +162,19 @@
                         </select>
                         <input type="number" name="quantity" class="span1" placeholder="Qty." required />
                         <br><br>
-                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+
                         @php $countWishlist = 0; @endphp
                         @if(Auth::check())
                             @php
                                 $countWishlist = \App\Models\Wishlist::countWishlist($product_detail->id);
                             @endphp
-                            <button type="button" class="btn btn-large btn-primary pull-right" style="margin-right: 10px;"> Wishlist <i class="  @if($countWishlist > 0) icon-heart @else icon-heart-empty @endif"></i></button><br><br>
+                            <button type="button" class="btn btn-large btn-primary pull-right updateWishlist" data-productid="{{ $product_detail->id }}" style="margin-left: 10px;"> Wishlist <i class="  @if($countWishlist > 0) icon-heart @else icon-heart-empty @endif"></i></button>
                         @else
-                            <button type="button" class="btn btn-large btn-primary pull-right userLogin" style="margin-right: 10px;"> Wishlist <i class=" icon-heart-empty"></i></button><br><br>
+                            <button type="button" class="btn btn-large btn-primary pull-right userLogin" style="margin-right: 10px;"> Wishlist <i class=" icon-heart-empty"></i></button>
                         @endif
+
+                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+
 
                         <br><br>
                         <strong>Delivery</strong>

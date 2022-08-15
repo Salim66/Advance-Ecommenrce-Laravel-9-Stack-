@@ -280,6 +280,9 @@ Route::namespace('Front')->group(function(){
 
         // Paypal IPN (instant payment notification)
         Route::any('/paypal/ipn', [PaypalController::class, 'ipn']);
+
+        // Update Wishlist Route
+        Route::post('/update-wishlist', [ProductsController::class, 'updateWishlist']);
     });
 
 

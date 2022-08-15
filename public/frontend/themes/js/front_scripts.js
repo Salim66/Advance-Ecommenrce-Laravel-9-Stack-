@@ -490,6 +490,29 @@
             alert('Login your account then add to wishlist.');
         });
 
+        // Product add and remnove from whichlist
+        $('.updateWishlist').click(function(){
+            let product_id = $(this).data('productid');
+            $.ajax({
+                type: 'post',
+                url: '/update-wishlist',
+                data: { product_id:product_id },
+                success: function(data){
+                    if(data.action == 'add'){
+                        $('button[data-productid='+product_id+']').html('Wishlist <i class="icon-heart"></i>');
+                        alert('Product added to wishlist');
+                    }
+                    if(data.action == 'remove'){
+                        $('button[data-productid='+product_id+']').html('Wishlist <i class="icon-heart-empty"></i>');
+                        alert('Product remove from wishlist');
+                    }
+                },error: function(){
+                    alert('Error');
+                }
+
+            });
+        });
+
 
     });
 })(jQuery);
