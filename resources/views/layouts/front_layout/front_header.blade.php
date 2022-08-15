@@ -49,6 +49,9 @@
                     <button type="submit">Go</button>
 		          </form>
 		          <ul class="nav pull-right">
+                    @if(Auth::check())
+		            <li><a href="{{ url('wishlist') }}">Wishlist</a></li>
+                    @endif
 		            <li><a href="{{ url('orders') }}">Orders</a></li>
 		            <li class="divider-vertical"></li>
                     @if(Auth::check())

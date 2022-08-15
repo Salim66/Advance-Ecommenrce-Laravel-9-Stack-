@@ -283,6 +283,9 @@ Route::namespace('Front')->group(function(){
 
         // Update Wishlist Route
         Route::post('/update-wishlist', [ProductsController::class, 'updateWishlist']);
+
+        // Wishlist
+        Route::get('/wishlist', [ProductsController::class, 'wishlist']);
     });
 
 

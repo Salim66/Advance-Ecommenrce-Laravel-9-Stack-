@@ -15,4 +15,15 @@ class Wishlist extends Model
         return $countWishlist;
     }
 
+    public static function userWishlistItems(){
+        $userWishlistItems = Wishlist::with(['product' => function($queey){
+            $queey->select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image');
+        }])->where('user_id', Auth::user()->id)->get();
+        return $userWishlistItems;
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
 }

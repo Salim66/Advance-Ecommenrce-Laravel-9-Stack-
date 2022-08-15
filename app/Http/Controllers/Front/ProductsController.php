@@ -317,6 +317,8 @@ class ProductsController extends Controller
         }
     }
 
+
+
     /**
      * @access public
      * @route /cart
@@ -894,5 +896,15 @@ class ProductsController extends Controller
                 return response()->json(['status'=>true,'action'=>'remove']);
             }
         }
+    }
+
+    /**
+     * @access private
+     * @routes /wishlist
+     * @method GET
+     */
+    public function wishlist(){
+        $userWishlistItems = Wishlist::userWishlistItems();
+        return view('front.products.wishlist', compact('userWishlistItems'));
     }
 }
