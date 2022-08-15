@@ -36,7 +36,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Users | <a href="{{ url('/admin/view-users-charts') }}">Users Report</a></h3>
+                <h3 class="card-title">All Users | <a href="{{ url('/admin/view-users-charts') }}">Users Report</a> | <a href="{{ url('/admin/view-users-countries') }}">Users Countires Report</a></h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

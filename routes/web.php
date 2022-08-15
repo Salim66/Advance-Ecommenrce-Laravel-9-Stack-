@@ -136,6 +136,8 @@ Route::prefix('admin')->group(function () {
 
         // View Users Charts Report Route
         Route::get('/view-users-charts', [UsersController::class, 'viewUsersCharts']);
+        // View User countries Pie Charts Route
+        Route::get('/view-users-countries', [UsersController::class, 'viewUsersCountries']);
 
         // CMS Pages Route
         Route::get('/cms-pages', [CmsController::class, 'cmsPages']);
