@@ -52,6 +52,12 @@ class UserController extends Controller
                 $user->mobile = $data['mobile'];
                 $user->email = $data['email'];
                 $user->password = bcrypt($data['password']);
+
+                // set default timezone to bangladesh for user module only
+                date_default_timezone_set('Asia/Dhaka');
+                $user->created_at = date('Y-m-d H:i:s');
+                $user->updated_at = date('Y-m-d H:i:s');
+
                 $user->save();
 
                 // Send user to email varification link to active account
