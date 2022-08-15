@@ -161,14 +161,30 @@
                             @endforeach
                         </select>
                         <input type="number" name="quantity" class="span1" placeholder="Qty." required />
-                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button><br><br>
+                        <br><br>
+                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                        @php $countWishlist = 0; @endphp
+                        @if(Auth::check())
+                            @php
+                                $countWishlist = \App\Models\Wishlist::countWishlist($product_detail->id);
+                            @endphp
+                            <button type="button" class="btn btn-large btn-primary pull-right" style="margin-right: 10px;"> Wishlist <i class="  @if($countWishlist > 0) icon-heart @else icon-heart-empty @endif"></i></button><br><br>
+                        @else
+                            <button type="button" class="btn btn-large btn-primary pull-right userLogin" style="margin-right: 10px;"> Wishlist <i class=" icon-heart-empty"></i></button><br><br>
+                        @endif
+
+                        <br><br>
                         <strong>Delivery</strong>
                         <input type="text" style="width: 120px;" name="pincode" id="pincode" placeholder="Pin">
                         <button type="button" id="checkPincode">Check Pin</button>
+
+                        <br><br><br><br>
+                        <!-- ShareThis BEGIN -->
+                        <div class="sharethis-inline-share-buttons"></div>
+                        <!-- ShareThis END -->
                     </div>
                 </div>
             </form>
-<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
             <hr class="soft clr"/>
             <p class="span6">
                 {{ $product_detail->description }}

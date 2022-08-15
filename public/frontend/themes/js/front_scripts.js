@@ -485,6 +485,10 @@
             }
         });
 
+        // Check user is not login
+        $('.userLogin').click(function(){
+            alert('Login your account then add to wishlist.');
+        });
 
 
     });
