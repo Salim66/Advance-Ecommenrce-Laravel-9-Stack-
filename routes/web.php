@@ -286,6 +286,9 @@ Route::namespace('Front')->group(function(){
 
         // Wishlist
         Route::get('/wishlist', [ProductsController::class, 'wishlist']);
+
+        // Delete Wishlist item
+        Route::post('/delete-wishlist-item', [ProductsController::class, 'deleteWishlistItem']);
     });
 
 

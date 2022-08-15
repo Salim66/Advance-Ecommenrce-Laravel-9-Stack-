@@ -330,6 +330,16 @@ class ProductsController extends Controller
     }
 
     /**
+     * @access private
+     * @routes /wishlist
+     * @method GET
+     */
+    public function wishlist(){
+        $userWishlistItems = Wishlist::userWishlistItems();
+        return view('front.products.wishlist', compact('userWishlistItems'));
+    }
+
+    /**
      * @access public
      * @route /update-cart-item-qty
      * @method POST
@@ -391,6 +401,25 @@ class ProductsController extends Controller
             return response()->json([
                 'totalCartItems' => $totalCartItems,
                 'view'=>(String)View::make('front.products.cart_items', compact('user_cart_items'))
+            ]);
+        }
+    }
+
+    /**
+     * @access public
+     * @route /delete-wishlist-item
+     * @method POST
+     */
+    public function deleteWishlistItem(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+
+            Wishlist::where('id', $data['wishlistId'])->delete();
+            $userWishlistItems = Wishlist::userWishlistItems();
+            $totalWishlistItems = totalWishlistItems();
+            return response()->json([
+                'totalWishlistItems' => $totalWishlistItems,
+                'view'=>(String)View::make('front.products.wishlist_items', compact('userWishlistItems'))
             ]);
         }
     }
@@ -898,13 +927,5 @@ class ProductsController extends Controller
         }
     }
 
-    /**
-     * @access private
-     * @routes /wishlist
-     * @method GET
-     */
-    public function wishlist(){
-        $userWishlistItems = Wishlist::userWishlistItems();
-        return view('front.products.wishlist', compact('userWishlistItems'));
-    }
+
 }

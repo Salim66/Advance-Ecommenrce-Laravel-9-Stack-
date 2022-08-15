@@ -513,6 +513,22 @@
             });
         });
 
+        // Remove wishlist item
+        $(document).on('click', '.wishlistItemDelete', function(){
+            let wishlistId = $(this).data('wishlistid');
+            $.ajax({
+                type: 'post',
+                url: '/delete-wishlist-item',
+                data: { wishlistId:wishlistId },
+                success: function(data){
+                    $('.totalWishlistItems').html(data.totalWishlistItems);
+                    $("#appendWishlistItems").html(data.view);
+                },error: function(){
+                    alert('Error');
+                }
+            });
+        });
+
 
     });
 })(jQuery);

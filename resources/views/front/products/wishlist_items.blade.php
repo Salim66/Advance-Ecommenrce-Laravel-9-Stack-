@@ -14,8 +14,8 @@
             <td>{{ $item->product->product_name }} ({{ $item->product->product_code }})<br/>Color : {{ $item->product->product_color }}</td>
             <td colspan="2">
                 <div class="input-append">
-                    <button class="btn btnItemUpdate" type="button" data-cartid="{{ $item->id }}"><i class="icon-file"></i></button>
-                    <button class="btn btn-danger btnItemDelete" type="button" data-cartid="{{ $item->id }}"><i class="icon-remove icon-white"></i></button>
+                    <a target="_blank" href="{{ url('/product/'.$item->product->id) }}"><button class="btn btnItemUpdate" type="button" data-cartid="{{ $item->id }}"><i class="icon-file"></i></button></a>
+                    <button class="btn btn-danger wishlistItemDelete" type="button" data-wishlistid="{{ $item->id }}"><i class="icon-remove icon-white"></i></button>
                 </div>
             </td>
             <td>Rs.{{ $item->product->product_price }}</td>

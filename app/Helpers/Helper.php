@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Cart;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -12,4 +13,11 @@ function totalCartItems(){
         $toalCartItems = Cart::where('session_id', $session_id)->sum('quantity');
     }
     return $toalCartItems;
+}
+
+function totalWishlistItems(){
+    if(Auth::check()){
+        $toalWishlistItems = Wishlist::where('user_id', Auth::user()->id)->count();
+    }
+    return $toalWishlistItems;
 }
