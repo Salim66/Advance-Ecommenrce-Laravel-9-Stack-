@@ -131,6 +131,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/users', [UsersController::class, 'users']);
         Route::post('/update-user-status', [UsersController::class, 'updateUserStatus']);
 
+        // Users Charts Report Route
+        Route::get('/view-users-charts', [UsersController::class, 'viewUsersCharts']);
+
         // CMS Pages Route
         Route::get('/cms-pages', [CmsController::class, 'cmsPages']);
         Route::post('/update-cms-page-status', [CmsController::class, 'updateCmsPagetatus']);

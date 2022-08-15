@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -35,5 +36,17 @@ class UsersController extends Controller
                 'user_id' => $data['user_id']
             ]);
         }
+    }
+
+    /**
+     * View Users Charts Report
+     */
+    public function viewUsersCharts(){
+        $current_month_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count();
+        $before_1_month_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(1))->count();
+        $before_2_month_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(2))->count();
+        $before_3_month_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(3))->count();
+        $userCount = [$current_month_users, $before_1_month_users, $before_2_month_users, $before_3_month_users];
+        return view('admin.users.view_users_charts', compact('userCount'));
     }
 }
