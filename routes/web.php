@@ -121,6 +121,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/view-order-invoice/{id}', [AdminOrdersController::class, 'viewOrderInvoice']);
         Route::get('/print-pdf-invoice/{id}', [AdminOrdersController::class, 'printPDFInvoice']);
 
+        // View Orders Charts Report Route
+        Route::get('/view-orders-charts', [AdminOrdersController::class, 'viewOrdersCharts']);
+
 
         // Shipping Charges Route
         Route::get('/shipping-charges', [ShippingCargesController::class, 'viewShippingCharges']);
@@ -131,7 +134,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/users', [UsersController::class, 'users']);
         Route::post('/update-user-status', [UsersController::class, 'updateUserStatus']);
 
-        // Users Charts Report Route
+        // View Users Charts Report Route
         Route::get('/view-users-charts', [UsersController::class, 'viewUsersCharts']);
 
         // CMS Pages Route

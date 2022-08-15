@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use App\Models\Sms;
 use App\Models\User;
@@ -439,6 +440,18 @@ class OrdersController extends Controller
 
 
         // return view('admin.orders.order_invoice', compact('orderDetails', 'customerDetials'));
+    }
+
+    /**
+     * View Orders Charts Report
+     */
+    public function viewOrdersCharts(){
+        $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count();
+        $before_1_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(1))->count();
+        $before_2_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(2))->count();
+        $before_3_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(3))->count();
+        $orderCount = [$current_month_orders, $before_1_month_orders, $before_2_month_orders, $before_3_month_orders];
+        return view('admin.orders.view_orders_charts', compact('orderCount'));
     }
 
 
