@@ -1,12 +1,18 @@
 @extends('layouts.front_layout.front_layout')
 
 @section('content')
+@php
+    $getOrderStatus = \App\Models\Order::getOrderStatus($orderDetails->id);
+@endphp
 <div class="span9">
     <ul class="breadcrumb">
         <li><a href="{{ url('/') }}">Home</a> <span class="divider">/</span></li>
         <li class="active"><a href="{{ url('orders') }}">ORDERS</a></li>
     </ul>
     <h3> ORDERS #{{ $orderDetails->id }} Details</h3>
+    @if($getOrderStatus == "New")
+    <span><a href="{{ url('/orders/'.$orderDetails->id.'/cancel') }}" class="btnCancelOrder"><button type="button" class="btn btn-inline-block" style="float: right">Cancel Order</button></a></span> <br>
+    @endif
     <hr class="soft"/>
 
     <div class="row">
@@ -115,7 +121,9 @@
                         @php
                             $getProductImage = \App\Models\Product::getProductImage($pro->id);
                         @endphp
+                        @if(isset($getProductImage))
                         <a target="_blank" href="{{ url('/product/'.$pro->id) }}"><img style="width: 50px;" src="{{ URL::to('images/product_images/small/'.$getProductImage->main_image) }}" alt=""></a>
+                        @endif
                     </td>
                     <td>{{ $pro->product_code }}</td>
                     <td>{{ $pro->product_name }}</td>

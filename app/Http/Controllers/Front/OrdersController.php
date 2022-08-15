@@ -30,4 +30,13 @@ class OrdersController extends Controller
         // dd($orderDetails);
         return view('front.orders.order_details', compact('orderDetails'));
     }
+
+    /**
+     * @access private
+     * @routes /orders/{id}/cancel
+     * @method GET
+     */
+    public function cancelOrder($id){
+        return $id;
+    }
 }

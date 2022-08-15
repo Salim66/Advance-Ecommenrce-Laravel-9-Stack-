@@ -13,4 +13,9 @@ class Order extends Model
         return $this->hasMany(OrdersProduct::class, 'order_id');
     }
 
+    public static function getOrderStatus($order_id){
+        $getOrderStatus = Order::where('id', $order_id)->first();
+        return $getOrderStatus->order_status;
+    }
+
 }

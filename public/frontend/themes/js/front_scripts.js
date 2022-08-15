@@ -529,6 +529,14 @@
             });
         });
 
+        // Cancel Order
+        $(document).on('click', '.btnCancelOrder', function(e){
+            let result = confirm('Are you sure! you want to delete this order.');
+            if(!result){
+                e.preventDefault();
+            }
+        });
+
 
     });
 })(jQuery);
