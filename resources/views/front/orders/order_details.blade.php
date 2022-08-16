@@ -13,6 +13,34 @@
     @if($getOrderStatus == "New")
     <span><a href="{{ url('/orders/'.$orderDetails->id.'/cancel') }}" class="btnCancelOrder"><button type="button" class="btn btn-inline-block" style="float: right">Cancel Order</button></a></span> <br>
     @endif
+
+    @if(Session::has('success_message'))
+    <div class="alert alert-success" role="alert">
+      {{ Session::get('success_message') }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    @endif
+
+    @if(Session::has('error_message'))
+    <div class="alert alert-warning" role="alert">
+      {{ Session::get('error_message') }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    @endif
+
+     @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+      @endif
     <hr class="soft"/>
 
     <div class="row">

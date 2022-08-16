@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Front;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\OrdersLog;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class OrdersController extends Controller
 {
@@ -37,6 +39,31 @@ class OrdersController extends Controller
      * @method GET
      */
     public function cancelOrder($id){
-        return $id;
+
+        // Get user id from auth
+        $user_id_auth = Auth::user()->id;
+
+        // Get user id from orders table
+        $user_id_order = Order::select('user_id')->where('id', $id)->first();
+
+        if($user_id_auth == $user_id_order->user_id){
+            //Update order status to cancel
+            Order::where('id', $id)->update(['order_status'=>'Cancelled']);
+
+            // Update order log
+            $log = new OrdersLog;
+            $log->order_id = $id;
+            $log->order_status = "Cancelled";
+            $log->save();
+
+            $message = "Oder has been Cancelled";
+            Session::put('success_message', $message);
+            return redirect()->back();
+        }else {
+            $message = "Your order Cancelled request is not valid";
+            Session::put('error_message', $message);
+            return redirect()->back();
+        }
+
     }
 }
