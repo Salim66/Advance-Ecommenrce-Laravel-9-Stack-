@@ -231,6 +231,10 @@
                             <td colspan="2">
                                 @foreach ($odersLog as $log)
                                     <strong>{{ $log->order_status }}</strong><br />
+                                    @if(isset($log->reason) && !empty($log->reason))
+                                        {{ $log->reason }}
+                                        <br>
+                                    @endif
                                     {{ date('j F, Y, g:i a', strtotime($log->created_at)) }}
                                     <hr>
                                 @endforeach

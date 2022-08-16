@@ -38,31 +38,37 @@ class OrdersController extends Controller
      * @routes /orders/{id}/cancel
      * @method GET
      */
-    public function cancelOrder($id){
+    public function cancelOrder(Request $request, $id){
 
-        // Get user id from auth
-        $user_id_auth = Auth::user()->id;
+        if($request->isMethod('post')){
+            $data = $request->all();
 
-        // Get user id from orders table
-        $user_id_order = Order::select('user_id')->where('id', $id)->first();
+            // Get user id from auth
+            $user_id_auth = Auth::user()->id;
 
-        if($user_id_auth == $user_id_order->user_id){
-            //Update order status to cancel
-            Order::where('id', $id)->update(['order_status'=>'Cancelled']);
+            // Get user id from orders table
+            $user_id_order = Order::select('user_id')->where('id', $id)->first();
 
-            // Update order log
-            $log = new OrdersLog;
-            $log->order_id = $id;
-            $log->order_status = "Cancelled";
-            $log->save();
+            if($user_id_auth == $user_id_order->user_id){
+                //Update order status to cancel
+                Order::where('id', $id)->update(['order_status'=>'Cancelled']);
 
-            $message = "Oder has been Cancelled";
-            Session::put('success_message', $message);
-            return redirect()->back();
-        }else {
-            $message = "Your order Cancelled request is not valid";
-            Session::put('error_message', $message);
-            return redirect()->back();
+                // Update order log
+                $log = new OrdersLog;
+                $log->order_id = $id;
+                $log->order_status = "Cancelled";
+                $log->reason = $data['reason'];
+                $log->updated_by = "User";
+                $log->save();
+
+                $message = "Oder has been Cancelled";
+                Session::put('success_message', $message);
+                return redirect()->back();
+            }else {
+                $message = "Your order Cancelled request is not valid";
+                Session::put('error_message', $message);
+                return redirect()->back();
+            }
         }
 
     }

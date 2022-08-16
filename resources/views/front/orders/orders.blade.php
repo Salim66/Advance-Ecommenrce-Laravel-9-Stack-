@@ -15,6 +15,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    @php Session::forget('error_message') @endphp
     @endif
 
     <hr class="soft"/>

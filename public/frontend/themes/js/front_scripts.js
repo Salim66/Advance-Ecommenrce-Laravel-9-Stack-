@@ -531,6 +531,14 @@
 
         // Cancel Order
         $(document).on('click', '.btnCancelOrder', function(e){
+
+            let reason = $('#cancelReason').val();
+            if(reason == ""){
+                alert('Please select reason');
+                e.preventDefault();
+                return false;
+            }
+
             let result = confirm('Are you sure! you want to delete this order.');
             if(!result){
                 e.preventDefault();

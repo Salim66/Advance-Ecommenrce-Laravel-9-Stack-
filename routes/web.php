@@ -249,7 +249,7 @@ Route::namespace('Front')->group(function(){
         Route::get('order-details/{id}', [OrdersController::class, 'orderDetials']);
 
         // User Cancel Orders
-        Route::get('/orders/{id}/cancel', [OrdersController::class, 'cancelOrder']);
+        Route::any('/orders/{id}/cancel', [OrdersController::class, 'cancelOrder']);
 
         // Check user password
         Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);

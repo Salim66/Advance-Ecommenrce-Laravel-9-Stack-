@@ -9,10 +9,15 @@
         <li><a href="{{ url('/') }}">Home</a> <span class="divider">/</span></li>
         <li class="active"><a href="{{ url('orders') }}">ORDERS</a></li>
     </ul>
-    <h3> ORDERS #{{ $orderDetails->id }} Details</h3>
-    @if($getOrderStatus == "New")
-    <span><a href="{{ url('/orders/'.$orderDetails->id.'/cancel') }}" class="btnCancelOrder"><button type="button" class="btn btn-inline-block" style="float: right">Cancel Order</button></a></span> <br>
-    @endif
+    <h3> ORDERS #{{ $orderDetails->id }} Details
+        @if($getOrderStatus == "New")
+            <!-- Button trigger modal -->
+            <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Cancel Order
+            </button>
+        @endif
+    </h3>
+
 
     @if(Session::has('success_message'))
     <div class="alert alert-success" role="alert">
@@ -21,6 +26,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+        @php Session::forget('success_message') @endphp
     @endif
 
     @if(Session::has('error_message'))
@@ -30,6 +36,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    @php Session::forget('error_message') @endphp
     @endif
 
      @if ($errors->any())
@@ -163,5 +170,36 @@
            </table>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form action="{{ url('/orders/'.$orderDetails->id.'/cancel') }}" method="POST">
+        @csrf
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Reason for Cancelletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <select name="reason" id="cancelReason">
+                    <option value="">Select Reason</option>
+                    <option value="Order Created By Mistake">Order Created By Mistake</option>
+                    <option value="Item Not Arrive on Time">Item Not Arrive on Time</option>
+                    <option value="Shipping Cost to High">Shipping Cost to High</option>
+                    <option value="Found Cheaper Somewhere Else">Found Cheaper Somewhere Else</option>
+                    <option value="Others">Others</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btnCancelOrder">Cancel Order</button>
+              </div>
+            </div>
+          </div>
+    </form>
 </div>
 @endsection
