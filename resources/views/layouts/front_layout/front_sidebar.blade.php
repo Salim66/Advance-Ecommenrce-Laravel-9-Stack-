@@ -9,9 +9,11 @@
         <li class="subMenu"><a>{{ $section->name }}</a>
             <ul>
                 @foreach($section->categories as $category)
-                <li><a href="{{ url($category->url) }}"><i class="icon-chevron-right"></i><strong>{{ $category->category_name }}</strong></a></li>
+                @php $productCount = \App\Models\Product::productCount($category->id) @endphp
+                <li><a href="{{ url($category->url) }}"><i class="icon-chevron-right"></i><strong>{{ $category->category_name }} ({{ $productCount }})</strong></a></li>
                 @foreach($category->subCategories as $subcat)
-                <li><a href="{{ url($subcat->url) }}"><i class="icon-chevron-right"></i>{{ $subcat->category_name }}</a></li>
+                @php $productCount = \App\Models\Product::productCount($subcat->id) @endphp
+                <li><a href="{{ url($subcat->url) }}"><i class="icon-chevron-right"></i>{{ $subcat->category_name }} ({{ $productCount }})</a></li>
                 @endforeach
                 @endforeach
             </ul>

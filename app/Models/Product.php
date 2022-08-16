@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Product extends Model
 {
@@ -103,6 +104,20 @@ class Product extends Model
 
     public static function deleteCartProduct($product_id){
         Cart::where('product_id', $product_id)->delete();
+    }
+
+    public static function productCountForSubCategory($category_id){
+        $productCount = Product::where(['category_id'=>$category_id, 'status'=>1])->count();
+        return $productCount;
+    }
+
+    public static function productCount($category_id){
+        $catIds = Category::select('id')->where('parent_id', $category_id)->get()->toArray();
+        $catIds1 = Arr::flatten($catIds);
+        $catIds2 = array($category_id);
+        $catIds = array_merge($catIds1,$catIds2);
+        $productCount = Product::whereIn('category_id',$catIds)->where('status', 1)->count();
+        return $productCount;
     }
 
 }
