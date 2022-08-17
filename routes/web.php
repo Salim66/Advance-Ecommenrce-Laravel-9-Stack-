@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RatingsController;
@@ -174,6 +175,11 @@ Route::prefix('admin')->group(function () {
         // Excahnge Request
         Route::get('/exchange-request', [AdminOrdersController::class, 'exchangeRequest']);
         Route::post('/exchange-request/update', [AdminOrdersController::class, 'exchnageRequestUpdate']);
+
+         // Newsletter Subscriber Route
+         Route::get('/newsletter-subscribers', [AdminNewsletterController::class, 'newsletterSubscribers']);
+         Route::post('/update-subscriber-status', [AdminNewsletterController::class, 'updateSubscriberStatus']);
+         Route::get('/delete-subscriber/{id}', [AdminNewsletterController::class, 'deleteSubscriber']);
 
     });
 });

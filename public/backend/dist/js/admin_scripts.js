@@ -337,6 +337,28 @@
             });
         });
 
+        //Admin Subscribers Status Update Script
+        $('.updateSubscribersStatus').click(function(e){
+            e.preventDefault();
+            let status = $(this).children('i').attr('status');
+            let subscriber_id = $(this).attr('subscriber_id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/update-subscriber-status',
+                data: {status:status, subscriber_id:subscriber_id},
+                success:function(resp){
+                    if(resp['status'] == 1){
+                        $('#subscriber-'+subscriber_id).html('<i class="fas fa-toggle-on" status="Active"></i>');
+                    }else if(resp['status'] == 0){
+                        $('#subscriber-'+subscriber_id).html('<i class="fas fa-toggle-off" status="Inactive"></i>');
+                    }
+                },
+                error:function(){
+                    alert('Error');
+                }
+            });
+        });
+
         // Append Category Level
         $('#section_id').change(function(){
             let section_id = $(this).val();

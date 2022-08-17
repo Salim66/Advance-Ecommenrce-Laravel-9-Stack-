@@ -287,6 +287,18 @@
                 </a>
               </li>
 
+                @if (Session::get('page') == 'newsletter_subscribers')
+                    @php $active = "active"; @endphp
+                @else
+                    @php $active = ""; @endphp
+                @endif
+              <li class="nav-item">
+                <a href="{{ url('/admin/newsletter-subscribers') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Newsletter Subscribers</p>
+                </a>
+              </li>
+
             </ul>
           </li>
 
