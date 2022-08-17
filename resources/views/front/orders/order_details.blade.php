@@ -19,7 +19,7 @@
         @if($getOrderStatus == "Delivered")
             <!-- Button trigger modal -->
             <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#returnModalCenter">
-                Return Order
+                Return/Exchange Order
             </button>
         @endif
     </h3>
@@ -218,10 +218,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document" align="center">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="returnModalLongTitle">Reason for Return</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
+                <h5 class="modal-title" id="returnModalLongTitle">Reason for Return/Exchange</h5>
+              </div>
+              <div class="modal-body">
+                <select name="return_exchange" id="returnExchange">
+                    <option value="">Select Return/Exchange</option>
+                    <option value="Return">Return</option>
+                    <option value="Exchange">Exchange</option>
+                </select>
               </div>
               <div class="modal-body">
                 <select name="product_info" id="returnProduct">
@@ -231,6 +235,12 @@
                         <option value="{{ $product->product_code }}-{{ $product->product_size }}">{{ $product->product_code }}-{{ $product->product_size }}</option>
                         @endif
                     @endforeach
+                </select>
+              </div>
+              <div class="modal-body">
+                <select name="product_size" class="productSize">
+                    <option value="">Select Exchange Size</option>
+                    <option value="Return">Return</option>
                 </select>
               </div>
               <div class="modal-body">

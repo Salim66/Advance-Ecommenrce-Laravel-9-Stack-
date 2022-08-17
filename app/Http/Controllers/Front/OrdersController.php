@@ -123,4 +123,16 @@ class OrdersController extends Controller
         }
 
     }
+
+    /**
+     * @access private
+     * @routes /get-product-sizes
+     * @method POST
+     */
+    public function getProductSizes(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            return $data;
+        }
+    }
 }

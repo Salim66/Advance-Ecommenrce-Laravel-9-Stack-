@@ -258,6 +258,9 @@ Route::namespace('Front')->group(function(){
         // User Return Orders
         Route::any('/orders/{id}/return', [OrdersController::class, 'returnOrder']);
 
+        // Get Product Sizes
+        Route::post('get-product-sizes', [OrdersController::class, 'getProductSizes']);
+
         // Check user password
         Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);
 

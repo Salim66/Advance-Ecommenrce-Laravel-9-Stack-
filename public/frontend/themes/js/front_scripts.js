@@ -1,6 +1,6 @@
 (function($){
     $(document).ready(function(){
-
+        $('.productSize').hide();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -545,8 +545,43 @@
             }
         });
 
+
+        // show Exchange is selected
+        $('#returnExchange').change(function(){
+            let return_exchange = $(this).val();
+            if(return_exchange == 'Exchange'){
+                $('.productSize').show();
+            }else {
+                $('.productSize').hide();
+            }
+        });
+
+        // GET PRODUCT SIZE
+        $('#returnProduct').change(function(){
+            let product_info = $(this).val();
+            let return_exchange = $('#returnExchange').val();
+            if(return_exchange == "Exchange"){
+                $.ajax({
+                    type: 'post',
+                    url: '/get-product-sizes',
+                    data: { product_info: product_info },
+                    success: function(data){
+                        alert(data);
+                    },error: function(){
+                        alert('Error');
+                    }
+                });
+            }
+        });
+
         // Return Order
         $(document).on('click', '.btnReturnOrder', function(e){
+
+            let returnExchange = $('#returnExchange').val();
+            if(returnExchange == ""){
+                alert('Please select if you want to return or exchange');
+                return false;
+            }
 
             let product = $('#returnProduct').val();
             if(product == ""){
