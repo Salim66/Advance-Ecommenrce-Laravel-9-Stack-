@@ -70,10 +70,10 @@
                         <td>{{ $data->comment }}</td>
                         <td>{{ date('d m Y, h:i:s', strtotime($data->created_at)) }}</td>
                         <td>
-                            <form action="{{ url('/admin/return-request/update') }}" method="POST">
+                            <form action="{{ url('/admin/exchange-request/update') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="return_id" value="{{ $data->id }}">
-                                <select name="return_status" class="form-control">
+                                <input type="hidden" name="exchange_id" value="{{ $data->id }}">
+                                <select name="exchange_status" class="form-control">
                                     <option @if($data->exchange_status == 'Approved') selected @endif value="Approved">Approved</option>
                                     <option @if($data->exchange_status == 'Rejected') selected @endif value="Rejected">Rejected</option>
                                     <option @if($data->exchange_status == 'Pending') selected @endif value="Pending">Pending</option>

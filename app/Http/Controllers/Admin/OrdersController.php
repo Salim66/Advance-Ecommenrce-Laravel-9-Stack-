@@ -509,5 +509,39 @@ class OrdersController extends Controller
     }
 
 
+    /**
+     * Exchange Request Update
+     */
+    public function exchnageRequestUpdate(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            // Get exchange details
+            $exchangeDetails = ExchangeRequest::where('id', $data['exchange_id'])->first()->toArray();
+
+            // Update exchange status in exchange request table
+            ExchangeRequest::where('id', $data['exchange_id'])->update(['exchange_status'=>$data['exchange_status']]);
+
+            // Update exchange status in order products table
+            OrdersProduct::where(['order_id'=>$exchangeDetails['order_id'],'product_code'=>$exchangeDetails['product_code'], 'product_size'=>$exchangeDetails['product_size']])->update(['item_status'=> 'Exchange '.$exchangeDetails['exchange_status']]);
+
+            // Get user detials
+            $userDetails = User::select('name','email')->where('id', $exchangeDetails['user_id'])->first()->toArray();
+
+            // Send Exchange Status Email
+            $email = $userDetails['email'];
+            $exchange_status = $data['exchange_status'];
+            $messageData = ['userDetials'=>$userDetails, 'exchangeDetails'=>$exchangeDetails, 'exchange_status'=>$exchange_status];
+            Mail::send('emails.exchange_request', $messageData, function($message) use($email, $exchange_status){
+                $message->to($email)->subject("Return Request ".$exchange_status);
+            });
+
+            $message = "Exchange request has been ".$exchange_status." and email send to user.";
+            Session::flash('success_message', $message);
+            return redirect('/admin/exchange-request');
+        }
+    }
+
+
 
 }

@@ -172,7 +172,7 @@ Route::prefix('admin')->group(function () {
 
         // Excahnge Request
         Route::get('/exchange-request', [AdminOrdersController::class, 'exchangeRequest']);
-        Route::post('/exchange-request/update', [AdminOrdersController::class, 'returnRequestUpdate']);
+        Route::post('/exchange-request/update', [AdminOrdersController::class, 'exchnageRequestUpdate']);
 
     });
 });

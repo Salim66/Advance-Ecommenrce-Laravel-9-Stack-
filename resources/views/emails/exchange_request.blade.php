@@ -12,7 +12,7 @@
             <td>Dear {{ $userDetials['name'] }}</td>
         </tr>
         <tr>
-            <td>Your return request for Order no. {{ $returnDetails['order_id'] }} with e-commerce website is {{ $return_status }}</td>
+            <td>Your exchange request for Order no. {{ $exchangeDetails['order_id'] }} with e-commerce website is {{ $exchange_status }}</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
