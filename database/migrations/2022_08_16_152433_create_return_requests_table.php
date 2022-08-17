@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('order_id');
             $table->integer('user_id');
-            $table->integer('product_id');
+            $table->integer('product_size');
             $table->string('product_code');
             $table->string('return_reason');
             $table->enum('return_status', ['Pending','Approved', 'Rejected']);

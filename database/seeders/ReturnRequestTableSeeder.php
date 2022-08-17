@@ -16,7 +16,7 @@ class ReturnRequestTableSeeder extends Seeder
     public function run()
     {
         $returnRequestRecord = [
-            ['id'=>1,'order_id'=>9,'user_id'=>12,'product_id'=>1,'product_code'=>'BT0011','return_reason'=>'Item arrived too late', 'return_status'=>'Pending','comment'=>'']
+            ['id'=>1,'order_id'=>9,'user_id'=>12,'product_size'=>'Small','product_code'=>'BT0011','return_reason'=>'Item arrived too late', 'return_status'=>'Pending','comment'=>'']
         ];
         ReturnRequest::insert($returnRequestRecord);
     }

@@ -12,8 +12,14 @@
     <h3> ORDERS #{{ $orderDetails->id }} Details
         @if($getOrderStatus == "New")
             <!-- Button trigger modal -->
-            <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModalCenter">
                 Cancel Order
+            </button>
+        @endif
+        @if($getOrderStatus == "Delivered")
+            <!-- Button trigger modal -->
+            <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#returnModalCenter">
+                Return Order
             </button>
         @endif
     </h3>
@@ -172,14 +178,14 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Cancel Modal -->
+<div class="modal fade" id="cancelModalCenter" tabindex="-1" role="dialog"            aria-labelledby="cancelModalCenterTitle" aria-hidden="true">
     <form action="{{ url('/orders/'.$orderDetails->id.'/cancel') }}" method="POST">
         @csrf
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Reason for Cancelletion</h5>
+                <h5 class="modal-title" id="cancelModalLongTitle">Reason for Cancelletion</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
@@ -197,6 +203,48 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary btnCancelOrder">Cancel Order</button>
+              </div>
+            </div>
+          </div>
+    </form>
+</div>
+
+<!-- Return Modal -->
+<div class="modal fade" id="returnModalCenter" tabindex="-1" role="dialog"            aria-labelledby="returnModalCenterTitle" aria-hidden="true" style="width: 380px;">
+    <form action="{{ url('/orders/'.$orderDetails->id.'/return') }}" method="POST">
+        @csrf
+        <div class="modal-dialog modal-dialog-centered" role="document" align="center">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="returnModalLongTitle">Reason for Return</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <select name="product_info" id="returnProduct">
+                    <option value="">Select Product</option>
+                    @foreach ($orderDetails->order_products as $product)
+                    <option value="{{ $product->product_code }}-{{ $product->product_size }}">{{ $product->product_code }}-{{ $product->product_size }}</option>
+                    @endforeach
+                </select>
+              </div>
+              <div class="modal-body">
+                <select name="reason" id="returnReason">
+                    <option value="">Select Reason</option>
+                    <option value="Performance for quality not adequate">Performance for quality not adequate</option>
+                    <option value="Product Damaged but Shiping Box Ok">Product Damaged but Shiping Box Ok</option>
+                    <option value="Item arrived too late">Item arrived too late</option>
+                    <option value="Wrong item was send">Wrong item was send</option>
+                    <option value="Item deffective or doesn't work">Item deffective or doesn't work</option>
+                </select>
+              </div>
+              <div class="modal-body">
+                <textarea name="comment" placeholder="Comment"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btnReturnOrder">Return Order</button>
               </div>
             </div>
           </div>

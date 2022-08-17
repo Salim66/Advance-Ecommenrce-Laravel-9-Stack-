@@ -539,7 +539,29 @@
                 return false;
             }
 
-            let result = confirm('Are you sure! you want to delete this order.');
+            let result = confirm('Are you sure! you want to cancel this order.');
+            if(!result){
+                e.preventDefault();
+            }
+        });
+
+        // Return Order
+        $(document).on('click', '.btnReturnOrder', function(e){
+
+            let product = $('#returnProduct').val();
+            if(product == ""){
+                alert('Please select product');
+                return false;
+            }
+
+            let reason = $('#returnReason').val();
+            if(reason == ""){
+                alert('Please select reason');
+                e.preventDefault();
+                return false;
+            }
+
+            let result = confirm('Are you sure! you want to return this order.');
             if(!result){
                 e.preventDefault();
             }

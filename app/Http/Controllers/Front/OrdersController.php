@@ -36,7 +36,7 @@ class OrdersController extends Controller
     /**
      * @access private
      * @routes /orders/{id}/cancel
-     * @method GET
+     * @method ANY
      */
     public function cancelOrder(Request $request, $id){
 
@@ -71,5 +71,17 @@ class OrdersController extends Controller
             }
         }
 
+    }
+
+    /**
+     * @access private
+     * @routes /orders/{id}/return
+     * @method ANY
+     */
+    public function returnOrder(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+        }
     }
 }

@@ -251,6 +251,9 @@ Route::namespace('Front')->group(function(){
         // User Cancel Orders
         Route::any('/orders/{id}/cancel', [OrdersController::class, 'cancelOrder']);
 
+        // User Return Orders
+        Route::any('/orders/{id}/return', [OrdersController::class, 'returnOrder']);
+
         // Check user password
         Route::post('/check-user-password', [UserController::class, 'checkUserPassword']);
 
