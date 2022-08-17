@@ -155,6 +155,7 @@
                     <th>Product Size</th>
                     <th>Product Color</th>
                     <th>Product Qty</th>
+                    <th>Item Status</th>
                 </tr>
                 @foreach($orderDetails->order_products as $pro)
                 <tr>
@@ -171,6 +172,7 @@
                     <td>{{ $pro->product_size }}</td>
                     <td>{{ $pro->product_color }}</td>
                     <td>{{ $pro->product_qty }}</td>
+                    <td>{{ $pro->item_status }}</td>
                 </tr>
                 @endforeach
            </table>
@@ -230,7 +232,7 @@
                 </select>
               </div>
               <div class="modal-body">
-                <select name="reason" id="returnReason">
+                <select name="return_reason" id="returnReason">
                     <option value="">Select Reason</option>
                     <option value="Performance for quality not adequate">Performance for quality not adequate</option>
                     <option value="Product Damaged but Shiping Box Ok">Product Damaged but Shiping Box Ok</option>

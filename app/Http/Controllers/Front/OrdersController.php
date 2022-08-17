@@ -6,6 +6,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\OrdersLog;
+use App\Models\OrdersProduct;
+use App\Models\ReturnRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -79,9 +81,46 @@ class OrdersController extends Controller
      * @method ANY
      */
     public function returnOrder(Request $request, $id){
+
         if($request->isMethod('post')){
             $data = $request->all();
 
+            // Get user id from auth
+            $user_id_auth = Auth::user()->id;
+
+            // Get user id from orders table
+            $user_id_order = Order::select('user_id')->where('id', $id)->first();
+
+            if($user_id_auth == $user_id_order->user_id){
+
+                // Get Product Details
+                $productArr = explode('-', $data['product_info']);
+                $product_code = $productArr[0];
+                $product_size = $productArr[1];
+
+                //Update Item Status
+                OrdersProduct::where(['order_id'=>$id, 'product_code'=>$product_code, 'product_size'=>$product_size])->update(['item_status'=>'Return Initiated']);
+
+                // Update order return
+                $return = new ReturnRequest;
+                $return->order_id = $id;
+                $return->user_id = $user_id_auth;
+                $return->product_size = $product_size;
+                $return->product_code = $product_code;
+                $return->return_reason = $data['return_reason'];
+                $return->return_status = "Pending";
+                $return->comment = $data['comment'];
+                $return->save();
+
+                $message = "Return request has been placed for the ordered product.";
+                Session::put('success_message', $message);
+                return redirect()->back();
+            }else {
+                $message = "Your order return request is not valid";
+                Session::put('error_message', $message);
+                return redirect()->back();
+            }
         }
+
     }
 }

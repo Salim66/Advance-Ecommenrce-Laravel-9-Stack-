@@ -267,6 +267,7 @@
                             <th>Product Size</th>
                             <th>Product Color</th>
                             <th>Product Qty</th>
+                            <th>Item Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -285,6 +286,7 @@
                             <td>{{ $pro->product_size }}</td>
                             <td>{{ $pro->product_color }}</td>
                             <td>{{ $pro->product_qty }}</td>
+                            <td>{{ $pro->item_status }}</td>
                         </tr>
                         @endforeach
                     </tbody>
