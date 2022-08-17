@@ -12,6 +12,7 @@ use App\Models\OrdersLog;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ReturnRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -452,6 +453,15 @@ class OrdersController extends Controller
         $before_3_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(3))->count();
         $orderCount = [$current_month_orders, $before_1_month_orders, $before_2_month_orders, $before_3_month_orders];
         return view('admin.orders.view_orders_charts', compact('orderCount'));
+    }
+
+    /**
+     * Return Request
+     */
+    public function returnRequest(){
+        Session::put('page', 'return_request');
+        $return_request = ReturnRequest::get();
+        return view('admin.orders.return_request', compact('return_request'));
     }
 
 

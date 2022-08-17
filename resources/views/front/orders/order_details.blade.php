@@ -227,7 +227,9 @@
                 <select name="product_info" id="returnProduct">
                     <option value="">Select Product</option>
                     @foreach ($orderDetails->order_products as $product)
-                    <option value="{{ $product->product_code }}-{{ $product->product_size }}">{{ $product->product_code }}-{{ $product->product_size }}</option>
+                        @if($product->item_status != 'Return Initiated')
+                        <option value="{{ $product->product_code }}-{{ $product->product_size }}">{{ $product->product_code }}-{{ $product->product_size }}</option>
+                        @endif
                     @endforeach
                 </select>
               </div>

@@ -166,6 +166,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/ratings', [RatingsController::class, 'ratings']);
         Route::post('/update-rating-status', [RatingsController::class, 'updateRatingStatus']);
 
+        // Return Request
+        Route::get('/return-request', [AdminOrdersController::class, 'returnRequest']);
+
     });
 });
 
