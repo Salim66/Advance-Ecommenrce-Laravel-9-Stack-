@@ -238,7 +238,7 @@
                 </select>
               </div>
               <div class="modal-body">
-                <select name="product_size" class="productSize">
+                <select name="required_size" class="productSize">
                     <option value="">Select Exchange Size</option>
                     <option value="Return">Return</option>
                 </select>

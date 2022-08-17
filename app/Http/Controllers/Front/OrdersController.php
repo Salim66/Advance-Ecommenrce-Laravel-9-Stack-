@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ExchangeRequest;
 use App\Models\OrdersLog;
 use App\Models\OrdersProduct;
 use App\Models\Product;
@@ -100,25 +101,51 @@ class OrdersController extends Controller
                 $product_code = $productArr[0];
                 $product_size = $productArr[1];
 
-                //Update Item Status
-                OrdersProduct::where(['order_id'=>$id, 'product_code'=>$product_code, 'product_size'=>$product_size])->update(['item_status'=>'Return Initiated']);
+                if($data['return_exchange'] == "Return"){
+                    //Update Item Status
+                    OrdersProduct::where(['order_id'=>$id, 'product_code'=>$product_code, 'product_size'=>$product_size])->update(['item_status'=>'Return Initiated']);
 
-                // Update order return
-                $return = new ReturnRequest;
-                $return->order_id = $id;
-                $return->user_id = $user_id_auth;
-                $return->product_size = $product_size;
-                $return->product_code = $product_code;
-                $return->return_reason = $data['return_reason'];
-                $return->return_status = "Pending";
-                $return->comment = $data['comment'];
-                $return->save();
+                    // Update order return
+                    $return = new ReturnRequest;
+                    $return->order_id = $id;
+                    $return->user_id = $user_id_auth;
+                    $return->product_size = $product_size;
+                    $return->product_code = $product_code;
+                    $return->return_reason = $data['return_reason'];
+                    $return->return_status = "Pending";
+                    $return->comment = $data['comment'];
+                    $return->save();
 
-                $message = "Return request has been placed for the ordered product.";
-                Session::put('success_message', $message);
-                return redirect()->back();
+                    $message = "Return request has been placed for the ordered product.";
+                    Session::put('success_message', $message);
+                    return redirect()->back();
+                }else if($data['return_exchange'] == "Exchange"){
+                    //Update Item Status
+                    OrdersProduct::where(['order_id'=>$id, 'product_code'=>$product_code, 'product_size'=>$product_size])->update(['item_status'=>'Exchange Initiated']);
+
+                    // Update order return
+                    $exchange = new ExchangeRequest();
+                    $exchange->order_id = $id;
+                    $exchange->user_id = $user_id_auth;
+                    $exchange->product_size = $product_size;
+                    $exchange->required_size = $data['required_size'];
+                    $exchange->product_code = $product_code;
+                    $exchange->exchange_reason = $data['return_reason'];
+                    $exchange->exchange_status = "Pending";
+                    $exchange->comment = $data['comment'];
+                    $exchange->save();
+
+                    $message = "Exchange request has been placed for the ordered product.";
+                    Session::put('success_message', $message);
+                    return redirect()->back();
+                }else {
+                    $message = "Your order return/exchange request is not valid";
+                    Session::put('error_message', $message);
+                    return redirect()->back();
+                }
+
             }else {
-                $message = "Your order return request is not valid";
+                $message = "Your order return/exchange request is not valid";
                 Session::put('error_message', $message);
                 return redirect()->back();
             }
