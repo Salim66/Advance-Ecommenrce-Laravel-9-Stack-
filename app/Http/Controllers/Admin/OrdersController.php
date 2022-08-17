@@ -12,6 +12,7 @@ use App\Models\OrdersLog;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ExchangeRequest;
 use App\Models\OrdersProduct;
 use App\Models\ReturnRequest;
 use Illuminate\Support\Facades\Auth;
@@ -497,6 +498,16 @@ class OrdersController extends Controller
             return redirect('/admin/return-request');
         }
     }
+
+    /**
+     * Exchange Request
+     */
+    public function exchangeRequest(){
+        Session::put('page', 'exchange_request');
+        $exchange_request = ExchangeRequest::get();
+        return view('admin.orders.exchange_request', compact('exchange_request'));
+    }
+
 
 
 }

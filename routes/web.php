@@ -170,6 +170,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/return-request', [AdminOrdersController::class, 'returnRequest']);
         Route::post('/return-request/update', [AdminOrdersController::class, 'returnRequestUpdate']);
 
+        // Excahnge Request
+        Route::get('/exchange-request', [AdminOrdersController::class, 'exchangeRequest']);
+        Route::post('/exchange-request/update', [AdminOrdersController::class, 'returnRequestUpdate']);
+
     });
 });
 
