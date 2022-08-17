@@ -605,3 +605,28 @@
 
     });
 })(jQuery);
+
+ // Add Subscriber
+ function addSubscriber(){
+    let subscriber_email = $('#subscriberEmail').val();
+    var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+    if(!pattern.test(subscriber_email))
+    {
+      alert('not a valid e-mail address');
+      return false;
+    }
+    $.ajax({
+        type: 'post',
+        url: '/add-subscriber-email',
+        data: { subscriber_email:subscriber_email },
+        success: function(data){
+            if(data == 'exists'){
+                alert('Subscriber email already exists!');
+            }else if( data == 'inserted' ){
+                alert('Thanks for subscribing!');
+            }
+        },error: function(){
+            alert('Error');
+        }
+    });
+}

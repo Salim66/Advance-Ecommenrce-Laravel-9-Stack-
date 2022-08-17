@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ShippingCargesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\CMSPageController;
 use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Front\NewsletterController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaypalController;
 use App\Http\Controllers\Front\ProductsController;
@@ -242,6 +243,9 @@ Route::namespace('Front')->group(function(){
 
     // Review & Rating Route
     Route::any('/add-rating', [FrontRatingsController::class, 'addRating']);
+
+    // Add Subscriber Email
+    Route::post('/add-subscriber-email', [NewsletterController::class, 'addSubscriberEmail']);
 
     Route::group(['middleware' => ['auth']], function(){
         // User Logout

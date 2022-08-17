@@ -7,6 +7,7 @@
 			<div class="span6">Welcome!<strong> User</strong></div>
 			<div class="span6">
 				<div class="pull-right">
+                    <input type="text" name="subscriber_email" id="subscriberEmail" placeholder="Enter email..." style="margin-top: 10px; height: 20px; width: 150px;" required><button type="button" id="subscriberButton" onclick="addSubscriber()" class="btn btn-info btn-sm">Subscribe</button>
 					<a href="{{ url('cart') }}"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ <span class="totalCartItems">{{ totalCartItems() }}</span> ] Items in your cart </span> </a>
 				</div>
 			</div>
