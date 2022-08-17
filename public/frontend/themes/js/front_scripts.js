@@ -566,7 +566,7 @@
                     url: '/get-product-sizes',
                     data: { product_info: product_info },
                     success: function(data){
-                        alert(data);
+                        $('.productSize').html(data);
                     },error: function(){
                         alert('Error');
                     }

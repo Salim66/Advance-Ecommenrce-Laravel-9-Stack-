@@ -251,6 +251,8 @@
                     <option value="Item arrived too late">Item arrived too late</option>
                     <option value="Wrong item was send">Wrong item was send</option>
                     <option value="Item deffective or doesn't work">Item deffective or doesn't work</option>
+                    <option value="Require Smaller Size">Require Smaller Size</option>
+                    <option value="Require Large Size">Require Large Size</option>
                 </select>
               </div>
               <div class="modal-body">

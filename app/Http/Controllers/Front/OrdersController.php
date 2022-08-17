@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\OrdersLog;
 use App\Models\OrdersProduct;
+use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\ReturnRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -132,7 +134,22 @@ class OrdersController extends Controller
     public function getProductSizes(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            return $data;
+
+            // Get product details
+            $productArr = explode('-', $data['product_info']);
+            $product_code = $productArr[0];
+            $product_size = $productArr[1];
+
+            $proudctid = Product::select('id')->where('product_code', $product_code)->first();
+            $product_id = $proudctid->id;
+            $productSizes = ProductAttribute::select('size')->where('product_id', $product_id)->where('size', '!=', $product_size)->where('stock', '>', 0)->get();
+
+            $appendSizes = "<option value=''>Select Required Size</option>";
+            foreach($productSizes as $size){
+                $appendSizes .= "<option value='.$size->size.'>".$size->size."</option>";
+            }
+            return $appendSizes;
+
         }
     }
 }
