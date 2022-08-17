@@ -12,6 +12,7 @@ use App\Models\OrdersLog;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\OrdersProduct;
 use App\Models\ReturnRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -462,6 +463,39 @@ class OrdersController extends Controller
         Session::put('page', 'return_request');
         $return_request = ReturnRequest::get();
         return view('admin.orders.return_request', compact('return_request'));
+    }
+
+    /**
+     * Return Request Update
+     */
+    public function returnRequestUpdate(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            // Get return details
+            $returnDetails = ReturnRequest::where('id', $data['return_id'])->first()->toArray();
+
+            // Update return status in return request table
+            ReturnRequest::where('id', $data['return_id'])->update(['return_status'=>$data['return_status']]);
+
+            // Update return status in order products table
+            OrdersProduct::where(['order_id'=>$returnDetails['order_id'],'product_code'=>$returnDetails['product_code'], 'product_size'=>$returnDetails['product_size']])->update(['item_status'=> 'Return '.$returnDetails['return_status']]);
+
+            // Get user detials
+            $userDetails = User::select('name','email')->where('id', $returnDetails['user_id'])->first()->toArray();
+
+            // Send Return Status Email
+            $email = $userDetails['email'];
+            $return_status = $data['return_status'];
+            $messageData = ['userDetials'=>$userDetails, 'returnDetails'=>$returnDetails, 'return_status'=>$return_status];
+            Mail::send('emails.return_request', $messageData, function($message) use($email, $return_status){
+                $message->to($email)->subject("Return Request ".$return_status);
+            });
+
+            $message = "Return request has been ".$return_status." and email send to user.";
+            Session::flash('success_message', $message);
+            return redirect('/admin/return-request');
+        }
     }
 
 

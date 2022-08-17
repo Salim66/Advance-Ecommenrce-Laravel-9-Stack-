@@ -168,6 +168,7 @@ Route::prefix('admin')->group(function () {
 
         // Return Request
         Route::get('/return-request', [AdminOrdersController::class, 'returnRequest']);
+        Route::post('/return-request/update', [AdminOrdersController::class, 'returnRequestUpdate']);
 
     });
 });

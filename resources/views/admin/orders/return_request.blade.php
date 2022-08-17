@@ -68,11 +68,16 @@
                         <td>{{ $data->comment }}</td>
                         <td>{{ date('d m Y, h:i:s', strtotime($data->created_at)) }}</td>
                         <td>
-                            <select name="return_status" class="form-control">
-                                <option @if($data->return_status == 'Approved') selected @endif value="Approved">Approved</option>
-                                <option @if($data->return_status == 'Rejected') selected @endif value="Rejected">Rejected</option>
-                                <option @if($data->return_status == 'Pending') selected @endif value="Pending">Pending</option>
-                            </select>
+                            <form action="{{ url('/admin/return-request/update') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="return_id" value="{{ $data->id }}">
+                                <select name="return_status" class="form-control">
+                                    <option @if($data->return_status == 'Approved') selected @endif value="Approved">Approved</option>
+                                    <option @if($data->return_status == 'Rejected') selected @endif value="Rejected">Rejected</option>
+                                    <option @if($data->return_status == 'Pending') selected @endif value="Pending">Pending</option>
+                                </select>
+                                <input type="submit" class="btn btn-sm btn-info mt-2" value="Update">
+                            </form>
                         </td>
                     </tr>
                     @endforeach
