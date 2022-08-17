@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('return_requests', function (Blueprint $table) {
+        Schema::create('exchange_requests', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
             $table->integer('user_id');
             $table->string('product_size');
+            $table->string('required_size');
             $table->string('product_code');
-            $table->string('return_reason');
-            $table->enum('return_status', ['Pending','Approved', 'Rejected']);
+            $table->string('exchange_reason');
+            $table->enum('exchange_status', ['Pending','Approved', 'Rejected']);
             $table->string('comment');
             $table->timestamps();
         });
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('return_requests');
+        Schema::dropIfExists('exchange_requests');
     }
 };
