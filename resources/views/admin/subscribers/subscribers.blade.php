@@ -37,7 +37,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">All Subscriber</h3>
-                <a href="#" class="btn btn-primary float-right">Export</a>
+                <a href="{{ url('/admin/export-subscriber-email') }}" class="btn btn-primary float-right">Subscriber Export</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

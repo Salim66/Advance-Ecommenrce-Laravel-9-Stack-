@@ -188,6 +188,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/newsletter-subscribers', [AdminNewsletterController::class, 'newsletterSubscribers']);
         Route::post('/update-subscriber-status', [AdminNewsletterController::class, 'updateSubscriberStatus']);
         Route::get('/delete-subscriber/{id}', [AdminNewsletterController::class, 'deleteSubscriber']);
+        Route::get('/export-subscriber-email', [AdminNewsletterController::class, 'exportSubscriberEmail']);
 
         // Import CSV Pincode Update
         Route::any('/update-cod-pincode', [ImportController::class, 'updateCodPincode']);

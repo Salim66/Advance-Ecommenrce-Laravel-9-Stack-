@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SubscriberExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\NewsletterSubscriber;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NewsletterController extends Controller
 {
@@ -48,5 +50,12 @@ class NewsletterController extends Controller
 
         Session::put('success_message', 'Subscriber Deleted Successfully ):');
         return redirect()->back();
+    }
+
+    /**
+     * Subscriber Email Export
+     */
+    public function exportSubscriberEmail(){
+        return Excel::download(new SubscriberExport, 'subscriber.xlsx');
     }
 }
