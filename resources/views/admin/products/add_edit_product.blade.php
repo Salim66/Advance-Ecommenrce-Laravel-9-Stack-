@@ -140,7 +140,7 @@
                     </div>
                     <div class="form-group">
                         <label>product Description</label>
-                        <textarea class="form-control" name="description" rows="3" placeholder="Enter product Description">@if(!empty($product_data->description)) {{ $product_data->description }} @else {{ old('description') }} @endif</textarea>
+                        <textarea class="form-control summernote" name="description" rows="3" placeholder="Enter product Description">@if(!empty($product_data->description)) {{ $product_data->description }} @else {{ old('description') }} @endif</textarea>
                     </div>
                     <div class="form-group">
                         <label>Meta Description</label>
@@ -210,7 +210,7 @@
                     </div>
                     <div class="form-group">
                         <label>Wash Care</label>
-                        <textarea class="form-control" name="wash_care" rows="3" placeholder="Enter Meta Title">@if(!empty($product_data->wash_care)) {{ $product_data->wash_care }} @else {{ old('wash_care') }} @endif</textarea>
+                        <textarea class="form-control summernote" name="wash_care" rows="3" placeholder="Enter Meta Title">@if(!empty($product_data->wash_care)) {{ $product_data->wash_care }} @else {{ old('wash_care') }} @endif</textarea>
                     </div>
                     <div class="form-group">
                         <label>Meta Title</label>

@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="{{ asset('backend/') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="{{ asset('backend/') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="{{ asset('backend/') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{{ asset('backend/') }}/plugins/summernote/summernote-bs4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('backend/') }}/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
@@ -105,6 +107,8 @@
 <script src="{{ asset('backend/') }}/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('backend/') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- Summernote -->
+<script src="{{ asset('backend/') }}/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('backend/') }}/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -129,6 +133,18 @@
         "responsive": true,
       });
     });
+  </script>
+  <script>
+    $(function () {
+      // Summernote
+      $('.summernote').summernote()
+
+      // CodeMirror
+      CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+        mode: "htmlmixed",
+        theme: "monokai"
+      });
+    })
   </script>
 <!-- SweetAlert2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

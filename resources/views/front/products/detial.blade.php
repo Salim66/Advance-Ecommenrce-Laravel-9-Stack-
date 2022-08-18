@@ -190,7 +190,7 @@
             </form>
             <hr class="soft clr"/>
             <p class="span6">
-                {{ $product_detail->description }}
+                @php echo $product_detail->description @endphp
             </p>
             <a class="btn btn-small pull-right" href="#detail">More Details</a>
             <br class="clr"/>
@@ -235,7 +235,7 @@
                     </table>
 
                     <h5>Washcare</h5>
-                    <p>{{ $product_detail->wash_care }}</p>
+                    <p><?php echo $product_detail->wash_care ?></p>
                     <h5>Disclaimer</h5>
                     <p>
                         There may be a slight color variation between the image shown and original product.
