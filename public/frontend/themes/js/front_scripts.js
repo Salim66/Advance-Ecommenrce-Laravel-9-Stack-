@@ -436,6 +436,7 @@
         // Shipping Charges Applied
         $('input[name=address_id]').bind('change', function(){
             let shipping_charges = $(this).attr('shipping_charges');
+            let gst_charges = $(this).attr('gst_charges');
             let total_price = $(this).attr('total_price');
             let coupon_amount = $(this).attr('coupon_amount');
             let codPincodeCount = $(this).attr('codPincodeCount');
@@ -460,9 +461,10 @@
             if(coupon_amount == ""){
                 coupon_amount = 0;
             }
-            let grand_total = parseInt(total_price) - parseInt(coupon_amount) + parseInt(shipping_charges);
+            let grand_total = parseInt(total_price) - parseInt(coupon_amount) + parseInt(shipping_charges) + parseInt(gst_charges);
             $('.coupon_amount').text('Rs. '+coupon_amount);
             $('.shipping_charges').text('Rs. '+shipping_charges);
+            $('.gst_charges').text('Rs. '+gst_charges);
             $('.grand_total').text('Rs. '+grand_total);
         });
 

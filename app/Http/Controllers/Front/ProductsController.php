@@ -575,11 +575,21 @@ class ProductsController extends Controller
 
         $total_weight = 0;
         $total_price = 0;
+        $totalGST = 0;
         foreach($user_cart_items as $item){
             $product_weight = $item->product->product_weight;
             $total_weight = $total_weight + ($product_weight * $item->quantity);
             $get_attr_price = \App\Models\Product::getDiscountedAttrPrice($item->product->id, $item->size);
             $total_price = $total_price + ( $item->quantity * $get_attr_price['final_price'] );
+
+            $product_total_price =$item->quantity * $get_attr_price['final_price'];
+            // return $product_total_price;
+
+            // Calculate GST for item
+            $getGSTProudct = Product::select('product_gst')->where('id', $item->product_id)->first();
+            $gstPercent = $getGSTProudct->product_gst;
+            $gstAmount = round($product_total_price * $gstPercent/100,2);
+            $totalGST = $totalGST + $gstAmount;
         }
 
         $otherSettings = OtherSetting::where('id', 1)->first();
@@ -605,6 +615,7 @@ class ProductsController extends Controller
         foreach($deliveryAddresses as $key => $value){
             $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value->country);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+            $deliveryAddresses[$key]['gst_charges'] = $totalGST;
             // Check if delivery pincode exists in COD Pincode list
             $deliveryAddresses[$key]['codPincodeCount'] = DB::table('cod_pincodes')->where('pincode', $value->pincode)->count();
             // Check if delivery pincode exists in Prepaid pincode list
@@ -679,7 +690,7 @@ class ProductsController extends Controller
             $shipping_charges = ShippingCharge::getShippingCharges($total_weight, $deliveryAddress->country);
 
             // Calculate grand total
-            $grand_total = $total_price + $shipping_charges - Session::get('coupon_amount');
+            $grand_total = $total_price + $shipping_charges + $totalGST - Session::get('coupon_amount');
 
             // Insert grand total in session variable
             Session::put('grand_total', $grand_total);
@@ -698,6 +709,7 @@ class ProductsController extends Controller
             $order->mobile = $deliveryAddress->mobile;
             $order->email = Auth::user()->email;
             $order->shipping_charges = $shipping_charges;
+            $order->gst_charges = $totalGST;
             $order->coupon_code = Session::get('coupon_code');
             $order->coupon_amount = Session::get('coupon_amount');
             $order->order_status = "New";
@@ -781,7 +793,7 @@ class ProductsController extends Controller
 
 
 
-        return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses', 'total_price'));
+        return view('front.products.checkout', compact('user_cart_items', 'deliveryAddresses', 'total_price', 'totalGST'));
     }
 
     /**

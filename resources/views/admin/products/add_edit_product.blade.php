@@ -93,7 +93,7 @@
                         <input type="text" class="form-control" name="product_price" id="product_price" placeholder="Enter product price" @if(!empty($product_data->product_price)) value="{{ $product_data->product_price }}" @else value="{{ old('product_price') }}" @endif>
                     </div>
                     <div class="form-group">
-                        <label for="product_discount">Product Discount</label>
+                        <label for="product_discount">Product Discount (%)</label>
                         <input type="text" class="form-control" name="product_discount" id="product_discount" placeholder="Enter product Discount" @if(!empty($product_data->product_discount)) value="{{ $product_data->product_discount }}" @else value="{{ old('product_discount') }}" @endif>
                     </div>
                     <div class="form-group">

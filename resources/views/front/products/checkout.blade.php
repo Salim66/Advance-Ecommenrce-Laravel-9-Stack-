@@ -41,7 +41,7 @@
             <tr>
                 <td>
                     <div class="control-group" style="float: left; margin-top: -2px; margin-right: 5px;">
-                        <input type="radio" id="address{{ $address->id }}" name="address_id" value="{{ $address->id }}" shipping_charges="{{ $address->shipping_charges }}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('coupon_amount') }}" codPincodeCount="{{ $address->codPincodeCount }}" prepaidPincodeCount="{{ $address->prepaidPincodeCount }}">
+                        <input type="radio" id="address{{ $address->id }}" name="address_id" value="{{ $address->id }}" shipping_charges="{{ $address->shipping_charges }}"  gst_charges="{{ $address->gst_charges }}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('coupon_amount') }}" codPincodeCount="{{ $address->codPincodeCount }}" prepaidPincodeCount="{{ $address->prepaidPincodeCount }}">
                     </div>
                     </div>
                     <div class="control-group">
@@ -104,14 +104,16 @@
                 </tr>
                 <tr>
                 <td colspan="6" style="text-align:right">Shipping Charges(+):	</td>
-                <td class="shipping_charges">
-                    
-                </td>
+                <td class="shipping_charges">Rs.0</td>
                 </tr>
                 <tr>
-                <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.{{ $total_price }} - <span class="coupon_amount">Rs.0</span> + <span class="shipping_charges">Rs.0</span>) =</strong></td>
+                <td colspan="6" style="text-align:right">GST Charges(+):	</td>
+                <td class="gst_charges">Rs. {{ $totalGST }}</td>
+                </tr>
+                <tr>
+                <td colspan="6" style="text-align:right"><strong>TOTAL (Rs.{{ $total_price }} - <span class="coupon_amount">Rs.0</span> + <span class="shipping_charges">Rs.0</span> + <span class="gst_charges">Rs. {{ $totalGST }}</span>) =</strong></td>
                 <td class="label label-important" style="display:block"> <strong class="grand_total">
-                    Rs. {{ $grand_total = $total_price - Session::get('coupon_amount') }}
+                    Rs. {{ $grand_total = $total_price + $totalGST - Session::get('coupon_amount') }}
                     @php Session::put('grand_total', $grand_total); @endphp
                 </strong></td>
                 </tr>
