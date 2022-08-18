@@ -138,6 +138,10 @@ Route::prefix('admin')->group(function () {
 
         // View Users Charts Report Route
         Route::get('/view-users-charts', [UsersController::class, 'viewUsersCharts']);
+
+        // Users Exports Route
+        Route::get('/users-export', [UsersController::class, 'usersExport']);
+
         // View User countries Pie Charts Route
         Route::get('/view-users-countries', [UsersController::class, 'viewUsersCountries']);
 

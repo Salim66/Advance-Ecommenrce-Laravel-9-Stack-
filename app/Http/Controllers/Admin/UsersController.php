@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
@@ -58,5 +60,12 @@ class UsersController extends Controller
 
         $getUsersCountries = User::select('country', DB::raw('count(country) as count'))->groupBy('country')->get();
         return view('admin.users.view_users_countries', compact('getUsersCountries'));
+    }
+
+    /**
+     * Users Export
+     */
+    public function usersExport(){
+        return Excel::download( new UsersExport, 'users.xlsx');
     }
 }
