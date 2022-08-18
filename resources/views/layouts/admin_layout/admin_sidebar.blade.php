@@ -299,6 +299,18 @@
                 </a>
               </li>
 
+                @if (Session::get('page') == 'import_pincode')
+                    @php $active = "active"; @endphp
+                @else
+                    @php $active = ""; @endphp
+                @endif
+              <li class="nav-item">
+                <a href="{{ url('/admin/update-cod-pincode') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Import CSV Pincode</p>
+                </a>
+              </li>
+
             </ul>
           </li>
 
