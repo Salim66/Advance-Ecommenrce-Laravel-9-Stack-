@@ -97,6 +97,10 @@
                         <input type="text" class="form-control" name="product_discount" id="product_discount" placeholder="Enter product Discount" @if(!empty($product_data->product_discount)) value="{{ $product_data->product_discount }}" @else value="{{ old('product_discount') }}" @endif>
                     </div>
                     <div class="form-group">
+                        <label for="product_gst">Product GST (%)</label>
+                        <input type="text" class="form-control" name="product_gst" id="product_gst" placeholder="Enter product Discount" @if(!empty($product_data->product_gst)) value="{{ $product_data->product_gst }}" @else value="{{ old('product_gst') }}" @endif>
+                    </div>
+                    <div class="form-group">
                         <label for="product_video">product Video</label>
                         <div class="input-group">
                             <div class="custom-file">

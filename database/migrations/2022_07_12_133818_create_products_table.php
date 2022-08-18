@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('product_color');
             $table->float('product_price');
             $table->float('product_discount');
+            $table->float('product_gst');
             $table->float('product_weight');
             $table->string('product_video');
             $table->string('main_image');
