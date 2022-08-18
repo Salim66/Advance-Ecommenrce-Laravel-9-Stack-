@@ -35,6 +35,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">All Order | <a href="{{ url('/admin/view-orders-charts') }}">Orders Report</a></h3>
+                <a href="{{ url('/admin/orders-export') }}" class="btn btn-primary float-right">Orders Export</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

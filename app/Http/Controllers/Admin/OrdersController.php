@@ -11,12 +11,14 @@ use App\Models\AdminRole;
 use App\Models\OrdersLog;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\ExchangeRequest;
+use App\Exports\OrdersExport;
 use App\Models\OrdersProduct;
 use App\Models\ReturnRequest;
+use App\Models\ExchangeRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 
 class OrdersController extends Controller
@@ -540,6 +542,13 @@ class OrdersController extends Controller
             Session::flash('success_message', $message);
             return redirect('/admin/exchange-request');
         }
+    }
+
+    /**
+     * Export Orders
+     */
+    public function ordersExport(){
+        return Excel::download(new OrdersExport, 'orders.xlsx');
     }
 
 

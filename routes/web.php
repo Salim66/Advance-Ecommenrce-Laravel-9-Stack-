@@ -126,6 +126,9 @@ Route::prefix('admin')->group(function () {
         // View Orders Charts Report Route
         Route::get('/view-orders-charts', [AdminOrdersController::class, 'viewOrdersCharts']);
 
+        // Orders Exports Route
+        Route::get('/orders-export', [AdminOrdersController::class, 'ordersExport']);
+
 
         // Shipping Charges Route
         Route::get('/shipping-charges', [ShippingCargesController::class, 'viewShippingCharges']);

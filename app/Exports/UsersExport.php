@@ -16,7 +16,7 @@ class UsersExport implements FromCollection, WithHeadings
         // For exportng all table
         // return User::all();
 
-        $usersData = User::select('id', 'name', 'address', 'city', 'state', 'country', 'pincode', 'mobile', 'email', 'created_at')->where('status', 1)->get();
+        $usersData = User::select('id', 'name', 'address', 'city', 'state', 'country', 'pincode', 'mobile', 'email', 'created_at')->where('status', 1)->orderBy('id', 'DESC')->get();
         return $usersData;
     }
 
