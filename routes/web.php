@@ -190,8 +190,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete-subscriber/{id}', [AdminNewsletterController::class, 'deleteSubscriber']);
         Route::get('/export-subscriber-email', [AdminNewsletterController::class, 'exportSubscriberEmail']);
 
-        // Import CSV Pincode Update
+        // Update COD Pincode
         Route::any('/update-cod-pincode', [ImportController::class, 'updateCodPincode']);
+
+        // Update Prepaid Pincode
+        Route::any('/update-prepaid-pincode', [ImportController::class, 'updatePrepaidPincode']);
 
     });
 });

@@ -13,7 +13,7 @@ class ImportController extends Controller
      * Update COD Pincode
      */
     public function updateCodPincode(Request $request){
-        Session::put('page', 'import_pincode');
+        Session::put('page', 'import_cod_pincode');
         if($request->isMethod('post')){
             $data = $request->all();
 
@@ -48,6 +48,49 @@ class ImportController extends Controller
 
         }
         return view('admin.pincodes.update_cod_pincode');
+
+    }
+
+
+    /**
+     * Update Prepaid Pincode
+     */
+    public function updatePrepaidPincode(Request $request){
+        Session::put('page', 'import_prepaid_pincode');
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            // Upload Pincode CSV to pincode folder
+            if($request->hasFile('file')){
+                if($request->file('file')->isValid()){
+                    $file = $request->file('file');
+                    $destination = public_path('imports/pincodes');
+                    $ext = $file->getClientOriginalExtension();
+                    $filename = 'pincode-'.rand().".".$ext;
+                    $file->move($destination, $filename);
+                }
+            }
+
+            $file = public_path('imports/pincodes/'.$filename);
+            $pincodes = $this->csvToArray($file);
+            // return $pincodes; die;
+            $latestPincodes = [];
+            foreach($pincodes as $key => $pincode){
+                $latestPincodes[$key]['pincode'] = $pincode['pincode'];
+                $latestPincodes[$key]['created_at'] = date('Y-m-d H:i:s');
+                $latestPincodes[$key]['updated_at'] = date('Y-m-d H:i:s');
+            }
+
+            DB::table('prepaid_pincode')->delete();
+            DB::update('Alter Table prepaid_pincode AUTO_INCREMENT=1;');
+            DB::table('prepaid_pincode')->insert($latestPincodes);
+
+            $message = "Prepaid Pincode has been replaced successfully!";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+
+        }
+        return view('admin.pincodes.update_prepaid_pincode');
 
     }
 

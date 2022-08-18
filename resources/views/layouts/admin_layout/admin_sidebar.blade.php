@@ -299,7 +299,7 @@
                 </a>
               </li>
 
-                @if (Session::get('page') == 'import_pincode')
+                @if (Session::get('page') == 'import_cod_pincode')
                     @php $active = "active"; @endphp
                 @else
                     @php $active = ""; @endphp
@@ -307,7 +307,19 @@
               <li class="nav-item">
                 <a href="{{ url('/admin/update-cod-pincode') }}" class="nav-link {{ $active }}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Import CSV Pincode</p>
+                  <p>Import COD Pincode</p>
+                </a>
+              </li>
+
+                @if (Session::get('page') == 'import_prepaid_pincode')
+                    @php $active = "active"; @endphp
+                @else
+                    @php $active = ""; @endphp
+                @endif
+              <li class="nav-item">
+                <a href="{{ url('/admin/update-prepaid-pincode') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Import Prepaid Pincode</p>
                 </a>
               </li>
 
