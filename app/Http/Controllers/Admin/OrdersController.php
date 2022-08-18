@@ -413,6 +413,16 @@ class OrdersController extends Controller
                     $output .='</tr>
                     <tr>
                         <td colspan="2"></td>
+                        <td colspan="2">Shipping Charges</td>
+                        <td>INR '.$orderDetails->shipping_charges.'</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2">GST Charges</td>
+                        <td>INR '.$orderDetails->gst_charges.'</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
                         <td colspan="2">GRAND TOTAL</td>
                         <td>INR '.$orderDetails->grand_total.'</td>
                     </tr>

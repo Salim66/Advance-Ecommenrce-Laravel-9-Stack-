@@ -72,6 +72,10 @@
                             <td>{{ $orderDetails->shipping_charges }}</td>
                         </tr>
                         <tr>
+                            <td>GST Charges</td>
+                            <td>{{ $orderDetails->gst_charges }}</td>
+                        </tr>
+                        <tr>
                             <td>Coupon Code</td>
                             <td>{{ $orderDetails->coupon_code }}</td>
                         </tr>

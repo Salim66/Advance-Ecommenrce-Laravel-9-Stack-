@@ -125,27 +125,33 @@
     							<tr>
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
-    								<td class="thick-line text-center"><strong>Sub Total</td>
+    								<td class="thick-line text-right"><strong>Sub Total</td>
     								<td class="thick-line text-right">INR {{ $sub_total }}</strong></td>
     							</tr>
                                 @if(!empty($orderDetails->coupon_amount))
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Discount</strong></td>
+    								<td class="no-line text-right"><strong>Discount</strong></td>
     								<td class="no-line text-right">INR {{ $orderDetails->coupon_amount }}</td>
     							</tr>
                                 @endif
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Shipping</strong></td>
-    								<td class="no-line text-right">INR 0</td>
+    								<td class="no-line text-right"><strong>Shipping Charges</strong></td>
+    								<td class="no-line text-right">INR {{ $orderDetails->shipping_charges }}</td>
     							</tr>
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Grand Total</strong></td>
+    								<td class="no-line text-right"><strong>GST Charges</strong></td>
+    								<td class="no-line text-right">INR {{ $orderDetails->gst_charges }}</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-right"><strong>Grand Total</strong></td>
     								<td class="no-line text-right">INR {{ $orderDetails->grand_total }}</td>
     							</tr>
     						</tbody>
