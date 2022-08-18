@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ImportController extends Controller
@@ -27,8 +28,46 @@ class ImportController extends Controller
                 }
             }
 
+            $file = public_path('imports/pincodes/'.$filename);
+            $pincodes = $this->csvToArray($file);
+            // return $pincodes; die;
+            $latestPincodes = [];
+            foreach($pincodes as $key => $pincode){
+                $latestPincodes[$key]['pincode'] = $pincode['pincode'];
+                $latestPincodes[$key]['created_at'] = date('Y-m-d H:i:s');
+                $latestPincodes[$key]['updated_at'] = date('Y-m-d H:i:s');
+            }
+
+            DB::table('cod_pincodes')->delete();
+            DB::update('Alter Table cod_pincodes AUTO_INCREMENT=1;');
+            DB::table('cod_pincodes')->insert($latestPincodes);
+
+            $message = "COD Pincode has been replaced successfully!";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+
         }
         return view('admin.pincodes.update_cod_pincode');
 
+    }
+
+    /**
+     * CSV to Array Coverter
+     */
+    public function csvToArray($filename = '', $delimiter = ','){
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
+            $header = null;
+            $data = array();
+            if (($handle = fopen($filename, 'r')) !== false){
+                while (($row = fgetcsv($handle, 1000, $delimiter)) !== false){
+                if (!$header)
+                    $header = $row;
+                else
+                    $data[] = array_combine($header, $row);
+                }
+            fclose($handle);
+            }
+        return $data;
     }
 }
